@@ -40,6 +40,11 @@ public class Navigation {
         return 0.0;
     }
 
+    public static double calculateCoordAngle(Coordinate coord1, Coordinate coord2){
+        double a = a1 -a2;
+        
+    }
+
     public static Coordinate getCurrentCoordinate() {
         // TODO
         return new Coordinate(0, 0, 0);
