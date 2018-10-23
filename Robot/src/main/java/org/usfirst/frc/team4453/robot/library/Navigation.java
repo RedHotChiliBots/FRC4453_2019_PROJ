@@ -36,13 +36,10 @@ public class Navigation {
     }
 
     public static double calculateCoordAngle(Coordinate coord1, Coordinate coord2) {
-        // TODO For Larsen.
-        return 0.0;
-    }
-
-    public static double calculateCoordAngle(Coordinate coord1, Coordinate coord2){
-        double a = a1 -a2;
-        
+        double x = coord2.X - coord1.X;
+        double y = coord2.Y - coord1.Y;
+        double dangle = 90 - Math.toDegrees(Math.atan2(y, x));
+        return dangle;
     }
 
     public static Coordinate getCurrentCoordinate() {
