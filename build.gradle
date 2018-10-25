@@ -1,0 +1,12 @@
+plugins {
+    id "jaci.gradle.EmbeddedTools" version "2018.10.16a" apply false
+    id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3" apply false
+}
+
+subprojects {
+    apply plugin: "java"
+}
+
+wrapper {
+    gradleVersion = '4.9'
+}

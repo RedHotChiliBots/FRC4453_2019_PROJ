@@ -1,0 +1,12 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.openpnp:opencv:3.4.2-0"
+    compile "com.google.code.gson:gson:2.8.5"
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
