@@ -5,6 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Debug Vision",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "org.frc.team4453.vision.Vision",
+      
+      "args": ""
+    },
+    {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
       "request": "launch",

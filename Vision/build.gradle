@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.openpnp:opencv:3.4.2-0'
+    compile group: 'org.bytedeco', name: 'javacv-platform', version: '1.4.3'
     compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
     compile project(':Shared')
 }
