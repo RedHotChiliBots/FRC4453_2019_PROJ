@@ -86,10 +86,10 @@ public class Chassis extends PIDSubsystem {
         }
     };
     
-    private PIDController distancePID = new PIDController(0.00025, 0.0, 0.0004, distancePIDInput, distancePIDOutput); // TODO: PID Values
+    private PIDController distancePID = new PIDController(0.0001, 0.0, 0.0, distancePIDInput, distancePIDOutput); // TODO: PID Values
     
     public Chassis() {
-        super("Chassis", 0.1, 0.0, 0.0); // TODO: PID Values
+        super("Chassis", 0.0, 0.0, 0.0); // TODO: PID Values
         System.out.println("Entering Chassis...");
         
         System.out.println("Configuring Distance PID...");

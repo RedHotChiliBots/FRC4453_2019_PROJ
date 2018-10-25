@@ -5,9 +5,9 @@ deploy {
         target("rpi") {
             locations {
                 ssh {
-                    address = "rsapberrypi.local"
+                    address = "raspberrypi.local"
                     user = 'pi'
-                    password = 'raspberry'
+                    password = 'Robotics1'
                 }
             }
             directory = '/home/pi/Vision'
