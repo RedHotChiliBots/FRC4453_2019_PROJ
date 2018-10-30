@@ -16,9 +16,28 @@ deploy {
     }
     artifacts {
         // Define my artifact. In this case, the default java build for this project.
-        javaArtifact('vision') {
+        javaArtifact('Vision') {
             targets << "rpi"
             jar = 'jar'     // This sets the jarfile to deploy. The default jar task in gradle is simply called 'jar'
+            predeploy << { execute 'sudo systemctl stop vision' }
+            postdeploy << { execute 'sudo systemctl start vision' }
+        }
+        fileArtifact('VisionService') {
+            targets << "rpi"
+            file = file('vision.service')               // Set the file to deploy. Required.
+            predeploy << { execute 'sudo systemctl stop vision' }
+            postdeploy << { execute 'sudo ln -sv /home/pi/Vision/vision.service /etc/systemd/system/; sudo systemctl daemon-reload; sudo systemctl enable vision' }
+
+        }
+        fileArtifact('VisionRun') {
+            targets << "rpi"
+            file = file('run.sh')               // Set the file to deploy. Required.
+            predeploy << { execute 'sudo systemctl stop vision' }
+        }
+        commandArtifact('VisionStart') {
+            targets << "rpi"
+            dependsOn('deployVisionRunRpi', 'deployVisionServiceRpi', 'deployVisionRpi')
+            command = "sudo systemctl start vision.service"
         }
     }
 }
@@ -28,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.bytedeco', name: 'javacv-platform', version: '1.4.3'
+    compile group: 'org.bytedeco', name: 'javacv', version: '1.4.3'
     compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
     compile project(':Shared')
 }
