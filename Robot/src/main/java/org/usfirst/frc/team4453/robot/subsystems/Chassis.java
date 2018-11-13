@@ -86,7 +86,7 @@ public class Chassis extends PIDSubsystem {
         }
     };
     
-    private PIDController distancePID = new PIDController(0.0001, 0.0, 0.0, distancePIDInput, distancePIDOutput); // TODO: PID Values
+    private PIDController distancePID = new PIDController(0.00005, 0.0000009, 0.0007, distancePIDInput, distancePIDOutput); // TODO: PID Values
     
     public Chassis() {
         super("Chassis", 0.0, 0.0, 0.0); // TODO: PID Values
@@ -97,7 +97,7 @@ public class Chassis extends PIDSubsystem {
         getPIDController().setContinuous();
         getPIDController().setAbsoluteTolerance(0.2); // TODO
         getPIDController().setOutputRange(-.6, .6);
-        distancePID.setAbsoluteTolerance(400); // TODO
+        distancePID.setAbsoluteTolerance(0.5); // TODO
         distancePID.setOutputRange(-.6, .6);
         distancePID.setName("Chassis", "Distance PID");
         SmartDashboard.putData(distancePID);
