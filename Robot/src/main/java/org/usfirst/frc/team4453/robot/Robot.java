@@ -10,6 +10,7 @@ package org.usfirst.frc.team4453.robot;
 import java.util.HashMap;
 
 import org.usfirst.frc.team4453.robot.commands.autonomous.*;
+import org.usfirst.frc.team4453.robot.library.Navigation;
 //import org.usfirst.frc.team4453.robot.library.Vision;
 import org.usfirst.frc.team4453.robot.subsystems.*;
 
@@ -30,6 +31,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
+
+    public static Navigation navigation; 
 
     public static Chassis chassis;
     public static Climber climber;
@@ -82,6 +85,9 @@ public class Robot extends TimedRobot {
         
         //vision = new Vision();
         //System.out.println("Vision Started!");
+
+        navigation = new Navigation();
+        System.out.println("Navigation constructed!");
         
         chassis = new Chassis();
         System.out.println("Chassis constructed!");
