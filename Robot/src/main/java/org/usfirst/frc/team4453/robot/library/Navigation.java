@@ -22,6 +22,8 @@ public class Navigation implements MqttCallback {
     public Navigation() {
         try {
             client = new MqttClient(BROKER_URL, "Robot");
+            client.setCallback(this);
+            client.connect();
             client.subscribe("Vision/CurrentPosition");
             client.subscribe("Vision/Status");
         } catch (MqttException e) {
