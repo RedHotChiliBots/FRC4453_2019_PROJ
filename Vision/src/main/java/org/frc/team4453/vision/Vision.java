@@ -30,7 +30,7 @@ import org.usfirst.frc.team4453.library.NavigationShared.Coordinate;
 
 class Vision implements MqttCallback {
 
-    private Mat camera_matrix = new Mat(); // TODO: How to load these?
+    private Mat camera_matrix = new Mat();
     private Mat dist_coeff = new Mat();
 
     private FastFeatureDetector detector = FastFeatureDetector.create(20, true, FastFeatureDetector.TYPE_9_16);

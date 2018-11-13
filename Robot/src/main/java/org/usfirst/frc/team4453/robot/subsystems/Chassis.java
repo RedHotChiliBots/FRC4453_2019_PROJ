@@ -1,15 +1,19 @@
 package org.usfirst.frc.team4453.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import org.usfirst.frc.team4453.robot.Robot;
 import org.usfirst.frc.team4453.robot.RobotMap;
 import org.usfirst.frc.team4453.robot.commands.TeleopDrive;
 
-import javax.management.loading.PrivateClassLoader;
-
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,12 +22,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends PIDSubsystem {
-    private static final double CHASSIS_3RD_GEAR_RATIO               = 2.5; // Vex 3CIM Ball Shifter 3rd Stage 24:60
-    private static final double CHASSIS_ENCODER_RATIO                = 3.0; // Encoder gear ratio 1:3
-    public static final double  CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;	// SRX Mag Encoder 1024cpr Quadrature
-    private static final double CHASSIS_GEARBOX2ENCODER_RATIO        = CHASSIS_3RD_GEAR_RATIO * CHASSIS_ENCODER_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION;
-    public static final double  CHASSIS_WHEEL_DIAMETER               = 6; // inches
-    private static final double CHASSIS_TICKS_PER_INCH               = CHASSIS_GEARBOX2ENCODER_RATIO / (CHASSIS_WHEEL_DIAMETER * Math.PI);
+    private static final double CHASSIS_3RD_GEAR_RATIO = 2.5; // Vex 3CIM Ball Shifter 3rd Stage 24:60
+    private static final double CHASSIS_ENCODER_RATIO = 3.0; // Encoder gear ratio 1:3
+    public static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096; // SRX Mag Encoder 1024cpr Quadrature
+    private static final double CHASSIS_GEARBOX2ENCODER_RATIO = CHASSIS_3RD_GEAR_RATIO * CHASSIS_ENCODER_RATIO
+            * CHASSIS_ENCODER_TICKS_PER_REVOLUTION;
+    public static final double CHASSIS_WHEEL_DIAMETER = 6; // inches
+    private static final double CHASSIS_TICKS_PER_INCH = CHASSIS_GEARBOX2ENCODER_RATIO
+            / (CHASSIS_WHEEL_DIAMETER * Math.PI);
     
     private static final double FEET_TO_METERS = 3.28084;
 
