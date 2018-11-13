@@ -18,13 +18,13 @@ public class RobotDriveDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.chassis.driveDistance(distance);
+        Robot.chassis.driveDistance(distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return Robot.chassis.distanceOnTarget();
-	return (false);
+        // return Robot.chassis.distanceOnTarget();
+        return false;
     }
 
     // Called once after isFinished returns true

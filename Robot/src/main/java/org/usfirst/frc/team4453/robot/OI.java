@@ -31,10 +31,10 @@ public class OI {
 
     //private JoystickButton shooterShoot = new JoystickButton(operator, RobotMap.Y_BUTTON);
 
-    private JoystickButton grabberGrab	  = new JoystickButton(operator, RobotMap.A_BUTTON);
+    private JoystickButton grabberGrab    = new JoystickButton(operator, RobotMap.A_BUTTON);
     private JoystickButton grabberRelease = new JoystickButton(operator, RobotMap.B_BUTTON);
-    private JoystickButton grabberThrow	  = new JoystickButton(operator, RobotMap.X_BUTTON);
-    private JoystickButton grabberPull 	  = new JoystickButton(operator, RobotMap.Y_BUTTON);
+    private JoystickButton grabberThrow   = new JoystickButton(operator, RobotMap.X_BUTTON);
+    private JoystickButton grabberPull    = new JoystickButton(operator, RobotMap.Y_BUTTON);
 
     private JoystickButton wingsLift = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
     private JoystickButton wingsDrop = new JoystickButton(operator, RobotMap.RIGHT_BUMPER);

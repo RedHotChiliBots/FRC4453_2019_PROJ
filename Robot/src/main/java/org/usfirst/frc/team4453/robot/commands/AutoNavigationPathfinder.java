@@ -9,9 +9,8 @@ package org.usfirst.frc.team4453.robot.commands;
 
 import java.util.List;
 
+import org.usfirst.frc.team4453.library.NavigationShared.Coordinate;
 import org.usfirst.frc.team4453.robot.Robot;
-import org.usfirst.frc.team4453.robot.library.Navigation;
-import org.usfirst.frc.team4453.robot.library.Navigation.Coordinate;
 import org.usfirst.frc.team4453.robot.subsystems.Chassis;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -41,7 +40,7 @@ public class AutoNavigationPathfinder extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Coordinate start = Navigation.getCurrentCoordinate();
+        Coordinate start = Robot.navigation.getCurrentCoordinate();
         coordinates.add(0, new Waypoint(start.X, start.Y, start.A));
         Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 0.05, Chassis.MAX_VELOCITY, Chassis.MAX_ACCELERATION, Chassis.MAX_JERK);
         trajectory = Pathfinder.generate(coordinates.toArray(new Waypoint[0]), config);
@@ -72,7 +71,7 @@ public class AutoNavigationPathfinder extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return left.isFinished() || right.isFinished();
+        return left.isFinished() || right.isFinished() || !Robot.navigation.isOK();
     }
 
     // Called once after isFinished returns true

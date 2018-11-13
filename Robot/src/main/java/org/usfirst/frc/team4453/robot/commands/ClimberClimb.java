@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberClimb extends Command {
 
     static final double	ANGLE_THRESHHOLD = 5;
-    static final double	CLIMB_HEIGHT	 = 18; // TODO Verify 12in + width of bumpers + extra.
+    static final double	CLIMB_HEIGHT     = 18; // TODO Verify 12in + width of bumpers + extra.
 
     public ClimberClimb() {
         requires(Robot.climber);

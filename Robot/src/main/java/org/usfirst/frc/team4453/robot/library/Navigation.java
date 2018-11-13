@@ -1,16 +1,32 @@
 package org.usfirst.frc.team4453.robot.library;
 
-public class Navigation {
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.usfirst.frc.team4453.library.NavigationShared.Coordinate;
 
-    public static class Coordinate {
-        public double X;
-        public double Y;
-        public double A;
+import edu.wpi.first.wpilibj.DriverStation;
 
-        public Coordinate(double x_in, double y_in, double a_in) {
-            X = x_in;
-            Y = y_in;
-            A = a_in;
+public class Navigation implements MqttCallback {
+
+    private static final String BROKER_URL = "tcp://raspberrypi.local:1883";
+
+    private MqttClient client = null;
+
+    private String status = new String(); 
+
+    private Coordinate currentCoordinate;
+
+    public Navigation() {
+        try {
+            client = new MqttClient(BROKER_URL, "Robot");
+            client.subscribe("Vision/CurrentPosition");
+            client.subscribe("Vision/Status");
+        } catch (MqttException e) {
+            DriverStation.reportError("Cannot start MQTT client: " + e.getMessage(), e.getStackTrace());
+            client = null;
         }
     }
 
@@ -42,8 +58,29 @@ public class Navigation {
         return dangle;
     }
 
-    public static Coordinate getCurrentCoordinate() {
-        // TODO
-        return new Coordinate(0, 0, 0);
+    public boolean isOK() {
+        return client != null && client.isConnected() && status.equals("OK");
     }
+
+    public Coordinate getCurrentCoordinate() {
+        return currentCoordinate;
+    }
+
+    @Override
+    public void connectionLost(Throwable cause) {
+        DriverStation.reportError("Lost connection to MQTT Broker: " + cause.getMessage(), false);
+    }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage message) throws Exception {
+        if(topic.equals("Vision/CurrentPosition")) {
+            currentCoordinate = Coordinate.deserialize(new String(message.getPayload()));
+        } 
+        else if(topic.equals("Vision/Status")) {
+            status = new String(message.getPayload());
+        }
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken token) {}
 }

@@ -1,12 +1,10 @@
 package org.usfirst.frc.team4453.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import org.usfirst.frc.team4453.robot.RobotMap;
 import org.usfirst.frc.team4453.robot.commands.HookLower;
-import org.usfirst.frc.team4453.robot.commands.HookStop;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,10 +15,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Hook extends Subsystem {
 
     // PID Constants
-    //private final int	 slotIdx     = 0;
-    private final int pidLoopIdx  = 0;
+    // private final int slotIdx = 0;
+    // private final int pidLoopIdx  = 0;
     private final int timeOutMs   = 10;
-   // private final boolean sensorPhase = true;
+    // private final boolean sensorPhase = true;
     private final boolean motorInvert = true;
     //private final double	 kF	     = 0.0;
     //private final double	 kP	     = 2.0;

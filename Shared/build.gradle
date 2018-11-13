@@ -3,7 +3,6 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.bytedeco', name: 'javacv', version: '1.4.3'
     compile "com.google.code.gson:gson:2.8.5"
 }
 

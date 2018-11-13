@@ -10,6 +10,7 @@ package org.usfirst.frc.team4453.robot;
 import java.util.HashMap;
 
 import org.usfirst.frc.team4453.robot.commands.autonomous.*;
+import org.usfirst.frc.team4453.robot.library.Navigation;
 //import org.usfirst.frc.team4453.robot.library.Vision;
 import org.usfirst.frc.team4453.robot.subsystems.*;
 
@@ -31,40 +32,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
+    public static Navigation navigation; 
+
     public static Chassis chassis;
     public static Climber climber;
     public static Grabber grabber;
     public static Shooter shooter;
-    public static Wings	  wings;
-    public static Hook	  hook;
+    public static Wings   wings;
+    public static Hook    hook;
 
     public static AHRS ahrs;
 
     public static OI oi;
 
-    //public Vision vision;
+    // public Vision vision;
 
     public enum RobotPosition {
-	LEFT,
-	RIGHT,
-	CENTER
+        LEFT,
+        RIGHT,
+        CENTER
     }
     
     private SendableChooser<HashMap<RobotPosition, Command>> autoChooser = new SendableChooser<>();
     
     private HashMap<RobotPosition, Command> makeAutoChooserEntry(Command l, Command c, Command r)
     {
-	HashMap<RobotPosition, Command> ret = new HashMap<RobotPosition, Command>();
-	ret.put(RobotPosition.LEFT, l);
-	ret.put(RobotPosition.CENTER, c);
-	ret.put(RobotPosition.RIGHT, r);
-	return ret;
+        HashMap<RobotPosition, Command> ret = new HashMap<RobotPosition, Command>();
+        ret.put(RobotPosition.LEFT, l);
+        ret.put(RobotPosition.CENTER, c);
+        ret.put(RobotPosition.RIGHT, r);
+        return ret;
     }
     
     private SendableChooser<RobotPosition> positionChooser = new SendableChooser<>();
     public RobotPosition getRobotStartingPosition()
     {
-	return positionChooser.getSelected();
+        return positionChooser.getSelected();
     }
     
     private Command autoCommand = null;
@@ -82,6 +85,9 @@ public class Robot extends TimedRobot {
         
         //vision = new Vision();
         //System.out.println("Vision Started!");
+
+        navigation = new Navigation();
+        System.out.println("Navigation constructed!");
         
         chassis = new Chassis();
         System.out.println("Chassis constructed!");

@@ -9,10 +9,9 @@ package org.usfirst.frc.team4453.robot.commands;
 
 import java.util.List;
 
+import org.usfirst.frc.team4453.library.NavigationShared.Coordinate;
 import org.usfirst.frc.team4453.robot.Robot;
 import org.usfirst.frc.team4453.robot.library.Navigation;
-import org.usfirst.frc.team4453.robot.library.Navigation.Coordinate;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoNavigation extends Command {
@@ -29,14 +28,14 @@ public class AutoNavigation extends Command {
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+        protected void initialize() {
     }
 
-  // Called repeatedly when this Command is scheduled to run
+    // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
         Coordinate goingTo = coordinates.get(currentCoordinate);
-        Coordinate currentCoord = Navigation.getCurrentCoordinate();
+        Coordinate currentCoord = Robot.navigation.getCurrentCoordinate();
 
         if(!isTurned) {
             double angle = Navigation.calculateCoordAngle(currentCoord, goingTo);
@@ -59,7 +58,7 @@ public class AutoNavigation extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return currentCoordinate == coordinates.size();
+        return currentCoordinate == coordinates.size() || !Robot.navigation.isOK();
     }
 
     // Called once after isFinished returns true
