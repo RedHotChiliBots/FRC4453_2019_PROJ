@@ -11,6 +11,6 @@ public class TiltForSwitch extends CommandGroup {
     private final static double ANGLE = 60; // TODO Move constant to dashboard
     
     public TiltForSwitch() {
-       addSequential(new GrabberTilt(ANGLE));
+        addSequential(new GrabberTilt(ANGLE));
     }
 }

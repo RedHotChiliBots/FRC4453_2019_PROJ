@@ -31,41 +31,41 @@ public class RobotDriveCountCubes extends Command {
     
     @Override
     protected void initialize() {
-	Robot.chassis.driveWithHeading(SPEED, Robot.ahrs.getYaw());
+        Robot.chassis.driveWithHeading(SPEED, Robot.ahrs.getYaw());
     }
     
     @Override
     protected void execute() {
-	double value = isRight ? Robot.chassis.getRightDistance() : Robot.chassis.getLeftDistance();
-	for(int i = 1; i < values.length; i++)
+        double value = isRight ? Robot.chassis.getRightDistance() : Robot.chassis.getLeftDistance();
+        for(int i = 1; i < values.length; i++)
         {
             values[i-1] = values[i];
         }
-	values[values.length-1] = value;
-	
-	if(values[0] - values[values.length-1] >= CUBE_THRESH) {
-	    cubesCounted++;
-	    waitForRisingEdge = true;
-	}
-	else if(values[values.length-1] - values[0] >= CUBE_THRESH && waitForRisingEdge) {
-	    waitForRisingEdge = false;
-	}
+        values[values.length-1] = value;
+
+        if(values[0] - values[values.length-1] >= CUBE_THRESH) {
+            cubesCounted++;
+            waitForRisingEdge = true;
+        }
+        else if(values[values.length-1] - values[0] >= CUBE_THRESH && waitForRisingEdge) {
+            waitForRisingEdge = false;
+        }
     }
     
     @Override
     protected boolean isFinished() {
-	return cubesCounted >= numCubes;
+        return cubesCounted >= numCubes;
     }
     
     @Override
     protected void end()
     {
-	Robot.chassis.stop();
+        Robot.chassis.stop();
     }
     
     @Override
     protected void interrupted()
     {
-	Robot.chassis.stop();
+        Robot.chassis.stop();
     }
 }

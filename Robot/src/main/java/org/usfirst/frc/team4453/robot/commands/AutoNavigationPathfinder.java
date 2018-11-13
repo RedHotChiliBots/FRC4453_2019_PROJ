@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.usfirst.frc.team4453.library.NavigationShared.Coordinate;
 import org.usfirst.frc.team4453.robot.Robot;
-import org.usfirst.frc.team4453.robot.library.Navigation;
 import org.usfirst.frc.team4453.robot.subsystems.Chassis;
 
 import edu.wpi.first.wpilibj.command.Command;

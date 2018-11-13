@@ -9,22 +9,22 @@ public final class FieldConstants {
     public final static double FENCE_DEPTH = 4*12 + 8;
     public final static double WALL_TO_FENCE = 140;
     public final static double CUBE_WIDTH = 13;
-    
+
     public enum SwitchPosition {
-	LEFT,
-	RIGHT
+        LEFT,
+        RIGHT
     }
     
     public enum Alliance {
-	US,
-	THEM
+        US,
+        THEM
     }
     
     public static SwitchPosition getSwitchPosition(Alliance a){
-	return DriverStation.getInstance().getGameSpecificMessage().charAt(a == Alliance.US ? 0 : 2) == 'L' ? SwitchPosition.LEFT : SwitchPosition.RIGHT;
+        return DriverStation.getInstance().getGameSpecificMessage().charAt(a == Alliance.US ? 0 : 2) == 'L' ? SwitchPosition.LEFT : SwitchPosition.RIGHT;
     }
     
     public static SwitchPosition getScalePosition() {
-	return DriverStation.getInstance().getGameSpecificMessage().charAt(1) == 'L' ? SwitchPosition.LEFT : SwitchPosition.RIGHT;
+        return DriverStation.getInstance().getGameSpecificMessage().charAt(1) == 'L' ? SwitchPosition.LEFT : SwitchPosition.RIGHT;
     }
 }

@@ -16,53 +16,51 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends PIDSubsystem {
-    private static final double CHASSIS_3RD_GEAR_RATIO = 2.5; // Vex 3CIM Ball Shifter 3rd Stage 24:60
-    private static final double CHASSIS_ENCODER_RATIO = 3.0; // Encoder gear ratio 1:3
-    public static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;	// SRX Mag Encoder 1024cpr Quadrature
-    private static final double CHASSIS_GEARBOX2ENCODER_RATIO = CHASSIS_3RD_GEAR_RATIO * CHASSIS_ENCODER_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION;
-    public static final double CHASSIS_WHEEL_DIAMETER = 6; // inches
-    private static final double CHASSIS_TICKS_PER_INCH = CHASSIS_GEARBOX2ENCODER_RATIO / (CHASSIS_WHEEL_DIAMETER * Math.PI);
+    private static final double CHASSIS_3RD_GEAR_RATIO               = 2.5; // Vex 3CIM Ball Shifter 3rd Stage 24:60
+    private static final double CHASSIS_ENCODER_RATIO                = 3.0; // Encoder gear ratio 1:3
+    public static final double  CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;	// SRX Mag Encoder 1024cpr Quadrature
+    private static final double CHASSIS_GEARBOX2ENCODER_RATIO        = CHASSIS_3RD_GEAR_RATIO * CHASSIS_ENCODER_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION;
+    public static final double  CHASSIS_WHEEL_DIAMETER               = 6; // inches
+    private static final double CHASSIS_TICKS_PER_INCH               = CHASSIS_GEARBOX2ENCODER_RATIO / (CHASSIS_WHEEL_DIAMETER * Math.PI);
     
     private static final double FEET_TO_METERS = 3.28084;
 
-    public static final double MAX_VELOCITY = 15.0 * FEET_TO_METERS;
+    public static final double MAX_VELOCITY     = 15.0 * FEET_TO_METERS;
     public static final double MAX_ACCELERATION = MAX_VELOCITY / 0.5;
-    public static final double MAX_JERK = MAX_ACCELERATION / 0.1;
+    public static final double MAX_JERK         = MAX_ACCELERATION / 0.1;
 
 
-    private final WPI_TalonSRX	    leftFront			 = new WPI_TalonSRX(RobotMap.CHASSIS_FRONT_LEFT_MOTOR);
-    private final WPI_TalonSRX	    rightFront			 = new WPI_TalonSRX(RobotMap.CHASSIS_FRONT_RIGHT_MOTOR);
-    private final WPI_TalonSRX	    leftMid			 = new WPI_TalonSRX(RobotMap.CHASSIS_MID_LEFT_MOTOR);
-    private final WPI_TalonSRX	    rightMid			 = new WPI_TalonSRX(RobotMap.CHASSIS_MID_RIGHT_MOTOR);
-    private final WPI_TalonSRX	    leftBack			 = new WPI_TalonSRX(RobotMap.CHASSIS_REAR_LEFT_MOTOR);
-    private final WPI_TalonSRX	    rightBack			 = new WPI_TalonSRX(RobotMap.CHASSIS_REAR_RIGHT_MOTOR);
+    private final WPI_TalonSRX leftFront  = new WPI_TalonSRX(RobotMap.CHASSIS_FRONT_LEFT_MOTOR);
+    private final WPI_TalonSRX rightFront = new WPI_TalonSRX(RobotMap.CHASSIS_FRONT_RIGHT_MOTOR);
+    private final WPI_TalonSRX leftMid    = new WPI_TalonSRX(RobotMap.CHASSIS_MID_LEFT_MOTOR);
+    private final WPI_TalonSRX rightMid   = new WPI_TalonSRX(RobotMap.CHASSIS_MID_RIGHT_MOTOR);
+    private final WPI_TalonSRX leftBack   = new WPI_TalonSRX(RobotMap.CHASSIS_REAR_LEFT_MOTOR);
+    private final WPI_TalonSRX rightBack  = new WPI_TalonSRX(RobotMap.CHASSIS_REAR_RIGHT_MOTOR);
 
-    private final DoubleSolenoid    shifter			 = new DoubleSolenoid(RobotMap.SHIFTER_HI_SOLENOID,
-	    RobotMap.SHIFTER_LO_SOLENOID);
+    private final DoubleSolenoid shifter  = new DoubleSolenoid(RobotMap.SHIFTER_HI_SOLENOID, RobotMap.SHIFTER_LO_SOLENOID);
 
-    private final DifferentialDrive drive			 = new DifferentialDrive(leftFront, rightFront);
+    private final DifferentialDrive drive = new DifferentialDrive(leftFront, rightFront);
 
     // Constants
-    private final double	    PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
-    private final double	    DISTANCE_SENSOR_SCALE	 = 5.0 / 512;
+    private final double PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
+    private final double DISTANCE_SENSOR_SCALE        = 5.0 / 512;
 
     // Pressure sensors
-    private AnalogInput		    hiPressureSensor		 = new AnalogInput(RobotMap.HI_PRESSURE_SENSOR);
-    private AnalogInput		    loPressureSensor		 = new AnalogInput(RobotMap.LO_PRESSURE_SENSOR);
+    private AnalogInput hiPressureSensor    = new AnalogInput(RobotMap.HI_PRESSURE_SENSOR);
+    private AnalogInput loPressureSensor    = new AnalogInput(RobotMap.LO_PRESSURE_SENSOR);
     // Distance Sensors
-    private AnalogInput		    leftDistanceSensor		 = new AnalogInput(RobotMap.LEFT_DISTANCE_SENSOR);
-    private AnalogInput		    rightDistanceSensor		 = new AnalogInput(RobotMap.RIGHT_DISTANCE_SENSOR);
+    private AnalogInput leftDistanceSensor  = new AnalogInput(RobotMap.LEFT_DISTANCE_SENSOR);
+    private AnalogInput rightDistanceSensor = new AnalogInput(RobotMap.RIGHT_DISTANCE_SENSOR);
 
-    private Compressor		    compressor			 = new Compressor();
+    private Compressor  compressor          = new Compressor();
 
     private double heading = 0.0;
-    private double xPos = 0.0;
-    private double yPos = 0.0;
+    private double xPos    = 0.0;
+    private double yPos    = 0.0;
     
     private double PIDSpeed = 0;
     
     private PIDSource distancePIDInput = new PIDSource() {
-
         @Override
         public void setPIDSourceType(PIDSourceType pidSource) {
         }
@@ -76,7 +74,6 @@ public class Chassis extends PIDSubsystem {
         public double pidGet() {
             return (leftFront.getSelectedSensorPosition(0) + rightFront.getSelectedSensorPosition(0))/2.0; 
         }
-
     };
 
     private PIDOutput distancePIDOutput = new PIDOutput() {
