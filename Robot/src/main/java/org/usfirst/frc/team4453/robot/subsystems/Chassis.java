@@ -4,6 +4,8 @@ import org.usfirst.frc.team4453.robot.Robot;
 import org.usfirst.frc.team4453.robot.RobotMap;
 import org.usfirst.frc.team4453.robot.commands.TeleopDrive;
 
+import javax.management.loading.PrivateClassLoader;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -86,7 +88,7 @@ public class Chassis extends PIDSubsystem {
     private PIDController distancePID = new PIDController(0.00005, 0.0000009, 0.0007, distancePIDInput, distancePIDOutput); // TODO: PID Values
     
     public Chassis() {
-        super("Chassis", 0.0, 0.0, 0.0); // TODO: PID Values
+        super("Chassis", 0.00001, 0.0, 0.0); // TODO: PID Values
         System.out.println("Entering Chassis...");
         
         System.out.println("Configuring Distance PID...");
