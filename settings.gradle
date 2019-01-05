@@ -23,3 +23,4 @@ pluginManagement {
         }
     }
 }
+include "Robot", "Vision", "Shared"
