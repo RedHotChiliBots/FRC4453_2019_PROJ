@@ -1,9 +1,0 @@
-[Unit]
-Description=Vision code
-
-[Service]
-Type=simple
-ExecStart=/home/pi/Vision/run.sh
-
-[Install]
-WantedBy=multi-user.target
