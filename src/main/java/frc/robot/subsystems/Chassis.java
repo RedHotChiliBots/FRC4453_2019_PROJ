@@ -11,6 +11,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
+import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotMap;
 import frc.robot.commands.Drive;
 
@@ -26,15 +29,28 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX backright;
 	private MecanumDrive drive;
 
-	public Chassis(){
+	// Define navX board
+	private AHRS ahrs = null;
+
+	public Chassis() {
 		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);
 		frontright = new WPI_TalonSRX(RobotMap.frontRightMotor);
 		backleft = new WPI_TalonSRX(RobotMap.backLeftMotor);
 		backright = new WPI_TalonSRX(RobotMap.backRightMotor);
+
 		drive = new MecanumDrive(frontleft, frontright, backleft, backright);
+
+		try {
+			/* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+			ahrs = new AHRS(SPI.Port.kMXP); 
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+		}
 	}
 	
-	public void drivechassis(double x, double y, double r){
+	public void drivechassis(double x, double y, double r) {
 		drive.driveCartesian(y, x, r);
 	}
 
