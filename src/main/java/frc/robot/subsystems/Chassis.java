@@ -50,7 +50,7 @@ public class Chassis extends Subsystem {
 		}
 	}
 	
-	public void drivechassis(double x, double y, double r) {
+	public void driveChassis(double x, double y, double r) {
 		drive.driveCartesian(y, x, r);
 	}
 
