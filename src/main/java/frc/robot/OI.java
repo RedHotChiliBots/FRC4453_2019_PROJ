@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,6 +43,22 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
 
+  private static final double DEADZONE = 0.2;
+
   public XboxController driver = new XboxController(0);
 
+  public double getDriveX() {
+    double v = driver.getX(Hand.kRight);
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
+
+  public double getDriveY() {
+    double v = -driver.getY(Hand.kRight);
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
+
+  public double getDriveR() {
+    double v = driver.getX(Hand.kLeft);
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
 }

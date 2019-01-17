@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -28,10 +27,10 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Drive execute.");
-    double x = Robot.oi.driver.getX(Hand.kRight);
-    double y = Robot.oi.driver.getY(Hand.kRight);
-    double r = Robot.oi.driver.getX(Hand.kLeft);
+    //System.out.println("Drive execute.");
+    double x = Robot.oi.getDriveX();
+    double y = Robot.oi.getDriveY();
+    double r = Robot.oi.getDriveR();
     Robot.chassis.drivechassis(x, y, r);
   }
 
