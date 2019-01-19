@@ -31,7 +31,7 @@ public class Drive extends Command {
     double x = Robot.oi.getDriveX();
     double y = Robot.oi.getDriveY();
     double r = Robot.oi.getDriveR();
-    Robot.chassis.drivechassis(x, y, r);
+    Robot.chassis.driveChassis(x, y, r);
   }
 
   // Make this return true when this Command no longer needs to run execute()

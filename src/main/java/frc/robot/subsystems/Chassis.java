@@ -7,10 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
@@ -29,8 +31,20 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX backright;
 	private MecanumDrive drive;
 
+	private AnalogInput	hiPressureSensor;
+	private AnalogInput	loPressureSensor;
+
 	// Define navX board
-	private AHRS ahrs = null;
+	public AHRS ahrs = null;
+
+	private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per wheel revs. TODO
+  private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;//TODO
+  private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
+  private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION) / (CHASSIS_WHEEL_DIAMETER * Math.PI);
+
+	private AnalogInput		    leftDistanceSensor		 = new AnalogInput(RobotMap.leftDistanceSensor);
+	private AnalogInput		    rightDistanceSensor		 = new AnalogInput(RobotMap.rightDistanceSensor);
+
 
 	public Chassis() {
 		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);
@@ -38,7 +52,26 @@ public class Chassis extends Subsystem {
 		backleft = new WPI_TalonSRX(RobotMap.backLeftMotor);
 		backright = new WPI_TalonSRX(RobotMap.backRightMotor);
 
+		frontleft.set(0.0);
+    frontleft.setSubsystem("Chassis");
+		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+		frontright.set(0.0);
+    frontright.setSubsystem("Csassis");
+	  frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+		backleft.set(0.0);
+    backleft.setSubsystem("Chassis");
+	  backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+		backright.set(0.0);
+    backright.setSubsystem("Chassis");
+	  backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+ 
+ 
+
 		drive = new MecanumDrive(frontleft, frontright, backleft, backright);
+
+		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
+		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
+		
 
 		try {
 			/* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
@@ -59,5 +92,13 @@ public class Chassis extends Subsystem {
     // Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new Drive());
-  }
+	}
+	
+	public void followLine(){
+
+	}
+
+	public void distFromBay(){
+
+	}
 }

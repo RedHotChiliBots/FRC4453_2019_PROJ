@@ -7,9 +7,15 @@
 
 package frc.robot;
 
+//import com.sun.tools.javac.comp.Lower;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.CargoGrabber;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.LowerLift;
+import frc.robot.subsystems.UpperLift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,7 +26,11 @@ import frc.robot.subsystems.Chassis;
  */
 public class Robot extends TimedRobot {
   public static OI oi;
+
   public static Chassis chassis;
+  public static CargoGrabber cargo;
+  public static UpperLift uLift;
+  public static LowerLift lLift;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -42,6 +52,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    telemetry();
   }
 
   /**
@@ -100,5 +111,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  private void telemetry() {
+    SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
+    SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());  
   }
 }
