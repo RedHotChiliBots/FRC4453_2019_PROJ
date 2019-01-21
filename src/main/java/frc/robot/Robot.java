@@ -40,6 +40,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
     chassis = new Chassis();
+
+    SmartDashboard.putData(Scheduler.getInstance());
+    SmartDashboard.putData(chassis);
   }
 
   /**
