@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Drive extends Command {
-  public Drive() {
+public class DriveTeleop extends Command {
+  public DriveTeleop() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     System.out.println("Drive constructed.");
@@ -28,10 +28,7 @@ public class Drive extends Command {
   @Override
   protected void execute() {
     //System.out.println("Drive execute.");
-    double x = Robot.oi.getDriveX();
-    double y = Robot.oi.getDriveY();
-    double r = Robot.oi.getDriveR();
-    Robot.chassis.driveChassis(x, y, r);
+    Robot.chassis.driveTeleop();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -12,12 +12,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
+
+import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.Drive;
+import frc.robot.commands.DriveTeleop;
 
 /**
  * Add your docs here.
@@ -33,6 +36,13 @@ public class Chassis extends Subsystem {
 
 	private AnalogInput	hiPressureSensor;
 	private AnalogInput	loPressureSensor;
+
+	private boolean collisionDetected = false;
+
+	double last_world_linear_accel_x;
+	double last_world_linear_accel_y;
+
+	final static double kCollisionThreshold_DeltaG = 0.5f;
 
 	// Define navX board
 	public AHRS ahrs = null;
@@ -65,14 +75,11 @@ public class Chassis extends Subsystem {
     backright.setSubsystem("Chassis");
 	  backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
  
- 
-
 		drive = new MecanumDrive(frontleft, frontright, backleft, backright);
 
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
 		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
 		
-
 		try {
 			/* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
 			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
@@ -87,11 +94,22 @@ public class Chassis extends Subsystem {
 		drive.driveCartesian(y, x, r);
 	}
 
+	public void driveTeleop(){
+		double x = Robot.oi.getDriveX();
+    double y = Robot.oi.getDriveY();
+		double r = Robot.oi.getDriveR();
+		driveChassis(x,y,r);
+	}
+
+	public void driveVision(){
+
+	}
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new Drive());
+		setDefaultCommand(new DriveTeleop());
 	}
 	
 	public void followLine(){
@@ -100,5 +118,27 @@ public class Chassis extends Subsystem {
 
 	public void distFromBay(){
 
+	}
+
+	public void findJerk(){
+		double curr_world_linear_accel_x = ahrs.getWorldLinearAccelX();
+		double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
+		last_world_linear_accel_x = curr_world_linear_accel_x;
+		double curr_world_linear_accel_Y = ahrs.getWorldLinearAccelY();
+		double currentJerkY = curr_world_linear_accel_Y - last_world_linear_accel_y;
+		last_world_linear_accel_y = curr_world_linear_accel_Y;
+
+		if ( (Math.abs(currentJerkX) > kCollisionThreshold_DeltaG)||
+			(Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ){
+			collisionDetected = true;
+		}
+	}
+
+	public boolean IsCollisionDetected(){
+		return collisionDetected;
+	}
+
+	public void resetCollisionDetected(){
+		collisionDetected = false;
 	}
 }

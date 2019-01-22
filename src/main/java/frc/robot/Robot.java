@@ -12,9 +12,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.DriveJerk;
+import frc.robot.commands.DriveTeleop;
 import frc.robot.subsystems.CargoGrabber;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.LowerLift;
+import frc.robot.subsystems.PanelGrabber;
 import frc.robot.subsystems.UpperLift;
 
 /**
@@ -31,6 +35,8 @@ public class Robot extends TimedRobot {
   public static CargoGrabber cargo;
   public static UpperLift uLift;
   public static LowerLift lLift;
+  public static PanelGrabber panel;
+  public static Climber climber;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -40,9 +46,19 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
     chassis = new Chassis();
+//    cargo = new CargoGrabber();
+//    uLift = new UpperLift();
+//    lLift = new LowerLift();
+//    panel = new PanelGrabber();
+//    climber = new Climber();
+
+    chassis.ahrs.zeroYaw();
 
     SmartDashboard.putData(Scheduler.getInstance());
     SmartDashboard.putData(chassis);
+    SmartDashboard.putData("DriveJerk", new DriveJerk());
+    SmartDashboard.putData("DriveTeleop", new DriveTeleop());
+    SmartDashboard.putBoolean("CollisionDetected", Robot.chassis.IsCollisionDetected());
   }
 
   /**
@@ -56,6 +72,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     telemetry();
+    chassis.findJerk();
   }
 
   /**
@@ -85,7 +102,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-
+    chassis.ahrs.zeroYaw();
   }
 
   /**

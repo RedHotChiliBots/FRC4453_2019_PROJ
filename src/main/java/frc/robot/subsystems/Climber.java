@@ -19,16 +19,17 @@ public class Climber extends Subsystem {
   // here. Call these from Commands.
 
   
-  private final DoubleSolenoid climbFront; 
-  private final DoubleSolenoid climbBack; 
+  private DoubleSolenoid climbFront; 
+  private DoubleSolenoid climbBack; 
 
-  private AnalogInput CLimbLeftDistanceSensor = new AnalogInput(RobotMap.ClimbLeftDistanceSensor);
-	private AnalogInput ClimbRightDistanceSensor = new AnalogInput(RobotMap.ClimbRightDistanceSensor);
+  private AnalogInput ClimbLeftDistanceSensor;
+	private AnalogInput ClimbRightDistanceSensor;
 
   public Climber(){
     climbFront = new DoubleSolenoid(RobotMap.ClimberFrontUpSolenoid,RobotMap.ClimberFrontDownSolenoid);
     climbBack = new DoubleSolenoid(RobotMap.ClimberBackUpSolenoid,RobotMap.ClimberBackDownSolenoid);
-
+    ClimbLeftDistanceSensor = new AnalogInput(RobotMap.ClimbLeftDistanceSensor);
+    ClimbRightDistanceSensor = new AnalogInput(RobotMap.ClimbRightDistanceSensor);
   }
 
   @Override
@@ -54,6 +55,6 @@ public class Climber extends Subsystem {
   }
 
   public void getDistSensor(){
-    
+
   }
 }
