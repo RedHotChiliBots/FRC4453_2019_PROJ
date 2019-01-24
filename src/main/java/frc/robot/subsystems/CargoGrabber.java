@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.CargoStop;
 
 /**
  * Add your docs here.
@@ -26,12 +28,16 @@ public class CargoGrabber extends Subsystem {
   public CargoGrabber(){
     motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
     motor2 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor2);
+
+    SmartDashboard.putData(motor1);
+    SmartDashboard.putData(motor2);
   }
   
   @Override
   public void initDefaultCommand() { //stop
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new CargoStop());
   }
 
   public void grab() {

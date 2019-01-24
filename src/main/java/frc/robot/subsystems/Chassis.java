@@ -39,10 +39,13 @@ public class Chassis extends Subsystem {
 
 	private boolean collisionDetected = false;
 
+	private boolean panelSelcted = true;
+	private boolean cargoSelected = false;
+
 	double last_world_linear_accel_x;
 	double last_world_linear_accel_y;
 
-	final static double kCollisionThreshold_DeltaG = 0.5f;
+	final static double kCollisionThreshold_DeltaG = 0.4f;
 
 	// Define navX board
 	public AHRS ahrs = null;
@@ -55,6 +58,7 @@ public class Chassis extends Subsystem {
 	private AnalogInput		    leftDistanceSensor		 = new AnalogInput(RobotMap.leftDistanceSensor);
 	private AnalogInput		    rightDistanceSensor		 = new AnalogInput(RobotMap.rightDistanceSensor);
 
+	private final double	PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
 
 	public Chassis() {
 		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);
@@ -74,7 +78,7 @@ public class Chassis extends Subsystem {
 		backright.set(0.0);
     backright.setSubsystem("Chassis");
 	  backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
- 
+		
 		drive = new MecanumDrive(frontleft, frontright, backleft, backright);
 
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
@@ -88,6 +92,11 @@ public class Chassis extends Subsystem {
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
+
+		SmartDashboard.putData(frontleft);
+		SmartDashboard.putData(frontright);
+		SmartDashboard.putData(backleft);
+		SmartDashboard.putData(backright);
 	}
 	
 	public void driveChassis(double x, double y, double r) {
@@ -101,23 +110,51 @@ public class Chassis extends Subsystem {
 		driveChassis(x,y,r);
 	}
 
-	public void driveVision(){
+	public void driveCargo(){
+		double x = -Robot.oi.getDriveX();
+		double y = -Robot.oi.getDriveY();
+		double r = Robot.oi.getDriveR();
+		driveChassis(x, y, r);
+	}
 
+	public void drivePanel(){
+		driveTeleop();
+	}
+
+	public void driveVision(){
 	}
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
+		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DriveTeleop());
 	}
 	
 	public void followLine(){
-
 	}
 
 	public void distFromBay(){
+	}
 
+	public void switchPanelCargo(){
+		if (panelSelcted = true){
+			panelSelcted = false;
+			cargoSelected = true;
+		}
+
+		if (cargoSelected = true){
+			cargoSelected = false;
+			panelSelcted = true;
+		}
+	}
+
+	public boolean isPanelSelected(){
+		return panelSelcted;
+	}
+
+	public boolean isCargoSelected(){
+		return cargoSelected;
 	}
 
 	public void findJerk(){
@@ -128,10 +165,20 @@ public class Chassis extends Subsystem {
 		double currentJerkY = curr_world_linear_accel_Y - last_world_linear_accel_y;
 		last_world_linear_accel_y = curr_world_linear_accel_Y;
 
-		if ( (Math.abs(currentJerkX) > kCollisionThreshold_DeltaG)||
-			(Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ){
+		if (panelSelcted = true){
+			if (currentJerkX > kCollisionThreshold_DeltaG &&
+			Math.abs(currentJerkY) < 0.1){
 			collisionDetected = true;
+			}
 		}
+
+		if (cargoSelected = true){
+			if (currentJerkX < -kCollisionThreshold_DeltaG &&
+			Math.abs(currentJerkY) < 0.1){
+			collisionDetected = true;
+			}
+		}
+		
 	}
 
 	public boolean IsCollisionDetected(){
@@ -141,4 +188,14 @@ public class Chassis extends Subsystem {
 	public void resetCollisionDetected(){
 		collisionDetected = false;
 	}
+
+	public double getLoPressure() {
+		return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0; // ToDo
+	}
+	
+	public double getHiPressure() {
+		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
+	}
+	
+
 }

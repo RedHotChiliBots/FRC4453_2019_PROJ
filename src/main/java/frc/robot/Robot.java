@@ -58,7 +58,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(chassis);
     SmartDashboard.putData("DriveJerk", new DriveJerk());
     SmartDashboard.putData("DriveTeleop", new DriveTeleop());
-    SmartDashboard.putBoolean("CollisionDetected", Robot.chassis.IsCollisionDetected());
   }
 
   /**
@@ -135,6 +134,9 @@ public class Robot extends TimedRobot {
 
   private void telemetry() {
     SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
-    SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());  
+    SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
+    SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
+    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
+    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
   }
 }

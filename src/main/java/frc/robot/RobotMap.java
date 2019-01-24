@@ -45,23 +45,23 @@ public class RobotMap {
 
   //panel grabber
   public static final int PanelGrabberGripSolenoid = 4; // TODO
-  public static final int PanelGrabberReleaseSolenoid = 5; // TODO
+  public static final int PanelGrabberReleaseSolenoid = 8;
 
-  public static final DoubleSolenoid.Value PanelGrabberGrip = DoubleSolenoid.Value.kForward;
-  public static final DoubleSolenoid.Value PanelGrabberRelease  = DoubleSolenoid.Value.kReverse;
+//  public static final DoubleSolenoid.Value PanelGrabberGrip = DoubleSolenoid.Value.kForward;
+//  public static final DoubleSolenoid.Value PanelGrabberRelease  = DoubleSolenoid.Value.kReverse;
 
   //climber
   public static final int ClimberFrontUpSolenoid = 4; // TODO
-  public static final int ClimberFrontDownSolenoid = 5; // TODO
+  public static final int ClimberFrontDownSolenoid = 5;
 
-  public static final DoubleSolenoid.Value ClimberFrontUp = DoubleSolenoid.Value.kForward;
-  public static final DoubleSolenoid.Value ClimberFrontDown  = DoubleSolenoid.Value.kReverse;
+//  public static final DoubleSolenoid.Value ClimberFrontUp = DoubleSolenoid.Value.kForward;
+//  public static final DoubleSolenoid.Value ClimberFrontDown  = DoubleSolenoid.Value.kReverse;
 
   public static final int ClimberBackUpSolenoid = 4; // TODO
-  public static final int ClimberBackDownSolenoid = 5; // TODO
+  public static final int ClimberBackDownSolenoid = 6;
 
-  public static final DoubleSolenoid.Value ClimberBackUp = DoubleSolenoid.Value.kForward;
-  public static final DoubleSolenoid.Value ClimberBackDown  = DoubleSolenoid.Value.kReverse;
+//  public static final DoubleSolenoid.Value ClimberBackUp = DoubleSolenoid.Value.kForward;
+//  public static final DoubleSolenoid.Value ClimberBackDown  = DoubleSolenoid.Value.kReverse;
 
   public static final int ClimbLeftDistanceSensor = 2;
   public static final int ClimbRightDistanceSensor = 3;
@@ -70,4 +70,9 @@ public class RobotMap {
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
+
+  public static final int A_BUTTON	 = 1;
+  public static final int B_BUTTON	 = 2;
+  public static final int X_BUTTON	 = 3;
+  public static final int Y_BUTTON	= 4;
 }

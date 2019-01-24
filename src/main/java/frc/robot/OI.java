@@ -7,8 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -43,9 +46,14 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
 
-  private static final double DEADZONE = 0.2;
+  public XboxController driver   = new XboxController(0);
+  public XboxController operator = new XboxController(1);
 
-  public XboxController driver = new XboxController(0);
+  private JoystickButton grabberGrab	  = new JoystickButton(operator, RobotMap.A_BUTTON);
+  private JoystickButton grabberRelease = new JoystickButton(operator, RobotMap.B_BUTTON);
+  private JoystickButton grabberThrow	  = new JoystickButton(operator, RobotMap.X_BUTTON);
+
+  private static final double DEADZONE = 0.2;
 
   public double getDriveX() {
     double v = driver.getX(Hand.kRight);
