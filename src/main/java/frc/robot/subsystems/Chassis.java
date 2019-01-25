@@ -39,21 +39,27 @@ public class Chassis extends Subsystem {
 
 	private boolean collisionDetected = false;
 
-	private boolean panelSelcted = true;
-	private boolean cargoSelected = false;
+//	private boolean panelSelcted = true;
+//	private boolean cargoSelected = false;
+
+	public enum Mode{
+		PANEL, CARGO
+	}
+
+	public Mode mode = null;
 
 	double last_world_linear_accel_x;
 	double last_world_linear_accel_y;
 
-	final static double kCollisionThreshold_DeltaG = 0.4f;
+	final static double kCollisionThreshold_DeltaG = 0.2f;
 
 	// Define navX board
 	public AHRS ahrs = null;
 
 	private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per wheel revs. TODO
-  private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;//TODO
-  private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
-  private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION) / (CHASSIS_WHEEL_DIAMETER * Math.PI);
+	private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;//TODO
+	private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
+	private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION) / (CHASSIS_WHEEL_DIAMETER * Math.PI);
 
 	private AnalogInput		    leftDistanceSensor		 = new AnalogInput(RobotMap.leftDistanceSensor);
 	private AnalogInput		    rightDistanceSensor		 = new AnalogInput(RobotMap.rightDistanceSensor);
@@ -67,17 +73,17 @@ public class Chassis extends Subsystem {
 		backright = new WPI_TalonSRX(RobotMap.backRightMotor);
 
 		frontleft.set(0.0);
-    frontleft.setSubsystem("Chassis");
+    	frontleft.setSubsystem("Chassis");
 		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		frontright.set(0.0);
-    frontright.setSubsystem("Csassis");
-	  frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+    	frontright.setSubsystem("Csassis");
+	  	frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		backleft.set(0.0);
-    backleft.setSubsystem("Chassis");
-	  backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+    	backleft.setSubsystem("Chassis");
+	  	backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		backright.set(0.0);
-    backright.setSubsystem("Chassis");
-	  backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+    	backright.setSubsystem("Chassis");
+	  	backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		
 		drive = new MecanumDrive(frontleft, frontright, backleft, backright);
 
@@ -105,12 +111,26 @@ public class Chassis extends Subsystem {
 
 	public void driveTeleop(){
 		double x = Robot.oi.getDriveX();
-    double y = Robot.oi.getDriveY();
+    	double y = Robot.oi.getDriveY();
 		double r = Robot.oi.getDriveR();
 		driveChassis(x,y,r);
+
+/*		if (cargoSelected = true){
+			double x2 = -Robot.oi.getDriveX();
+    		double y2 = -Robot.oi.getDriveY();
+			double r2 = Robot.oi.getDriveR();
+			driveChassis(x2,y2,r2);
+		}
+*/
+		if (mode == Mode.PANEL){
+			double x2 = -Robot.oi.getDriveX();
+    		double y2 = -Robot.oi.getDriveY();
+			double r2 = Robot.oi.getDriveR();
+			driveChassis(x2,y2,r2);
+		}
 	}
 
-	public void driveCargo(){
+/*	public void driveCargo(){
 		double x = -Robot.oi.getDriveX();
 		double y = -Robot.oi.getDriveY();
 		double r = Robot.oi.getDriveR();
@@ -120,7 +140,7 @@ public class Chassis extends Subsystem {
 	public void drivePanel(){
 		driveTeleop();
 	}
-
+*/
 	public void driveVision(){
 	}
 
@@ -137,7 +157,7 @@ public class Chassis extends Subsystem {
 	public void distFromBay(){
 	}
 
-	public void switchPanelCargo(){
+/*	public void switchPanelCargo(){
 		if (panelSelcted = true){
 			panelSelcted = false;
 			cargoSelected = true;
@@ -155,6 +175,11 @@ public class Chassis extends Subsystem {
 
 	public boolean isCargoSelected(){
 		return cargoSelected;
+		}
+*/
+
+	public void setMode(Mode m) {
+		mode = m;
 	}
 
 	public void findJerk(){
@@ -165,7 +190,7 @@ public class Chassis extends Subsystem {
 		double currentJerkY = curr_world_linear_accel_Y - last_world_linear_accel_y;
 		last_world_linear_accel_y = curr_world_linear_accel_Y;
 
-		if (panelSelcted = true){
+/*		if (panelSelcted = true){
 			if (currentJerkX > kCollisionThreshold_DeltaG &&
 			Math.abs(currentJerkY) < 0.1){
 			collisionDetected = true;
@@ -178,7 +203,21 @@ public class Chassis extends Subsystem {
 			collisionDetected = true;
 			}
 		}
-		
+*/		
+		if( mode == Mode.PANEL){
+			if (currentJerkX > kCollisionThreshold_DeltaG &&
+			Math.abs(currentJerkY) < 0.1){
+			collisionDetected = true;
+			}
+		}
+
+		if (mode == Mode.CARGO){
+			if (currentJerkX < -kCollisionThreshold_DeltaG &&
+			Math.abs(currentJerkY) < 0.1){
+			collisionDetected = true;
+			}
+		}
+
 	}
 
 	public boolean IsCollisionDetected(){

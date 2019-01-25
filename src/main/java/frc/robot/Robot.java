@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
 //    lLift = new LowerLift();
 //    panel = new PanelGrabber();
 //    climber = new Climber();
+    oi.init();
 
     chassis.ahrs.zeroYaw();
 
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(chassis);
     SmartDashboard.putData("DriveJerk", new DriveJerk());
     SmartDashboard.putData("DriveTeleop", new DriveTeleop());
+    SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
   }
 
   /**
@@ -136,7 +138,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
     SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
     SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
-    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
-    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
+//    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
+//    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
+  SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
   }
 }

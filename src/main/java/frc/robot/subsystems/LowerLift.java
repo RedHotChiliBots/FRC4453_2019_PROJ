@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -19,6 +20,21 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class LowerLift extends PIDSubsystem {
   private WPI_TalonSRX motor1;
   private WPI_TalonSRX motor2;
+
+  public static enum Level{
+		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
+  }
+
+  public Level level = null;
+
+  public static final Map<Level, Double> = ImmutableMap.of(
+    Level.LEVEL1, 0.0, 
+    Level.LEVEL2, 0.0,
+    Level.LEVEL3, 28.0,
+    Level.LOADINGSTATION, 0.0,
+    Level.SHIP, 0.0);
+
+
   /**
    * Add your docs here.
    */
@@ -63,15 +79,18 @@ public class LowerLift extends PIDSubsystem {
   }
 
   public void raise(){
-
+    motor1.set(ControlMode.PercentOutput, -0.5);
+    motor2.set(ControlMode.PercentOutput, 0.5);
   }
 
   public void lower(){
-
+    motor1.set(ControlMode.PercentOutput, 0.5);
+    motor2.set(ControlMode.PercentOutput, -0.5);
   }
 
   public void stop(){
-
+    motor1.set(ControlMode.PercentOutput, 0.0);
+    motor2.set(ControlMode.PercentOutput, 0.0);
   }
 
   public void raiseToPos(){
@@ -82,7 +101,7 @@ public class LowerLift extends PIDSubsystem {
 
   }
 
-  public void isLiimitSwitchHit(){
+  public void isLimitSwitchHit(){
 
   }
 

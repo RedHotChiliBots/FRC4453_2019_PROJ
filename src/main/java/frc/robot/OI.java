@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.SwitchToCargo;
+//import frc.robot.commands.SwitchToCargo;
+//import frc.robot.commands.SwitchToPanel;
+import frc.robot.commands.SwitchToPanel;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,11 +53,20 @@ public class OI {
   public XboxController driver   = new XboxController(0);
   public XboxController operator = new XboxController(1);
 
-  private JoystickButton grabberGrab	  = new JoystickButton(operator, RobotMap.A_BUTTON);
-  private JoystickButton grabberRelease = new JoystickButton(operator, RobotMap.B_BUTTON);
-  private JoystickButton grabberThrow	  = new JoystickButton(operator, RobotMap.X_BUTTON);
+  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.A_BUTTON);
+  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.B_BUTTON);
+//  private JoystickButton empty = new JoystickButton(operator, RobotMap.X_BUTTON);
 
   private static final double DEADZONE = 0.2;
+
+  public OI(){
+
+  }
+
+  public void init(){
+    switchToCargo.whenPressed(new SwitchToCargo());
+    switchToPanel.whenPressed(new SwitchToPanel());
+  }
 
   public double getDriveX() {
     double v = driver.getX(Hand.kRight);
@@ -69,4 +82,6 @@ public class OI {
     double v = driver.getX(Hand.kLeft);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
+
+
 }
