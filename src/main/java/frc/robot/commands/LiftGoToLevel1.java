@@ -9,8 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GoToLoadingStation extends Command {
-  public GoToLoadingStation() {
+public class LiftGoToLevel1 extends Command {
+  public LiftGoToLevel1() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }

@@ -18,8 +18,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * Add your docs here.
  */
 public class LowerLift extends PIDSubsystem {
-  private WPI_TalonSRX motor1;
-  private WPI_TalonSRX motor2;
+  public WPI_TalonSRX motor1;
+  public WPI_TalonSRX motor2;
+
+  private static final int COUNTS_PER_REV_MOTOR   = 12;
+  private static final int GEAR_RATIO		    = 20;
+  private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
+  private static final double TICKS_PER_INCH    = COUNTS_PER_REV_GEARBOX; //Lead screw 1 in/rev
 
   public static enum Level{
 		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
@@ -27,13 +32,16 @@ public class LowerLift extends PIDSubsystem {
 
   public Level level = null;
 
-  public static final Map<Level, Double> = ImmutableMap.of(
+//  public double motor1current = 0.0;
+//  public double motor2current = 0.0;
+
+/*  public static final Map<Level, Double> = ImmutableMap.of(
     Level.LEVEL1, 0.0, 
     Level.LEVEL2, 0.0,
     Level.LEVEL3, 28.0,
     Level.LOADINGSTATION, 0.0,
     Level.SHIP, 0.0);
-
+*/
 
   /**
    * Add your docs here.
@@ -45,23 +53,22 @@ public class LowerLift extends PIDSubsystem {
     // setSetpoint() - Sets where the PID controller should move the system
     // to
     // enable() - Enables the PID controller.
-    motor1 = new WPI_TalonSRX(RobotMap.upperLiftMotor1);
+    motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
     motor1.set(0.0);
-    motor1.setSubsystem("Chassis");
-	  motor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
-    motor2 = new WPI_TalonSRX(RobotMap.upperLiftMotor2);
+    motor1.setSubsystem("LowerLift");
+    motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
     motor2.set(0.0);
-    motor2.setSubsystem("Chassis");
-    motor1.set(0.0);
-    motor1.setSubsystem("UpperLift");
-	  motor2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
- 
+    motor2.setSubsystem("LowerLift");
+    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+
   }
 
   @Override
@@ -78,14 +85,13 @@ public class LowerLift extends PIDSubsystem {
     // e.g. yourMotor.set(output);
   }
 
-  public void raise(){
+/*  public void raise(){
     motor1.set(ControlMode.PercentOutput, -0.5);
     motor2.set(ControlMode.PercentOutput, 0.5);
   }
-
-  public void lower(){
-    motor1.set(ControlMode.PercentOutput, 0.5);
-    motor2.set(ControlMode.PercentOutput, -0.5);
+*/
+  public void lowerMotor(WPI_TalonSRX motor){
+    motor.set(ControlMode.PercentOutput, 0.25);
   }
 
   public void stop(){
@@ -93,19 +99,34 @@ public class LowerLift extends PIDSubsystem {
     motor2.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void raiseToPos(){
-
+  public void stopMotor(WPI_TalonSRX motor){
+    motor.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void lowerToPos(){
-
+  public void setPosMotor(WPI_TalonSRX motor, double pos){
+    motor.set((int)(pos * TICKS_PER_INCH));
   }
 
-  public void isLimitSwitchHit(){
-
+  public void resetPosMotor(WPI_TalonSRX motor, double pos){
+    motor.setSelectedSensorPosition((int)(pos * TICKS_PER_INCH));
   }
 
-  public void reset(){
-    
+  public void setPos(int pos){
+    setPosMotor(motor1, pos);
+    setPosMotor(motor2, pos);
   }
+
+/*  public void reset(){
+    motor1.getOutputCurrent();
+    motor2.getOutputCurrent();
+
+    if(motor1current > currentThreshold){
+      motor1.set(ControlMode.PercentOutput, 0.0);
+    }
+
+    if (motor2current > currentThreshold){
+      motor2.set(ControlMode.PercentOutput, 0.0);
+    }
+  }
+*/
 }

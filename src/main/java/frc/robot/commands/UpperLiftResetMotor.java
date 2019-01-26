@@ -9,8 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GoToLevel1 extends Command {
-  public GoToLevel1() {
+public class UpperLiftResetMotor extends Command {
+  public UpperLiftResetMotor() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }

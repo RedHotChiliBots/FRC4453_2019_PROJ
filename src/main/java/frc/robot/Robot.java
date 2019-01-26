@@ -7,13 +7,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Preferences;
+
 //import com.sun.tools.javac.comp.Lower;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.DriveJerk;
-import frc.robot.commands.DriveTeleop;
+import frc.robot.commands.ChassisDriveJerk;
+import frc.robot.commands.ChassisDriveTeleop;
 import frc.robot.subsystems.CargoGrabber;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
@@ -38,17 +40,22 @@ public class Robot extends TimedRobot {
   public static PanelGrabber panel;
   public static Climber climber;
 
+  public static Preferences prefs = null;
+
+
   /**
    * This function is run when the robot is first started up and should be
    * used for initialization code.
    */
   @Override
   public void robotInit() {
+    prefs = Preferences.getInstance();
+
     oi = new OI();
     chassis = new Chassis();
 //    cargo = new CargoGrabber();
 //    uLift = new UpperLift();
-//    lLift = new LowerLift();
+    lLift = new LowerLift();
 //    panel = new PanelGrabber();
 //    climber = new Climber();
     oi.init();
@@ -57,9 +64,13 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData(Scheduler.getInstance());
     SmartDashboard.putData(chassis);
-    SmartDashboard.putData("DriveJerk", new DriveJerk());
-    SmartDashboard.putData("DriveTeleop", new DriveTeleop());
+    SmartDashboard.putData("DriveJerk", new ChassisDriveJerk());
+    SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
     SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
+
+    prefs.putDouble("LLMotorReset", -1.0);
+    prefs.putDouble("CurrentThreshold", 9.0);
+
   }
 
   /**
@@ -141,5 +152,6 @@ public class Robot extends TimedRobot {
 //    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
 //    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
   SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
+  SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
   }
 }

@@ -8,21 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class GoToLevel2 extends Command {
-  public GoToLevel2() {
+public class ChassisDriveTeleop extends Command {
+  public ChassisDriveTeleop() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    System.out.println("Drive constructed.");
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Drive initialize.");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //System.out.println("Drive execute.");
+    Robot.chassis.driveTeleop();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -34,11 +40,13 @@ public class GoToLevel2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("Drive end.");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("Drive interrupted.");
   }
 }

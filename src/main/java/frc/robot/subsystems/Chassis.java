@@ -20,7 +20,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.DriveTeleop;
+import frc.robot.commands.ChassisDriveTeleop;
 
 /**
  * Add your docs here.
@@ -148,7 +148,7 @@ public class Chassis extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveTeleop());
+		setDefaultCommand(new ChassisDriveTeleop());
 	}
 	
 	public void followLine(){

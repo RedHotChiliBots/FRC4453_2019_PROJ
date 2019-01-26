@@ -7,11 +7,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.LowerLiftResetMotor;
 import frc.robot.commands.SwitchToCargo;
 //import frc.robot.commands.SwitchToCargo;
 //import frc.robot.commands.SwitchToPanel;
@@ -55,7 +54,7 @@ public class OI {
 
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.A_BUTTON);
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.B_BUTTON);
-//  private JoystickButton empty = new JoystickButton(operator, RobotMap.X_BUTTON);
+  private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
   private static final double DEADZONE = 0.2;
 
@@ -66,6 +65,7 @@ public class OI {
   public void init(){
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
+    liftReset.whenPressed(new LowerLiftResetMotor(Robot.lLift.motor1, Robot.prefs.getDouble("LLMotorReset", -1)));
   }
 
   public double getDriveX() {

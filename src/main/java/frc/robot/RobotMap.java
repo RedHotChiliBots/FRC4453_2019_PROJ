@@ -25,7 +25,7 @@ public class RobotMap {
   public static int frontLeftMotor = 1;
   public static int frontRightMotor = 2;
   public static int backLeftMotor = 3;
-  public static int backRightMotor = 0;
+  public static int backRightMotor = 4;
 
   public static final int highPressureSensor = 0;
   public static final int lowPressureSensor = 1;
@@ -34,14 +34,14 @@ public class RobotMap {
   public static final int rightDistanceSensor = 3;
 
   //lifts
-  public static int upperLiftMotor1 = 4;
-  public static int upperLiftMotor2 = 4;
-  public static int lowerLiftMotor1 = 4;
-  public static int lowerLiftMotor2 = 4;
+  public static int upperLiftMotor1 = 5;
+  public static int upperLiftMotor2 = 6;
+  public static int lowerLiftMotor1 = 7;
+  public static int lowerLiftMotor2 = 8;
   
   //cargo grabber
-  public static int cargoGrabberMotor1 = 4;
-  public static int cargoGrabberMotor2 = 4;
+  public static int cargoGrabberMotor1 = 9;
+  public static int cargoGrabberMotor2 = 10;
 
   //panel grabber
   public static final int PanelGrabberGripSolenoid = 4; // TODO
