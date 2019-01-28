@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.LiftLowerReset;
+import frc.robot.commands.LiftStartup;
 import frc.robot.commands.SwitchToCargo;
 //import frc.robot.commands.SwitchToCargo;
 //import frc.robot.commands.SwitchToPanel;
@@ -65,7 +65,7 @@ public class OI {
   public void init(){
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
-    liftReset.whenPressed(new LiftLowerReset());
+    liftReset.whenPressed(new LiftStartup());
   }
 
   public double getDriveX() {

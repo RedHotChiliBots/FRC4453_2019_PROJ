@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
-public class LiftLowerReset extends CommandGroup {
+public class LiftInit extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LiftLowerReset() {
+  public LiftInit() {
 
     double pos = Robot.prefs.getDouble("LLmotorOffset", -1.0);
     // Add Commands here:
@@ -34,10 +34,9 @@ public class LiftLowerReset extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
-    addSequential(new LowerLiftResetMotor(Robot.lLift.motor2));
-    
     addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
-    addSequential(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
+//    addParallel(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
+//    addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
+//    addSequential(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
   }
 }
