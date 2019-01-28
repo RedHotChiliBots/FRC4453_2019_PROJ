@@ -61,9 +61,6 @@ public class Chassis extends Subsystem {
 	private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
 	private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION) / (CHASSIS_WHEEL_DIAMETER * Math.PI);
 
-	private AnalogInput		    leftDistanceSensor		 = new AnalogInput(RobotMap.leftDistanceSensor);
-	private AnalogInput		    rightDistanceSensor		 = new AnalogInput(RobotMap.rightDistanceSensor);
-
 	private final double	PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
 
 	public Chassis() {

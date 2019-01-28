@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -30,9 +28,6 @@ public class RobotMap {
   public static final int highPressureSensor = 0;
   public static final int lowPressureSensor = 1;
 
-  public static final int leftDistanceSensor = 2;
-  public static final int rightDistanceSensor = 3;
-
   //lifts
   public static int upperLiftMotor1 = 5;
   public static int upperLiftMotor2 = 6;
@@ -50,22 +45,17 @@ public class RobotMap {
 //  public static final DoubleSolenoid.Value PanelGrabberGrip = DoubleSolenoid.Value.kForward;
 //  public static final DoubleSolenoid.Value PanelGrabberRelease  = DoubleSolenoid.Value.kReverse;
 
-  //climber
+  //climber solenoids
   public static final int ClimberFrontUpSolenoid = 4; // TODO
   public static final int ClimberFrontDownSolenoid = 5;
-
-//  public static final DoubleSolenoid.Value ClimberFrontUp = DoubleSolenoid.Value.kForward;
-//  public static final DoubleSolenoid.Value ClimberFrontDown  = DoubleSolenoid.Value.kReverse;
 
   public static final int ClimberBackUpSolenoid = 4; // TODO
   public static final int ClimberBackDownSolenoid = 6;
 
-//  public static final DoubleSolenoid.Value ClimberBackUp = DoubleSolenoid.Value.kForward;
-//  public static final DoubleSolenoid.Value ClimberBackDown  = DoubleSolenoid.Value.kReverse;
-
-  public static final int ClimbLeftDistanceSensor = 2;
-  public static final int ClimbRightDistanceSensor = 3;
-
+  //climber analog dist sensors
+  public static final int ClimbFrontDistanceSensor = 0;
+  public static final int ClimbBackDistanceSensor = 1;
+  
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;

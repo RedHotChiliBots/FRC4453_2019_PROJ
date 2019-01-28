@@ -18,7 +18,7 @@ public class PanelGrabber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private final DoubleSolenoid grabber; 
+  private DoubleSolenoid grabber = null; 
 
   public PanelGrabber(){
     grabber = new DoubleSolenoid(RobotMap.PanelGrabberReleaseSolenoid,RobotMap.PanelGrabberGripSolenoid);
@@ -36,9 +36,5 @@ public class PanelGrabber extends Subsystem {
 
   public void release(){
 
-  }
-
-  public void stop(){
-    
   }
 }

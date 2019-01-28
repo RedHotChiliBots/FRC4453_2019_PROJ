@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
@@ -37,7 +35,7 @@ public class LiftLowerReset extends CommandGroup {
     // arm.
 
     addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
-    addParallel(new LowerLiftResetMotor(Robot.lLift.motor2));
+    addSequential(new LowerLiftResetMotor(Robot.lLift.motor2));
     
     addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
     addSequential(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
