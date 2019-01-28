@@ -17,7 +17,7 @@ public class LowerLiftResetMotor extends Command {
 
   private WPI_TalonSRX motor = null;
   
-  public LowerLiftResetMotor(WPI_TalonSRX motor, double pos) {
+  public LowerLiftResetMotor(WPI_TalonSRX motor) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.lLift);
@@ -39,18 +39,14 @@ public class LowerLiftResetMotor extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (outputCurrent > Robot.prefs.getDouble("CurrentThreshold", 9.0)){
-      return true;
-    }
-    return false;
+    return (outputCurrent > Robot.prefs.getDouble("CurrentThreshold", 9.0));
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.lLift.stopMotor(motor);
-    Robot.lLift.resetPosMotor(motor, Robot.prefs.getDouble("LLmotorOffset", -1.0));
-    Robot.lLift.setPosMotor(motor, 0.0);
+    Robot.lLift.resetPosMotor(motor, 0.0);
   }
 
   // Called when another command which requires one or more of the same

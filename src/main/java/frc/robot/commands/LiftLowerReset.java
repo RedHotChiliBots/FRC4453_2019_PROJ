@@ -7,13 +7,18 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 
 public class LiftLowerReset extends CommandGroup {
   /**
    * Add your docs here.
    */
   public LiftLowerReset() {
+
+    double pos = Robot.prefs.getDouble("LLmotorOffset", -1.0);
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -31,7 +36,10 @@ public class LiftLowerReset extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    addSequential(new LiftLowerResetMotor());
-    addSequential(new LiftLowerInitMotor());
+    addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
+    addParallel(new LowerLiftResetMotor(Robot.lLift.motor2));
+    
+    addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
+    addSequential(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
   }
 }

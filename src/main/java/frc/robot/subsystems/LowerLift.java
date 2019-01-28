@@ -21,10 +21,10 @@ public class LowerLift extends PIDSubsystem {
   public WPI_TalonSRX motor1;
   public WPI_TalonSRX motor2;
 
-  private static final int COUNTS_PER_REV_MOTOR   = 12;
-  private static final int GEAR_RATIO		    = 20;
+  private static final int COUNTS_PER_REV_MOTOR = 12;
+  private static final int GEAR_RATIO	= 20;
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
-  private static final double TICKS_PER_INCH    = COUNTS_PER_REV_GEARBOX; //Lead screw 1 in/rev
+  private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; //Lead screw 1 in/rev
 
   public static enum Level{
 		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
@@ -56,19 +56,18 @@ public class LowerLift extends PIDSubsystem {
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
     motor1.set(0.0);
     motor1.setSubsystem("LowerLift");
+    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
     motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
     motor2.set(0.0);
     motor2.setSubsystem("LowerLift");
-    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-
   }
 
   @Override
@@ -90,13 +89,9 @@ public class LowerLift extends PIDSubsystem {
     motor2.set(ControlMode.PercentOutput, 0.5);
   }
 */
+
   public void lowerMotor(WPI_TalonSRX motor){
     motor.set(ControlMode.PercentOutput, 0.25);
-  }
-
-  public void stop(){
-    motor1.set(ControlMode.PercentOutput, 0.0);
-    motor2.set(ControlMode.PercentOutput, 0.0);
   }
 
   public void stopMotor(WPI_TalonSRX motor){
@@ -114,6 +109,11 @@ public class LowerLift extends PIDSubsystem {
   public void setPos(int pos){
     setPosMotor(motor1, pos);
     setPosMotor(motor2, pos);
+  }
+
+  public void resetPos(int pos){
+    resetPosMotor(motor1, pos);
+    resetPosMotor(motor2, pos);
   }
 
 /*  public void reset(){

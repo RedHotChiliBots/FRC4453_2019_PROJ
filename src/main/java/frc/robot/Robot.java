@@ -156,5 +156,6 @@ public class Robot extends TimedRobot {
   private void initPrefs() {
     if (prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
     if (prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
+    if (prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
   }
 }

@@ -65,7 +65,7 @@ public class OI {
   public void init(){
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
-    liftReset.whenPressed(new LowerLiftResetMotor(Robot.lLift.motor1, Robot.prefs.getDouble("LLMotorReset", -1)));
+    liftReset.whenPressed(new LowerLiftReset(Robot.lLift.motor1, Robot.prefs.getDouble("LLMotorReset", -1)));
   }
 
   public double getDriveX() {
