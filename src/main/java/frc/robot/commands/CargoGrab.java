@@ -7,21 +7,14 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LowerLiftInitMotor extends Command {
-
-  private WPI_TalonSRX motor = null;
-  private double pos = 0.0;
-
-  public LowerLiftInitMotor(WPI_TalonSRX motor, double pos) {
+public class CargoGrab extends Command {
+  public CargoGrab() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-//    requires(Robot.lLift);
-    this.motor = motor;
-    this.pos = pos;
+    requires(Robot.cargo);
   }
 
   // Called just before this Command runs the first time
@@ -32,25 +25,23 @@ public class LowerLiftInitMotor extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.setPosMotor(motor, pos);
+    Robot.cargo.grab();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   return (Math.abs(motor.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.resetPosMotor(motor, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor(motor);
   }
 }
