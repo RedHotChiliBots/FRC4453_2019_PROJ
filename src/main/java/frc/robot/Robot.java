@@ -68,9 +68,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
     SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
 
-    prefs.putDouble("LLMotorReset", -1.0);
-    prefs.putDouble("CurrentThreshold", 9.0);
-
+    initPrefs();
   }
 
   /**
@@ -151,7 +149,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
 //    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
 //    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
-  SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
-  SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
+    SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
+    SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
+  }
+
+  private void initPrefs() {
+    if (prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
+    if (prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
   }
 }
