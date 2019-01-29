@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     prefs = Preferences.getInstance();
+    initPrefs();
 
     oi = new OI();
     chassis = new Chassis();
@@ -67,8 +68,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("DriveJerk", new ChassisDriveJerk());
     SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
     SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
-
-    initPrefs();
   }
 
   /**
@@ -154,8 +153,8 @@ public class Robot extends TimedRobot {
   }
 
   private void initPrefs() {
-    if (prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
-    if (prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
-    if (prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
+    if (!prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
+    if (!prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
+    if (!prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
   }
 }
