@@ -56,12 +56,12 @@ public class LowerLift extends PIDSubsystem {
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
     motor1.set(0.0);
     motor1.setSubsystem("LowerLift");
-    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
 
     motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
     motor2.set(0.0);
     motor2.setSubsystem("LowerLift");
-    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0, 100);
   }
 
   @Override
