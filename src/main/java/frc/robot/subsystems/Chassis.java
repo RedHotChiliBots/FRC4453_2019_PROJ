@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -70,15 +71,19 @@ public class Chassis extends Subsystem {
 		backright = new WPI_TalonSRX(RobotMap.backRightMotor);
 
 		frontleft.set(0.0);
+		frontleft.setNeutralMode(NeutralMode.Brake);
     	frontleft.setSubsystem("Chassis");
 		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		frontright.set(0.0);
+		frontright.setNeutralMode(NeutralMode.Brake);
     	frontright.setSubsystem("Csassis");
 	  	frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		backleft.set(0.0);
+		backleft.setNeutralMode(NeutralMode.Brake);
     	backleft.setSubsystem("Chassis");
 	  	backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		backright.set(0.0);
+		backright.setNeutralMode(NeutralMode.Brake);
     	backright.setSubsystem("Chassis");
 	  	backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 		

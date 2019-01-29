@@ -27,12 +27,12 @@ public class LowerLiftResetMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.lLift.lowerMotor(motor);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.lLift.lowerMotor(motor);
     outputCurrent = motor.getOutputCurrent();
   }
 
