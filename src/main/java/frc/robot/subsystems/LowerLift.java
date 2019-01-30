@@ -68,6 +68,7 @@ public class LowerLift extends PIDSubsystem {
     motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
     motor2.setInverted(true);
     motor2.setSensorPhase(true);
+    
   }
 
   @Override
