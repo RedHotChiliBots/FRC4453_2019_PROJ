@@ -68,7 +68,6 @@ public class LowerLift extends PIDSubsystem {
     motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
     motor2.setInverted(true);
     motor2.setSensorPhase(true);
-    
   }
 
   @Override
@@ -102,11 +101,16 @@ public class LowerLift extends PIDSubsystem {
   }
 
   public void stopMotor(WPI_TalonSRX motor){
-    motor.set(ControlMode.PercentOutput, 0.0);
+    motor.stopMotor();
+  }
+
+  public void resetMotorConfig(double pos) {
+    motor2.set(ControlMode.Follower,RobotMap.lowerLiftMotor1);
+    motor1.set(ControlMode.Position, pos);
   }
 
   public void setPosMotor(WPI_TalonSRX motor, double pos){
-    motor.set((int)(pos * TICKS_PER_INCH));
+    motor.set(ControlMode.Position, (int)(pos * TICKS_PER_INCH));
   }
 
   public void resetPosMotor(WPI_TalonSRX motor, double pos){

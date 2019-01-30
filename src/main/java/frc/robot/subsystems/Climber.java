@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 /**
  * Add your docs here.
@@ -53,7 +54,43 @@ public class Climber extends Subsystem {
 
   }
 
-  public void getDistSensor() {
+  private static final double MAXDIST = 30.0; // cm
+  private static final double MINDIST = 4.0; // cm
+  private static final double MAXVOLT = 2.25; // vdc
+  private static final double MINVOLT = 0.4; // vdc
+  private static final double DISTRATIO = (MAXDIST-MINDIST)/(MAXVOLT-MINVOLT);
 
+  private double calcDist(double v) {
+    double d = 0.0;
+    // 30cm = 0.4vdc
+    // 4cm = 2.25vcd
+    if (v >= MINVOLT && v <= MAXVOLT) {
+      d = -(((v - MINVOLT) * DISTRATIO) - MINDIST);
+    }
+    return d;
+  }
+
+  public double getDistFrontSensor() {
+    return calcDist(climbFrontDistanceSensor.getVoltage());
+  }
+
+  public double getDistBackSensor() {
+    return calcDist(climbBackDistanceSensor.getVoltage());
+  }
+
+  public boolean isFrontClimb() {
+    return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("FrontStepAngle", 30.0);
+  }
+
+  public boolean isBackClimb() {
+    return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("BackStepAngle", 30.0);
+  }
+  
+  public boolean isFrontStep() {
+    return isFrontClimb() && getDistFrontSensor() < Robot.prefs.getDouble("FrontStepDist", 2.0);
+  }
+
+  public boolean isBackStep() {
+    return isBackClimb() && getDistBackSensor() < Robot.prefs.getDouble("BackStepDist", 2.0);
   }
 }

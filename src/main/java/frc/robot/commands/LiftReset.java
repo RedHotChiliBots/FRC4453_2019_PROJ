@@ -15,6 +15,7 @@ public class LiftReset extends CommandGroup {
    * Add your docs here.
    */
   public LiftReset() {
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -34,7 +35,7 @@ public class LiftReset extends CommandGroup {
 
     addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
 //    addParallel(new LowerLiftResetMotor(Robot.lLift.motor2));
-//    addParallel(new UpperLiftResetMotor(Robot.lLift.motor1));
-//    addSequential(new UpperLiftResetMotor(Robot.lLift.motor2));
+//    addParallel(new UpperLiftResetMotor(Robot.uLift.motor1));
+//    addSequential(new UpperLiftResetMotor(Robot.uLift.motor2));
   }
 }

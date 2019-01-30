@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -64,7 +63,7 @@ public class Chassis extends Subsystem {
 	private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
 	private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION) / (CHASSIS_WHEEL_DIAMETER * Math.PI);
 
-	private final double	PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
+	private static final double PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
 
 	public Chassis() {
 		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);

@@ -16,8 +16,9 @@ public class LiftInit extends CommandGroup {
    */
   public LiftInit() {
 
-    double pos = Robot.prefs.getDouble("LLmotorOffset", -1.0);
-    // Add Commands here:
+    double pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
+
+     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
@@ -35,8 +36,6 @@ public class LiftInit extends CommandGroup {
     // arm.
 
     addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
-//    addParallel(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
-//    addParallel(new UpperLiftInitMotor(Robot.lLift.motor1, pos));
-//    addSequential(new UpperLiftInitMotor(Robot.lLift.motor2, pos));
+//    addSequential(new UpperLiftInitMotor(Robot.uLift.motor1, pos));
   }
 }
