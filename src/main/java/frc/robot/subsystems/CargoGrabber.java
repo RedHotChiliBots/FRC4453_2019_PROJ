@@ -27,7 +27,9 @@ public class CargoGrabber extends Subsystem {
   
   public CargoGrabber(){
     motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
+    motor1.configFactoryDefault();
     motor2 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor2);
+    motor2.configFactoryDefault();
 
     SmartDashboard.putData(motor1);
     SmartDashboard.putData(motor2);

@@ -36,7 +36,7 @@ public class LiftInit extends CommandGroup {
 
     addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
 //    addParallel(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
-//    addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
-//    addSequential(new LowerLiftInitMotor(Robot.lLift.motor2, pos));
+//    addParallel(new UpperLiftInitMotor(Robot.lLift.motor1, pos));
+//    addSequential(new UpperLiftInitMotor(Robot.lLift.motor2, pos));
   }
 }

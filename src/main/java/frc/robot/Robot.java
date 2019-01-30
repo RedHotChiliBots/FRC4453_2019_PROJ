@@ -142,6 +142,9 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
+/**
+ * 
+ */
   private void telemetry() {
     SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
     SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
@@ -150,11 +153,15 @@ public class Robot extends TimedRobot {
 //    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
     SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
     SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
+//    SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getTarget());
+    SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
+    SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
   }
 
   private void initPrefs() {
     if (!prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
     if (!prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
     if (!prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
+    if (prefs.containsKey("position to reset as zero")) prefs.remove("position to reset as zero");
   }
 }

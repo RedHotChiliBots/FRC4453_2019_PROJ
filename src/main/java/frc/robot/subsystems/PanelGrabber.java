@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -31,10 +32,10 @@ public class PanelGrabber extends Subsystem {
   }
 
   public void grab(){
-
+    grabber.set(Value.kForward);
   }
 
   public void release(){
-
+    grabber.set(Value.kReverse);
   }
 }
