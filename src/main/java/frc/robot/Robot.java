@@ -153,7 +153,7 @@ public class Robot extends TimedRobot {
 //    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
     SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
     SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
-//    SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getTarget());
+    //SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getSetpoint());
     SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
     SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
   }

@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -27,6 +28,7 @@ public class LowerLiftInitMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    motor.set(ControlMode.Position, 0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run

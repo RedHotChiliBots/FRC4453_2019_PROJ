@@ -55,17 +55,17 @@ public class LowerLift extends PIDSubsystem {
     // enable() - Enables the PID controller.
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
     motor1.configFactoryDefault();
-    motor1.set(0.0);
+    motor1.set(ControlMode.PercentOutput,0.0);
     motor1.setSubsystem("LowerLift");
-    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
     motor1.setInverted(true);
     motor1.setSensorPhase(true);
 
     motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
     motor2.configFactoryDefault();
-    motor2.set(0.0);
+    motor2.set(ControlMode.PercentOutput,0.0);
     motor2.setSubsystem("LowerLift");
-    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
     motor2.setInverted(true);
     motor2.setSensorPhase(true);
   }
