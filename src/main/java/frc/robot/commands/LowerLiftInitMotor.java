@@ -27,8 +27,8 @@ public class LowerLiftInitMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.prefs.getDouble("LLMotorReset", 2.0)
-    SmartDashboard.putNumber("LLMotorReset", pos)
+    pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
+    SmartDashboard.putNumber("LLMotorReset", pos);
     Robot.lLift.resetPosMotor(motor, pos);
     Robot.lLift.resetMotorConfig(0.0);
   }

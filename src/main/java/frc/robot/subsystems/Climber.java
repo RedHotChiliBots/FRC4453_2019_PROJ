@@ -65,7 +65,7 @@ public class Climber extends Subsystem {
     // 30cm = 0.4vdc
     // 4cm = 2.25vcd
     if (v >= MINVOLT && v <= MAXVOLT) {
-      d = -(((v - MINVOLT) * DISTRATIO) - MINDIST);
+      d = MAXDIST-(((v - MINVOLT) * DISTRATIO) - MINDIST);
     }
     return d;
   }
