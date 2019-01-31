@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
 //    uLift = new UpperLift();
     lLift = new LowerLift();
 //    panel = new PanelGrabber();
-//    climber = new Climber();
+    climber = new Climber();
     oi.init();
 
     chassis.ahrs.zeroYaw();
@@ -148,21 +148,23 @@ public class Robot extends TimedRobot {
   private void telemetry() {
     SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
     SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
+    SmartDashboard.putNumber("Pitch", chassis.ahrs.getPitch()); 
     SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
 //    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
 //    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
     SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
     SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
-    //SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getSetpoint());
+    SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
     SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
     SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Low Pressure", Robot.chassis.getLoPressure());
-    SmartDashboard.putNumber("Low Pressure", Robot.chassis.getHiPressure());
-    SmartDashboard.putBoolean("Low Pressure", Robot.climber.isFrontClimb());
+    SmartDashboard.putNumber("Lo Pressure", Robot.chassis.getLoPressure());
+    SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
     SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());
     SmartDashboard.putBoolean("Back Climb", Robot.climber.isBackClimb());
     SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
     SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
+    SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());
+    SmartDashboard.putNumber("Back Dist", Robot.climber.getDistBackSensor());
   }
 
   private void initPrefs() {

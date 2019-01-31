@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class LiftInit extends CommandGroup {
@@ -17,6 +18,7 @@ public class LiftInit extends CommandGroup {
   public LiftInit() {
 
     double pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
+    SmartDashboard.putNumber("LLMotorReset", pos);
 
      // Add Commands here:
     // e.g. addSequential(new Command1());
@@ -35,7 +37,7 @@ public class LiftInit extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    addParallel(new LowerLiftInitMotor(Robot.lLift.motor1, pos));
-//    addSequential(new UpperLiftInitMotor(Robot.uLift.motor1, pos));
+    addParallel(new LowerLiftInitMotor(Robot.lLift.motor1));
+//    addSequential(new UpperLiftInitMotor(Robot.uLift.motor1));
   }
 }

@@ -19,14 +19,12 @@ public class RobotMap {
   // public static int leftMotor = 1;
   // public static int rightMotor = 2;
 
+  //============= MOTORS =============
   //chassis
   public static int frontLeftMotor = 1;
   public static int frontRightMotor = 2;
   public static int backLeftMotor = 3;
   public static int backRightMotor = 4;
-
-  public static final int highPressureSensor = 0;
-  public static final int lowPressureSensor = 1;
 
   //lifts
   public static int upperLiftMotor1 = 5;
@@ -38,23 +36,29 @@ public class RobotMap {
   public static int cargoGrabberMotor1 = 9;
   public static int cargoGrabberMotor2 = 10;
 
+  //============= SOLENOIDS (dio) =============
   //panel grabber
-  public static final int PanelGrabberGripSolenoid = 4; // TODO
-  public static final int PanelGrabberReleaseSolenoid = 8;
+  public static final int PanelGrabberGripSolenoid = 0; // TODO
+  public static final int PanelGrabberReleaseSolenoid = 1;
 
 //  public static final DoubleSolenoid.Value PanelGrabberGrip = DoubleSolenoid.Value.kForward;
 //  public static final DoubleSolenoid.Value PanelGrabberRelease  = DoubleSolenoid.Value.kReverse;
 
   //climber solenoids
-  public static final int ClimberFrontUpSolenoid = 4; // TODO
-  public static final int ClimberFrontDownSolenoid = 5;
+  public static final int ClimberFrontUpSolenoid = 2; // TODO
+  public static final int ClimberFrontDownSolenoid = 3;
 
   public static final int ClimberBackUpSolenoid = 4; // TODO
-  public static final int ClimberBackDownSolenoid = 6;
+  public static final int ClimberBackDownSolenoid = 5;
+
+//============= SENSORS (analog) =============
+  // chassis pressure sensors
+  public static final int highPressureSensor = 0;
+  public static final int lowPressureSensor = 1;
 
   //climber analog dist sensors
-  public static final int ClimbFrontDistanceSensor = 0;
-  public static final int ClimbBackDistanceSensor = 1;
+  public static final int ClimbFrontDistanceSensor = 2;
+  public static final int ClimbBackDistanceSensor = 3;
   
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:

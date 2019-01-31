@@ -9,24 +9,26 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class LowerLiftInitMotor extends Command {
 
-  private double pos = 0.0;
   private WPI_TalonSRX motor = null;
+  private double pos = 0.0;
 
-  public LowerLiftInitMotor(WPI_TalonSRX motor, double pos) {
+  public LowerLiftInitMotor(WPI_TalonSRX motor) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
 //    requires(Robot.lLift);
     this.motor = motor;
-    this.pos = pos;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.prefs.getDouble("LLMotorReset", 2.0)
+    SmartDashboard.putNumber("LLMotorReset", pos)
     Robot.lLift.resetPosMotor(motor, pos);
     Robot.lLift.resetMotorConfig(0.0);
   }
