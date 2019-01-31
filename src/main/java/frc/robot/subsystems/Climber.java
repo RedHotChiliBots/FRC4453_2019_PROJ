@@ -83,7 +83,7 @@ public class Climber extends Subsystem {
   }
 
   public boolean isBackClimb() {
-    return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("BackStepAngle", 30.0);
+    return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("BackStepAngle", 0.0);
   }
   
   public boolean isFrontStep() {

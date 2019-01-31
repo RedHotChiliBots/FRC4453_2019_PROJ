@@ -170,7 +170,7 @@ public class Robot extends TimedRobot {
     if (!prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
     if (!prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
     if (!prefs.containsKey("FrontStepAngle")) prefs.putDouble("FrontStepAngle", 30.0);
-    if (!prefs.containsKey("BackStepAngle")) prefs.putDouble("BackStepAngle", 30.0);
+    if (!prefs.containsKey("BackStepAngle")) prefs.putDouble("BackStepAngle", 0.0);
     if (!prefs.containsKey("FrontStepDist")) prefs.putDouble("FrontStepDist", 2.0);
     if (!prefs.containsKey("BackStepDist")) prefs.putDouble("BackStepDist", 2.0);
     if (prefs.containsKey("position to reset as zero")) prefs.remove("position to reset as zero");
