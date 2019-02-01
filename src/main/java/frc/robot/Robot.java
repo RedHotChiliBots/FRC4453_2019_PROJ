@@ -54,10 +54,10 @@ public class Robot extends TimedRobot {
 
     oi = new OI();
     chassis = new Chassis();
-//    cargo = new CargoGrabber();
-//    uLift = new UpperLift();
+    cargo = new CargoGrabber();
+    uLift = new UpperLift();
     lLift = new LowerLift();
-//    panel = new PanelGrabber();
+    panel = new PanelGrabber();
     climber = new Climber();
     oi.init();
 
@@ -65,9 +65,13 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData(Scheduler.getInstance());
     SmartDashboard.putData(chassis);
+    SmartDashboard.putData(cargo);
+    SmartDashboard.putData(uLift);
+    SmartDashboard.putData(lLift);
+    SmartDashboard.putData(panel);
+    SmartDashboard.putData(climber);
     SmartDashboard.putData("DriveJerk", new ChassisDriveJerk());
     SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
-    SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
   }
 
   /**
@@ -178,6 +182,8 @@ public class Robot extends TimedRobot {
     if (!prefs.containsKey("BackStepAngle")) prefs.putDouble("BackStepAngle", 0.0);
     if (!prefs.containsKey("FrontStepDist")) prefs.putDouble("FrontStepDist", 2.0);
     if (!prefs.containsKey("BackStepDist")) prefs.putDouble("BackStepDist", 2.0);
+    if (!prefs.containsKey("CargoGrabSpd")) prefs.getDouble("CargoGrabSpd", 0.5);
+    if (!prefs.containsKey("CargoRelSpd")) prefs.getDouble("CargoRelSpd", 0.5);
     if (prefs.containsKey("position to reset as zero")) prefs.remove("position to reset as zero");
   }
 }

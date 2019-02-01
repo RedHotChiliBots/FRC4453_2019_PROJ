@@ -116,28 +116,30 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void driveChassis(double x, double y, double r) {
-		drive.driveCartesian(y, x, r);
+		drive.driveCartesian(y, x, r, ahrs.getYaw());
 	}
 
 	public void driveTeleop(){
-		double x = Robot.oi.getDriveX();
-    	double y = Robot.oi.getDriveY();
-		double r = Robot.oi.getDriveR();
-		driveChassis(x,y,r);
+		double x = 0.0;
+		double y = 0.0;
+		double r = 0.0;
+		
+		switch (mode) {
+			case CARGO:
+				x = Robot.oi.getDriveX();
+				y = Robot.oi.getDriveY();
+				break;
 
-/*		if (cargoSelected = true){
-			double x2 = -Robot.oi.getDriveX();
-    		double y2 = -Robot.oi.getDriveY();
-			double r2 = Robot.oi.getDriveR();
-			driveChassis(x2,y2,r2);
+			case PANEL:
+				x = -Robot.oi.getDriveX();
+				y = -Robot.oi.getDriveY();
+				break;
+		
+			default:
 		}
-*/
-		if (mode == Mode.PANEL){
-			double x2 = -Robot.oi.getDriveX();
-    		double y2 = -Robot.oi.getDriveY();
-			double r2 = Robot.oi.getDriveR();
-			driveChassis(x2,y2,r2);
-		}
+
+		r = Robot.oi.getDriveR();
+		driveChassis(x,y,r);
 	}
 
 /*	public void driveCargo(){
