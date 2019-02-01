@@ -7,53 +7,44 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LowerLiftResetMotor extends Command {
-
-  private double outputCurrent = 0.0;
-
-  private WPI_TalonSRX motor = null;
-  
-  public LowerLiftResetMotor(WPI_TalonSRX motor) {
+public class ClimberClimb extends Command {
+  public ClimberClimb() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-//    requires(Robot.lLift);
-    this.motor = motor;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.lLift.lowerMotor(motor);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    motor.feed();
-    outputCurrent = motor.getOutputCurrent();
+ /*   Robot.climber.extendfront();
+    Robot.chassis.driveTeleop() until Robot.climber.isFrontStep()==true;
+    Robot.climber.extendback();
+    Robot.climber.retractfront();
+    Robot.chassis.driveTeleop(); until */
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (outputCurrent > Robot.prefs.getDouble("CurrentThreshold", 9.0));
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.stopMotor(motor);
-    Robot.lLift.resetPosMotor(motor, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor(motor);
   }
 }

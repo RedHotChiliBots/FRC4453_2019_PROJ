@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -39,19 +40,19 @@ public class Climber extends Subsystem {
   }
 
   public void extendfront() {
-
+    climbFront.set(Value.kForward);
   }
 
   public void extendback() {
-
+    climbBack.set(Value.kForward);
   }
 
   public void retractfront() {
-
+    climbFront.set(Value.kReverse);
   }
 
   public void retractback() {
-
+    climbFront.set(Value.kReverse);
   }
 
   private static final double MAXDIST = 30.0; // cm

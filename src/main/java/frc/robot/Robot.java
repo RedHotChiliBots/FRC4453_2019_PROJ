@@ -157,6 +157,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
     SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
     SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
+    SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
+    SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
     SmartDashboard.putNumber("Lo Pressure", Robot.chassis.getLoPressure());
     SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
     SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());

@@ -58,7 +58,7 @@ public class LowerLift extends PIDSubsystem {
     motor1.set(ControlMode.PercentOutput,0.0);
     motor1.setSubsystem("LowerLift");
     motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
-    motor1.setInverted(true);
+    motor1.setInverted(false);
     motor1.setSensorPhase(true);
 
     motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
@@ -66,7 +66,7 @@ public class LowerLift extends PIDSubsystem {
     motor2.set(ControlMode.PercentOutput,0.0);
     motor2.setSubsystem("LowerLift");
     motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
-    motor2.setInverted(true);
+    motor2.setInverted(false);
     motor2.setSensorPhase(true);
   }
 

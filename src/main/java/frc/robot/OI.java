@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.LiftStartup;
+import frc.robot.commands.PanelGrip;
+import frc.robot.commands.PanelRelease;
 import frc.robot.commands.SwitchToCargo;
 //import frc.robot.commands.SwitchToCargo;
 //import frc.robot.commands.SwitchToPanel;
@@ -54,7 +56,11 @@ public class OI {
 
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.A_BUTTON);
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.B_BUTTON);
+  
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
+
+  private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+  private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
 
   private static final double DEADZONE = 0.2;
 
@@ -66,6 +72,8 @@ public class OI {
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
     liftReset.whenPressed(new LiftStartup());
+    panelGrip.whenPressed(new PanelGrip());
+    panelRelease.whenPressed(new PanelRelease());
   }
 
   public double getDriveX() {
