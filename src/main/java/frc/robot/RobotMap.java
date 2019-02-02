@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
@@ -57,7 +60,6 @@ public class RobotMap {
 
   public static final DoubleSolenoid.Value ClimberBackUp = DoubleSolenoid.Value.kForward;
   public static final DoubleSolenoid.Value ClimberBackDown = DoubleSolenoid.Value.kReverse;
-
 
 //============= SENSORS (analog) =============
 
@@ -117,4 +119,28 @@ public class RobotMap {
     BUTTON_9 = 9,
     BUTTON_10 = 10,
     BUTTON_11 = 11;
+
+    public static enum LEVEL {
+      LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
+    }
+    public static enum LIFT {
+      UPPER, LOWER
+    }
+  
+    public static final Map<LIFT, Map<LEVEL,Double>> height = new HashMap<LIFT,Map<LEVEL,Double>>() {{
+      put(LIFT.UPPER, new HashMap<LEVEL,Double>() {{
+        put(LEVEL.LEVEL1, 0.0);
+        put(LEVEL.LEVEL2, 28.0);
+        put(LEVEL.LEVEL3, 28.0);
+        put(LEVEL.LOADINGSTATION, 0.0);
+        put(LEVEL.SHIP, 0.0);
+      }});
+      put(LIFT.LOWER, new HashMap<LEVEL,Double>() {{
+        put(LEVEL.LEVEL1, 0.0);
+        put(LEVEL.LEVEL2, 0.0);
+        put(LEVEL.LEVEL3, 28.0);
+        put(LEVEL.LOADINGSTATION, 0.0);
+        put(LEVEL.SHIP, 0.0);
+      }});
+    }};
 }
