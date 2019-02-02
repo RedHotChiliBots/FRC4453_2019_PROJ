@@ -26,23 +26,6 @@ public class LowerLift extends PIDSubsystem {
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
   private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; //Lead screw 1 in/rev
 
-  public static enum Level{
-		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
-  }
-
-  public Level level = null;
-
-//  public double motor1current = 0.0;
-//  public double motor2current = 0.0;
-
-/*  public static final Map<Level, Double> = ImmutableMap.of(
-    Level.LEVEL1, 0.0, 
-    Level.LEVEL2, 0.0,
-    Level.LEVEL3, 28.0,
-    Level.LOADINGSTATION, 0.0,
-    Level.SHIP, 0.0);
-*/
-
   /**
    * Add your docs here.
    */

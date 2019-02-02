@@ -26,8 +26,6 @@ public class Climber extends Subsystem {
   public AnalogInput climbFrontDistanceSensor = null;
   public AnalogInput climbBackDistanceSensor = null;
 
-  private Value value = null;
-
   public Climber() {
     climbFront = new DoubleSolenoid(RobotMap.ClimberFrontUpSolenoid,RobotMap.ClimberFrontDownSolenoid);
     climbBack = new DoubleSolenoid(RobotMap.ClimberBackUpSolenoid,RobotMap.ClimberBackDownSolenoid);
@@ -112,30 +110,6 @@ public class Climber extends Subsystem {
       && getDistSensor(distSensor) > Robot.prefs.getDouble("BStepDistLow", 4.0);
     }
   }
-
-/*  public void SolenoidReverse(DoubleSolenoid solenoid){
-    if(solenoid == climbFront){
-      solenoid.get();
-      if(value == Value.kForward){
-        solenoid.set(Value.kReverse);
-      }else{
-        solenoid.set(Value.kForward);
-      }
-    }else{
-      if(value == Value.kForward){
-        solenoid.set(Value.kReverse);
-      }else{
-        solenoid.set(Value.kForward);
-      }
-  }*/
-
-  /*public void extend(DoubleSolenoid solenoid){
-    solenoid.set(Value.kForward);
-  }
-
-  public void retract(DoubleSolenoid solenoid){
-    solenoid.set(Value.kReverse);
-  }*/
 
   public void cmdSolenoid(DoubleSolenoid solenoid, Value value){
     solenoid.set(value);
