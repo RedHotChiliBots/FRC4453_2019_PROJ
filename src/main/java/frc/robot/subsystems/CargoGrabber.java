@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.CargoStop;
 
@@ -24,6 +25,11 @@ public class CargoGrabber extends Subsystem {
   private WPI_TalonSRX motor1;
   private WPI_TalonSRX motor2;
   
+  public static enum CargoMotor {
+    LEFT, 
+    RIGHT, 
+    CENTER
+  };
   
   public CargoGrabber(){
     motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
@@ -43,18 +49,31 @@ public class CargoGrabber extends Subsystem {
   }
 
   public void grab() {
-    motor1.set(ControlMode.PercentOutput, -0.5);
-    motor2.set(ControlMode.PercentOutput, 0.5);
+    double spd = Robot.prefs.getDouble("CargoGrabSpd", 0.5);
+    motor1.set(ControlMode.PercentOutput, -spd);
+    motor2.set(ControlMode.PercentOutput, spd);
   }
 
-  public void release() {
-    motor1.set(ControlMode.PercentOutput, 0.5);
-    motor2.set(ControlMode.PercentOutput, -0.5);
+  public void release(CargoMotor dir) {
+    double spd = Robot.prefs.getDouble("CargoRelSpd", 0.5);
+    switch (dir) {
+      case LEFT:
+        motor1.set(ControlMode.PercentOutput, spd);
+        break;
+      case RIGHT:
+        motor2.set(ControlMode.PercentOutput, -spd);
+        break;
+      case CENTER:
+        motor1.set(ControlMode.PercentOutput, spd);
+        motor2.set(ControlMode.PercentOutput, -spd);
+        break;
+      default:
+    }
   }
 
   public void stop(){
-    motor1.set(ControlMode.PercentOutput, 0.0);
-    motor2.set(ControlMode.PercentOutput, 0.0);
+    motor1.stopMotor();
+    motor2.stopMotor();
   }
 
 }

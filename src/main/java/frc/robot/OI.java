@@ -95,5 +95,25 @@ public class OI {
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
+  public double getCargoL() {
+    int v = operator.getPOV();
+    double spd;
+    if (v > 180) {
+      spd = (((270-v)-90)/2.0)+0.5;
+    } else {
+      spd = (270-v)-90;
+    }
+    return spd;
+  }
 
+  public double getCargoR() {
+    int v = operator.getPOV();
+    double spd;
+    if (v > 180) {
+      spd = (270-v)-90;
+    } else {
+      spd = (((270-v)-90)/2.0)+0.5;
+    }
+    return spd;
+  }
 }
