@@ -21,7 +21,6 @@ public class UpperLiftResetMotor extends Command {
   public UpperLiftResetMotor(WPI_TalonSRX motor) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lLift);
     this.motor = motor;
   }
 
@@ -33,7 +32,7 @@ public class UpperLiftResetMotor extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.lowerMotor(motor);
+    Robot.uLift.lowerMotor(motor);
     outputCurrent = motor.getOutputCurrent();
   }
 
@@ -46,14 +45,14 @@ public class UpperLiftResetMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.stopMotor(motor);
-    Robot.lLift.resetPosMotor(motor, 0.0);
+    Robot.uLift.stopMotor(motor);
+    Robot.uLift.resetPosMotor(motor, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor(motor);
+    Robot.uLift.stopMotor(motor);
   }
 }
