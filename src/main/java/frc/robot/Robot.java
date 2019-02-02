@@ -201,12 +201,12 @@ public class Robot extends TimedRobot {
     if (!prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
     if (!prefs.containsKey("FStepDistHigh")) prefs.putDouble("FStepDistHigh", 10.0);
     if (!prefs.containsKey("BStepDistHigh")) prefs.putDouble("BStepDistHigh", 10.0);
-    if (!prefs.containsKey("FrontStepAngle")) prefs.putDouble("FrontStepAngle", 16.0);
-    if (!prefs.containsKey("BackStepAngle")) prefs.putDouble("BackStepAngle", 0.0);
+    if (!prefs.containsKey("FStepAngleHigh")) prefs.putDouble("FStepAngleHigh", 18.0);
+    if (!prefs.containsKey("FStepAngleLow")) prefs.putDouble("FStepAngleLow", 14.0);
+    if (!prefs.containsKey("BStepAngleHigh")) prefs.putDouble("BStepAngleHigh", 2.0);
+    if (!prefs.containsKey("BStepAngleLow")) prefs.putDouble("BStepAngleLow", -2.0);
     if (!prefs.containsKey("BStepDistLow")) prefs.putDouble("BStepDistLow", 4.0);
     if (!prefs.containsKey("FStepDistLow")) prefs.putDouble("FStepDistLow", 4.0);
-//    if (!prefs.containsKey("FrontStepDist")) prefs.putDouble("FrontStepDist", 2.0);
-//    if (!prefs.containsKey("BackStepDist")) prefs.putDouble("BackStepDist", 2.0);
     if (!prefs.containsKey("CargoGrabSpd")) prefs.getDouble("CargoGrabSpd", 0.5);
     if (!prefs.containsKey("CargoRelSpd")) prefs.getDouble("CargoRelSpd", 0.5);
     if (prefs.containsKey("BackStepAngleHigh")) prefs.remove("BackStepAngleHigh");
@@ -216,5 +216,7 @@ public class Robot extends TimedRobot {
     if (prefs.containsKey("BackStepDist")) prefs.remove("BackStepDist");
     if (prefs.containsKey("FrontStepDist")) prefs.remove("FrontStepDist");
     if (prefs.containsKey("BackStepDistHigh")) prefs.remove("BackStepDistHigh");
+    if (prefs.containsKey("FrontStepAngle")) prefs.remove("FrontStepAngle");
+    if (prefs.containsKey("BackStepAngle")) prefs.remove("BackStepAngle");
    }
 }

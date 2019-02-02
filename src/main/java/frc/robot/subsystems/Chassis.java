@@ -48,7 +48,7 @@ public class Chassis extends Subsystem {
 		PANEL, CARGO
 	}
 
-	public Mode mode = null;
+	public Mode mode = Mode.PANEL;
 
 	double last_world_linear_accel_x;
 	double last_world_linear_accel_y;

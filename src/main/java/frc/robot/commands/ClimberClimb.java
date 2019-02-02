@@ -33,6 +33,8 @@ public class ClimberClimb extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
+    System.out.println("Entering ClimberClimb");
+    
     addSequential(new ClimberSolenoidSwitch(Robot.climber.climbFront, RobotMap.ClimberFrontDown));
     addSequential(new ClimberDrive(Robot.climber.climbFrontDistanceSensor));
     addSequential(new ClimberSolenoidSwitch(Robot.climber.climbFront, RobotMap.ClimberFrontUp));

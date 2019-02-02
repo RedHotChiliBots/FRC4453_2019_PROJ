@@ -21,11 +21,13 @@ public class ClimberSolenoidSwitch extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.solenoid = solenoid;
+    this.value = value;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init ClimberSolenoidSwitch");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -37,18 +39,22 @@ public class ClimberSolenoidSwitch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    boolean result = false;
     if(solenoid == Robot.climber.climbFront){
-      return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("FrontStepAngleHigh", 16.0)
-      && Robot.chassis.ahrs.getPitch() > Robot.prefs.getDouble("FrontStepAngleLow", 16.0);
+      result = Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("FrontStepAngleHigh", 16.0)
+      && Robot.chassis.ahrs.getRoll() > Robot.prefs.getDouble("FrontStepAngleLow", 16.0);
     }else{
-      return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("BackStepAngleHigh", 0.0)
-      && Robot.chassis.ahrs.getPitch() > Robot.prefs.getDouble("BackStepAngleLow", 0.0);
+      result = Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("BackStepAngleHigh", 0.0)
+      && Robot.chassis.ahrs.getRoll() > Robot.prefs.getDouble("BackStepAngleLow", 0.0);
     }
+    if (result) System.out.println("Finish ClimberSolenoidSwitch");
+    return result;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("Ending ClimberSolenoidSwitch");
   }
 
   // Called when another command which requires one or more of the same

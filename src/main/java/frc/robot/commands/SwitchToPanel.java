@@ -22,6 +22,7 @@ public class SwitchToPanel extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init SwitchToPanel");
     Robot.chassis.setMode(Chassis.Mode.PANEL);
   }
 

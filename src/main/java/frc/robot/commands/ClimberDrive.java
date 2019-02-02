@@ -25,6 +25,7 @@ public class ClimberDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("init ClimberDrive");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -42,6 +43,7 @@ public class ClimberDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("ending ClimberDrive");
   }
 
   // Called when another command which requires one or more of the same

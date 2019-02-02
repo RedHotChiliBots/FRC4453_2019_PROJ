@@ -15,8 +15,6 @@ import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrip;
 import frc.robot.commands.PanelRelease;
 import frc.robot.commands.SwitchToCargo;
-//import frc.robot.commands.SwitchToCargo;
-//import frc.robot.commands.SwitchToPanel;
 import frc.robot.commands.SwitchToPanel;
 
 /**
@@ -60,7 +58,7 @@ public class OI {
   
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
-  private JoystickButton climberclimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
+  private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
 
   private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
   private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
@@ -77,7 +75,7 @@ public class OI {
     liftReset.whenPressed(new LiftStartup());
     panelGrip.whenPressed(new PanelGrip());
     panelRelease.whenPressed(new PanelRelease());
-    climberclimb.whenPressed(new ClimberClimb());
+    climberClimb.whenPressed(new ClimberClimb());
   }
 
   public double getDriveX() {

@@ -14,6 +14,7 @@ public class PanelRelease extends Command {
   public PanelRelease() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.panel);
   }
 
   // Called just before this Command runs the first time

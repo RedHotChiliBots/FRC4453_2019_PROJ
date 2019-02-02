@@ -91,11 +91,13 @@ public class Climber extends Subsystem {
   }
 
   public boolean isFrontClimb() {
-    return Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("FrontStepAngle", 30.0);
+    return Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("FStepAngleHigh", 18.0)
+    && Robot.chassis.ahrs.getRoll() > Robot.prefs.getDouble("FStepAngleLow", 14.0);
   }
 
   public boolean isBackClimb() {
-    return Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("BackStepAngle", 0.0);
+    return Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("BStepAngleHigh", 2.0)
+    && Robot.chassis.ahrs.getRoll() > Robot.prefs.getDouble("BStepAngleLow", -2.0);
   }
   
   public boolean isFrontStep() {
