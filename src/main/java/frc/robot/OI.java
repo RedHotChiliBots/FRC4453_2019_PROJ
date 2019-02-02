@@ -50,8 +50,8 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
 
-  public XboxController driver   = new XboxController(0);
-  public XboxController operator = new XboxController(1);
+  private XboxController driver   = new XboxController(0);
+  private XboxController operator = new XboxController(1);
 
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.A_BUTTON);
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.B_BUTTON);

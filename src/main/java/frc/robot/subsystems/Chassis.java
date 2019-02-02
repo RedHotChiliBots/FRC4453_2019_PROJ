@@ -115,6 +115,13 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putData(backright);
 	}
 	
+	@Override
+	public void initDefaultCommand() {
+	  // Set the default command for a subsystem here.
+		  // setDefaultCommand(new MySpecialCommand());
+		  setDefaultCommand(new ChassisDriveTeleop());
+	  }
+	  
 	public void driveChassis(double x, double y, double r) {
 		drive.driveCartesian(y, x, r, ahrs.getYaw());
 	}
@@ -142,27 +149,9 @@ public class Chassis extends Subsystem {
 		driveChassis(x,y,r);
 	}
 
-/*	public void driveCargo(){
-		double x = -Robot.oi.getDriveX();
-		double y = -Robot.oi.getDriveY();
-		double r = Robot.oi.getDriveR();
-		driveChassis(x, y, r);
-	}
-
-	public void drivePanel(){
-		driveTeleop();
-	}
-*/
 	public void driveVision(){
 	}
 
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new ChassisDriveTeleop());
-	}
-	
 	public void followLine(){
 	}
 

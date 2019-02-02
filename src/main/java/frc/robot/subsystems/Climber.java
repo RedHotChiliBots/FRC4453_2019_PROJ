@@ -63,11 +63,6 @@ public class Climber extends Subsystem {
   private static final double MINVOLT = 0.4; // vdc
   private static final double DISTRATIO = (MAXDIST-MINDIST)/(MAXVOLT-MINVOLT);
 
-  private static final double CMHigh = 4;
-  private static final double INHigh = CMHigh / 2.54;
-  private static final double CMLow = 1;
-  private static final double InLow = CMLow / 2.54;
-
   private double calcDist(double v) {
     double d = 0.0;
     // 30cm = 0.4vdc
@@ -75,7 +70,7 @@ public class Climber extends Subsystem {
     if (v >= MINVOLT && v <= MAXVOLT) {
       d = -(((v - MINVOLT) * DISTRATIO) - MAXDIST);
     }
-    return d;
+    return d/2.54;  // return distance in inches
   }
 
   public double getDistFrontSensor() {
