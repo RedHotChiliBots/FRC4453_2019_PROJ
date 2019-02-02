@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ClimberClimb;
 import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrip;
 import frc.robot.commands.PanelRelease;
@@ -59,6 +60,8 @@ public class OI {
   
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
+  private JoystickButton climberclimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
+
   private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
   private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
 
@@ -74,6 +77,7 @@ public class OI {
     liftReset.whenPressed(new LiftStartup());
     panelGrip.whenPressed(new PanelGrip());
     panelRelease.whenPressed(new PanelRelease());
+    climberclimb.whenPressed(new ClimberClimb());
   }
 
   public double getDriveX() {

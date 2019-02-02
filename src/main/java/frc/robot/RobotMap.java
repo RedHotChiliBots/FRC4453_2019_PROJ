@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -41,15 +43,19 @@ public class RobotMap {
   public static final int PanelGrabberGripSolenoid = 0; // TODO
   public static final int PanelGrabberReleaseSolenoid = 1;
 
-//  public static final DoubleSolenoid.Value PanelGrabberGrip = DoubleSolenoid.Value.kForward;
-//  public static final DoubleSolenoid.Value PanelGrabberRelease  = DoubleSolenoid.Value.kReverse;
-
   //climber solenoids
   public static final int ClimberFrontUpSolenoid = 2; // TODO
   public static final int ClimberFrontDownSolenoid = 3;
 
   public static final int ClimberBackUpSolenoid = 4; // TODO
   public static final int ClimberBackDownSolenoid = 5;
+
+  public static final DoubleSolenoid.Value ClimberFrontUp = DoubleSolenoid.Value.kForward;
+  public static final DoubleSolenoid.Value ClimberFrontDown = DoubleSolenoid.Value.kReverse;
+
+  public static final DoubleSolenoid.Value ClimberBackUp = DoubleSolenoid.Value.kForward;
+  public static final DoubleSolenoid.Value ClimberBackDown = DoubleSolenoid.Value.kReverse;
+
 
 //============= SENSORS (analog) =============
   // chassis pressure sensors

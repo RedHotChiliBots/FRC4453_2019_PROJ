@@ -20,11 +20,13 @@ public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private DoubleSolenoid climbFront = null; 
-  private DoubleSolenoid climbBack = null; 
+  public DoubleSolenoid climbFront = null; 
+  public DoubleSolenoid climbBack = null; 
 
-  private AnalogInput climbFrontDistanceSensor = null;
-	private AnalogInput climbBackDistanceSensor = null;
+  public AnalogInput climbFrontDistanceSensor = null;
+  public AnalogInput climbBackDistanceSensor = null;
+
+  private Value value = null;
 
   public Climber() {
     climbFront = new DoubleSolenoid(RobotMap.ClimberFrontUpSolenoid,RobotMap.ClimberFrontDownSolenoid);
@@ -61,6 +63,11 @@ public class Climber extends Subsystem {
   private static final double MINVOLT = 0.4; // vdc
   private static final double DISTRATIO = (MAXDIST-MINDIST)/(MAXVOLT-MINVOLT);
 
+  private static final double CMHigh = 4;
+  private static final double INHigh = CMHigh / 2.54;
+  private static final double CMLow = 1;
+  private static final double InLow = CMLow / 2.54;
+
   private double calcDist(double v) {
     double d = 0.0;
     // 30cm = 0.4vdc
@@ -79,12 +86,16 @@ public class Climber extends Subsystem {
     return calcDist(climbBackDistanceSensor.getVoltage());
   }
 
+  public double getDistSensor(AnalogInput distSensor) {
+    return calcDist(distSensor.getVoltage());
+  }
+
   public boolean isFrontClimb() {
-    return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("FrontStepAngle", 30.0);
+    return Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("FrontStepAngle", 30.0);
   }
 
   public boolean isBackClimb() {
-    return Robot.chassis.ahrs.getPitch() < Robot.prefs.getDouble("BackStepAngle", 0.0);
+    return Robot.chassis.ahrs.getRoll() < Robot.prefs.getDouble("BackStepAngle", 0.0);
   }
   
   public boolean isFrontStep() {
@@ -93,5 +104,43 @@ public class Climber extends Subsystem {
 
   public boolean isBackStep() {
     return isBackClimb() && getDistBackSensor() < Robot.prefs.getDouble("BackStepDist", 2.0);
+  }
+
+  public boolean isStep(AnalogInput distSensor) {
+    if(distSensor == climbFrontDistanceSensor){
+      return isFrontClimb() && getDistSensor(distSensor) < Robot.prefs.getDouble("FStepDistHigh", 10.0) 
+      && getDistSensor(distSensor) > Robot.prefs.getDouble("FStepDistLow", 4.0);
+    } else{
+      return isBackClimb() && getDistSensor(distSensor) < Robot.prefs.getDouble("BStepDistHigh", 10.0) 
+      && getDistSensor(distSensor) > Robot.prefs.getDouble("BStepDistLow", 4.0);
+    }
+  }
+
+/*  public void SolenoidReverse(DoubleSolenoid solenoid){
+    if(solenoid == climbFront){
+      solenoid.get();
+      if(value == Value.kForward){
+        solenoid.set(Value.kReverse);
+      }else{
+        solenoid.set(Value.kForward);
+      }
+    }else{
+      if(value == Value.kForward){
+        solenoid.set(Value.kReverse);
+      }else{
+        solenoid.set(Value.kForward);
+      }
+  }*/
+
+  /*public void extend(DoubleSolenoid solenoid){
+    solenoid.set(Value.kForward);
+  }
+
+  public void retract(DoubleSolenoid solenoid){
+    solenoid.set(Value.kReverse);
+  }*/
+
+  public void cmdSolenoid(DoubleSolenoid solenoid, Value value){
+    solenoid.set(value);
   }
 }

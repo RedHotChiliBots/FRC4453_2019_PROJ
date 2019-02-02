@@ -145,39 +145,67 @@ public class Robot extends TimedRobot {
 /**
  * 
  */
+  private int i = 0;
+
   private void telemetry() {
-    SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
-    SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
-    SmartDashboard.putNumber("Pitch", chassis.ahrs.getPitch()); 
-    SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
-//    SmartDashboard.putBoolean("Panel Selected", Robot.chassis.isPanelSelected());
-//    SmartDashboard.putBoolean("Cargo Selected", Robot.chassis.isCargoSelected());
-    SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
-    SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
-    SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
-    SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
-    SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
-    SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
-    SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Lo Pressure", Robot.chassis.getLoPressure());
-    SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
-    SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());
-    SmartDashboard.putBoolean("Back Climb", Robot.climber.isBackClimb());
-    SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
-    SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
-    SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());
-    SmartDashboard.putNumber("Back Dist", Robot.climber.getDistBackSensor());
+    switch(i){
+      case 0:
+      SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
+      SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
+      SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
+      SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
+      i++;
+      break;
+
+      case 1:
+      SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
+      SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
+      SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
+      SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
+      i++;
+      break;
+
+      case 2:
+      SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
+      SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
+      SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
+      i++;
+      break;
+
+      case 3:
+      SmartDashboard.putNumber("Lo Pressure", Robot.chassis.getLoPressure());
+      SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
+      SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());
+      SmartDashboard.putBoolean("Back Climb", Robot.climber.isBackClimb());
+      i++;
+      break;
+
+      case 4:
+      SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
+      SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
+      SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());
+      SmartDashboard.putNumber("Back Dist", Robot.climber.getDistBackSensor());
+      i = 0;
+    }
   }
+
 
   private void initPrefs() {
     if (!prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
     if (!prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
     if (!prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
-    if (!prefs.containsKey("FrontStepAngle")) prefs.putDouble("FrontStepAngle", 30.0);
+    if (!prefs.containsKey("FStepDistHigh")) prefs.putDouble("FStepDistHigh", 10.0);
+    if (!prefs.containsKey("BStepDistHigh")) prefs.putDouble("BackStepDistHigh", 10.0);
+    if (!prefs.containsKey("FrontStepAngle")) prefs.putDouble("FrontStepAngle", 16.0);
     if (!prefs.containsKey("BackStepAngle")) prefs.putDouble("BackStepAngle", 0.0);
-    if (!prefs.containsKey("FrontStepDist")) prefs.putDouble("FrontStepDist", 2.0);
-    if (!prefs.containsKey("BackStepDist")) prefs.putDouble("BackStepDist", 2.0);
-    if (prefs.containsKey("position to reset as zero")) prefs.remove("position to reset as zero");
+    if (!prefs.containsKey("BStepDistLow")) prefs.putDouble("BStepDistLow", 4.0);
+    if (!prefs.containsKey("FStepDistLow")) prefs.putDouble("FStepDistLow", 4.0);
+    if (prefs.containsKey("BackStepAngleHigh")) prefs.remove("BackStepAngleHigh");
+    if (prefs.containsKey("BackStepAngleLow")) prefs.remove("BackStepAngleLow");
+    if (prefs.containsKey("FrontStepAngleHigh")) prefs.remove("FrontStepAngleHigh");
+    if (prefs.containsKey("FrontStepAngleLow")) prefs.remove("FrontStepAngleLow");
+    if (prefs.containsKey("BackStepDist")) prefs.remove("BackStepDist");
+    if (prefs.containsKey("FrontStepDist")) prefs.remove("FrontStepDist");
   }
 }
