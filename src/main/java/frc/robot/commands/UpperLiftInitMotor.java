@@ -33,7 +33,7 @@ public class UpperLiftInitMotor extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.setPosMotor(motor, pos);
+    Robot.uLift.setPosMotor(motor, pos);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -45,13 +45,13 @@ public class UpperLiftInitMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.resetPosMotor(motor, 0.0);
+    Robot.uLift.resetPosMotor(motor, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor(motor);
+    Robot.uLift.stopMotor(motor);
   }
 }
