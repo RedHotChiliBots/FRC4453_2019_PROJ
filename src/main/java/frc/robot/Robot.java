@@ -54,10 +54,10 @@ public class Robot extends TimedRobot {
 
     oi = new OI();
     chassis = new Chassis();
-//    cargo = new CargoGrabber();
-//    uLift = new UpperLift();
+    cargo = new CargoGrabber();
+    uLift = new UpperLift();
     lLift = new LowerLift();
-//    panel = new PanelGrabber();
+    panel = new PanelGrabber();
     climber = new Climber();
     oi.init();
 
