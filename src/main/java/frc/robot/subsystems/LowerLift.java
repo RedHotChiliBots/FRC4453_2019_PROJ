@@ -26,6 +26,12 @@ public class LowerLift extends PIDSubsystem {
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
   private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; //Lead screw 1 in/rev
 
+  /*public static enum Level{
+		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
+  }
+
+  public Level level = Level.LEVEL1;
+  */
   /**
    * Add your docs here.
    */
@@ -123,4 +129,8 @@ public class LowerLift extends PIDSubsystem {
     }
   }
 */
+
+/*  public void goToLevel(RobotMap.LEVEL level){
+    setPos((int) level);
+  }*/
 }

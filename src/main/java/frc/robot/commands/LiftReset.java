@@ -35,7 +35,7 @@ public class LiftReset extends CommandGroup {
 
     addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
     addParallel(new LowerLiftResetMotor(Robot.lLift.motor2));
-//    addParallel(new UpperLiftResetMotor(Robot.uLift.motor1));
-//    addSequential(new UpperLiftResetMotor(Robot.uLift.motor2));
+    addParallel(new UpperLiftResetMotor(Robot.uLift.motor1));
+    addSequential(new UpperLiftResetMotor(Robot.uLift.motor2));
   }
 }

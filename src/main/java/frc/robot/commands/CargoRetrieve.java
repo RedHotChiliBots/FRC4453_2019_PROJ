@@ -7,7 +7,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 
 public class CargoRetrieve extends CommandGroup {
   /**
@@ -30,7 +32,12 @@ public class CargoRetrieve extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new LiftGoToLoadingStation());
+
+    //find line
+    //addParallel() followline
+    addSequential(new ChassisDriveJerk());
+    addSequential(new LiftGoToLevel(Robot.chassis.Level.LOADINGSTATION));
     addSequential(new CargoGrab());
+    //back up 
   }
 }

@@ -15,7 +15,12 @@ import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrip;
 import frc.robot.commands.PanelRelease;
 import frc.robot.commands.SwitchToCargo;
+import frc.robot.commands.SwitchToLevel1;
+import frc.robot.commands.SwitchToLevel2;
+import frc.robot.commands.SwitchToLevel3;
+import frc.robot.commands.SwitchToLoadingStation;
 import frc.robot.commands.SwitchToPanel;
+import frc.robot.commands.SwitchToShip;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -60,8 +65,14 @@ public class OI {
 
   private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
 
-  private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
-  private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+  private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.DPAD_X_AXIS);
+  private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.DPAD_Y_AXIS);
+
+  private JoystickButton switchToLevel1 = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+  private JoystickButton switchToLevel2 = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+  private JoystickButton switchToLevel3 = new JoystickButton(operator, RobotMap.RIGHT_BUMPER);
+  private JoystickButton switchToLoadingStation = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
+  private JoystickButton switchToShip = new JoystickButton(driver, RobotMap.START);
 
   private static final double DEADZONE = 0.2;
 
@@ -76,6 +87,11 @@ public class OI {
     panelGrip.whenPressed(new PanelGrip());
     panelRelease.whenPressed(new PanelRelease());
     climberClimb.whenPressed(new ClimberClimb());
+    switchToLevel1.whenPressed(new SwitchToLevel1());
+    switchToLevel2.whenPressed(new SwitchToLevel2());
+    switchToLevel3.whenPressed(new SwitchToLevel3());
+    switchToLoadingStation.whenPressed(new SwitchToLoadingStation());
+    switchToShip.whenPressed(new SwitchToShip());
   }
 
   public double getDriveX() {

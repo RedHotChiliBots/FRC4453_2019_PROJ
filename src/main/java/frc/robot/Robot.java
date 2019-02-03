@@ -162,7 +162,8 @@ public class Robot extends TimedRobot {
       break;
 
       case 1:
-      SmartDashboard.putString("Mode", Robot.chassis.mode==Chassis.Mode.PANEL?"PANEL":"CARGO");
+      SmartDashboard.putString("Mode", Robot.chassis.mode.name());
+      SmartDashboard.putString("Level", Robot.chassis.level.name());
       SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
       SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
       SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());

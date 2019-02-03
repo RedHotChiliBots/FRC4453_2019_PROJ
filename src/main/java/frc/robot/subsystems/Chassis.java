@@ -48,7 +48,13 @@ public class Chassis extends Subsystem {
 		PANEL, CARGO
 	}
 
+	public static enum Level {
+		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
+	}
+
 	public Mode mode = Mode.PANEL;
+
+	public Level level = Level.LEVEL1;
 
 	double last_world_linear_accel_x;
 	double last_world_linear_accel_y;
@@ -181,6 +187,10 @@ public class Chassis extends Subsystem {
 
 	public void setMode(Mode m) {
 		mode = m;
+	}
+
+	public void setLevel(Level l){
+		level = l;
 	}
 
 	public void findJerk(){

@@ -123,6 +123,7 @@ public class RobotMap {
     public static enum LEVEL {
       LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
     }
+    
     public static enum LIFT {
       UPPER, LOWER
     }

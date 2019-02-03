@@ -8,9 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.Chassis.Level;
 
-public class LiftGoToLevel1 extends Command {
-  public LiftGoToLevel1() {
+public class SwitchToLevel3 extends Command {
+  public SwitchToLevel3() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,12 +25,13 @@ public class LiftGoToLevel1 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.chassis.setLevel(Level.LEVEL3);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
