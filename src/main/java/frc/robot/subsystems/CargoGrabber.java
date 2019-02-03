@@ -24,14 +24,12 @@ public class CargoGrabber extends Subsystem {
   // here. Call these from Commands.
   private WPI_TalonSRX motor1;
   private WPI_TalonSRX motor2;
-  
+
   public static enum CargoMotor {
-    LEFT, 
-    RIGHT, 
-    CENTER
+    LEFT, RIGHT, CENTER
   };
-  
-  public CargoGrabber(){
+
+  public CargoGrabber() {
     motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
     motor1.configFactoryDefault();
     motor2 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor2);
@@ -40,9 +38,9 @@ public class CargoGrabber extends Subsystem {
     SmartDashboard.putData(motor1);
     SmartDashboard.putData(motor2);
   }
-  
+
   @Override
-  public void initDefaultCommand() { //stop
+  public void initDefaultCommand() { // stop
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new CargoStop());
@@ -57,21 +55,21 @@ public class CargoGrabber extends Subsystem {
   public void release(CargoMotor dir) {
     double spd = Robot.prefs.getDouble("CargoRelSpd", 0.5);
     switch (dir) {
-      case LEFT:
-        motor1.set(ControlMode.PercentOutput, spd);
-        break;
-      case RIGHT:
-        motor2.set(ControlMode.PercentOutput, -spd);
-        break;
-      case CENTER:
-        motor1.set(ControlMode.PercentOutput, spd);
-        motor2.set(ControlMode.PercentOutput, -spd);
-        break;
-      default:
+    case LEFT:
+      motor1.set(ControlMode.PercentOutput, spd);
+      break;
+    case RIGHT:
+      motor2.set(ControlMode.PercentOutput, -spd);
+      break;
+    case CENTER:
+      motor1.set(ControlMode.PercentOutput, spd);
+      motor2.set(ControlMode.PercentOutput, -spd);
+      break;
+    default:
     }
   }
 
-  public void stop(){
+  public void stop() {
     motor1.stopMotor();
     motor2.stopMotor();
   }
