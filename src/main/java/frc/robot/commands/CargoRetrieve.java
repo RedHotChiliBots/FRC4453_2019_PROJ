@@ -7,9 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
+
+import frc.robot.RobotMap;
 
 public class CargoRetrieve extends CommandGroup {
   /**
@@ -36,7 +36,7 @@ public class CargoRetrieve extends CommandGroup {
     //find line
     //addParallel() followline
     addSequential(new ChassisDriveJerk());
-    addSequential(new LiftGoToLevel(Robot.chassis.Level.LOADINGSTATION));
+    addSequential(new LiftGoToLevel(RobotMap.LEVEL.LOADINGSTATION));
     addSequential(new CargoGrab());
     //back up 
   }
