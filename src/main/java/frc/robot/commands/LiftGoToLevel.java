@@ -14,6 +14,10 @@ import frc.robot.RobotMap.LEVEL;
 
 public class LiftGoToLevel extends Command {
 
+  // TODO Need to review passed in argument versus get call for Level during
+  // execute()
+  // Argument not used and get argument has warning "Unlikely Argument Type"
+
   public LiftGoToLevel(LEVEL level) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
