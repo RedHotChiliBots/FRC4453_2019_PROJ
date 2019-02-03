@@ -64,8 +64,8 @@ public class Chassis extends Subsystem {
 	// Define navX board
 	public AHRS ahrs = null;
 
-	private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per wheel revs. TODO
-	private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;//TODO
+	private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per wheel revs.
+	private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096;	// Quad encoder, counts per rev
 	private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
 	private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION) / (CHASSIS_WHEEL_DIAMETER * Math.PI);
 

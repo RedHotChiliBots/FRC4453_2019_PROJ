@@ -45,14 +45,14 @@ public class RobotMap {
   //============= SOLENOIDS (dio) =============
 
   //panel grabber
-  public static final int PanelGrabberGripSolenoid = 0; // TODO
+  public static final int PanelGrabberGripSolenoid = 0;
   public static final int PanelGrabberReleaseSolenoid = 1;
 
   //climber solenoids
-  public static final int ClimberFrontUpSolenoid = 2; // TODO
+  public static final int ClimberFrontUpSolenoid = 2;
   public static final int ClimberFrontDownSolenoid = 3;
 
-  public static final int ClimberBackUpSolenoid = 4; // TODO
+  public static final int ClimberBackUpSolenoid = 4;
   public static final int ClimberBackDownSolenoid = 5;
 
   public static final DoubleSolenoid.Value ClimberFrontUp = DoubleSolenoid.Value.kForward;
