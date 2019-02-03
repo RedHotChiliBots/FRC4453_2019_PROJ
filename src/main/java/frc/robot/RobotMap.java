@@ -128,20 +128,21 @@ public class RobotMap {
       UPPER, LOWER
     }
   
+    // Heights are inches above base of 19" (Level 1)
     public static final Map<LIFT, Map<LEVEL,Double>> height = new HashMap<LIFT,Map<LEVEL,Double>>() {{
       put(LIFT.UPPER, new HashMap<LEVEL,Double>() {{
-        put(LEVEL.LEVEL1, 0.0);
-        put(LEVEL.LEVEL2, 28.0);
-        put(LEVEL.LEVEL3, 28.0);
-        put(LEVEL.LOADINGSTATION, 0.0);
-        put(LEVEL.SHIP, 0.0);
+        put(LEVEL.LEVEL3, 28.0);          // Score Panel & Cargo in Ship & Rocket
+        put(LEVEL.LEVEL2, 28.0);          // Score Panel & Cargo in Ship & Rocket
+        put(LEVEL.LOADINGSTATION, 16.0);  // Load Cargo
+        put(LEVEL.SHIP, 4.0);             // Score Cargo in Ship
+        put(LEVEL.LEVEL1, 0.0);           // Load Panel; Score Panel & Cargo in Ship & Rocket
       }});
       put(LIFT.LOWER, new HashMap<LEVEL,Double>() {{
-        put(LEVEL.LEVEL1, 0.0);
-        put(LEVEL.LEVEL2, 0.0);
-        put(LEVEL.LEVEL3, 28.0);
-        put(LEVEL.LOADINGSTATION, 0.0);
-        put(LEVEL.SHIP, 0.0);
+        put(LEVEL.LEVEL3, 28.0);          // Score Panel & Cargo in Ship & Rocket
+        put(LEVEL.LEVEL2, 0.0);           // Score Panel & Cargo in Ship & Rocket
+        put(LEVEL.LOADINGSTATION, 0.0);   // Load Cargo
+        put(LEVEL.SHIP, 0.0);             // Score Cargo in Ship
+        put(LEVEL.LEVEL1, 0.0);           // Load Panel; Score Panel & Cargo in Ship & Rocket
       }});
     }};
 }
