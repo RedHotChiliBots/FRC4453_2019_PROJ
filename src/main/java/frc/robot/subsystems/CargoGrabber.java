@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.CargoStop;
+import frc.robot.commands.CargoTeleop;
 
 /**
  * Add your docs here.
@@ -43,7 +44,13 @@ public class CargoGrabber extends Subsystem {
   public void initDefaultCommand() { // stop
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new CargoStop());
+    setDefaultCommand(new CargoTeleop());
+    // setDefaultCommand(new CargoStop());
+  }
+
+  public void setGrabRel(double l, double r) {
+    motor1.set(ControlMode.PercentOutput, l);
+    motor2.set(ControlMode.PercentOutput, r);
   }
 
   public void grab() {

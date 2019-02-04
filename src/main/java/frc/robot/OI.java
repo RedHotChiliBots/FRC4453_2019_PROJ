@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.CargoTeleop;
 import frc.robot.commands.ClimberClimb;
 import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrip;
@@ -55,12 +56,12 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
 
-  private XboxController driver   = new XboxController(0);
+  private XboxController driver = new XboxController(0);
   private XboxController operator = new XboxController(1);
 
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.A_BUTTON);
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.B_BUTTON);
-  
+
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
   private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
@@ -76,11 +77,11 @@ public class OI {
 
   private static final double DEADZONE = 0.2;
 
-  public OI(){
+  public OI() {
 
   }
 
-  public void init(){
+  public void init() {
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
     liftReset.whenPressed(new LiftStartup());
@@ -111,22 +112,24 @@ public class OI {
 
   public double getCargoL() {
     int v = operator.getPOV();
-    double spd;
-    if (v > 180) {
-      spd = (((270-v)-90)/2.0)+0.5;
-    } else {
-      spd = (270-v)-90;
-    }
-    return spd;
+    return calcCargo(v);
   }
 
   public double getCargoR() {
     int v = operator.getPOV();
-    double spd;
-    if (v > 180) {
-      spd = (270-v)-90;
+    return calcCargo(Math.abs(360 - v));
+  }
+
+  private double calcCargo(int v) {
+    double spd = 0.0;
+    if ((v > 135) && (v < 225)) {
+      spd = -1.0;
+    } else if (v >= 225) {
+      spd = 1.0;
+    } else if (v > 90) {
+      spd = 0.0;
     } else {
-      spd = (((270-v)-90)/2.0)+0.5;
+      spd = 1.0 - (v / 90.0);
     }
     return spd;
   }
