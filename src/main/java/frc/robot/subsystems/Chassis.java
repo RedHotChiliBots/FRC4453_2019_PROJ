@@ -23,6 +23,7 @@ import com.kauailabs.navx.frc.AHRS;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ChassisDriveTeleop;
+import frc.robot.subsystems.CargoGrabber.CargoMotor;
 
 /**
  * Add your docs here.
@@ -48,7 +49,7 @@ public class Chassis extends Subsystem {
 		PANEL, CARGO
 	}
 
-	public static enum Level {
+	public enum Level {
 		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
 	}
 
@@ -232,4 +233,25 @@ public class Chassis extends Subsystem {
 		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
+	public void cargoPanelGrab(Mode mode) {
+		if (mode == Mode.PANEL) {
+			Robot.panel.grab();
+		} else {
+			Robot.cargo.grab();
+		}
+	}
+
+	public void cargoPanelRelease(Mode mode, double l, double r) {
+		if (mode == Mode.PANEL) {
+			Robot.panel.release();
+		} else {
+			Robot.cargo.setGrabRel(l, r);
+		}
+	}
+
+	/*
+	 * public void setPos(double pos) {
+	 * 
+	 * frontleft.set(ControlMode.Position, (int) (pos * CHASSIS_TICKS_PER_INCH)); }
+	 */
 }

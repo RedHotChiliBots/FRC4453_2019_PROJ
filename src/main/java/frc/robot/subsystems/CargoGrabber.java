@@ -28,7 +28,9 @@ public class CargoGrabber extends Subsystem {
 
   public static enum CargoMotor {
     LEFT, RIGHT, CENTER
-  };
+  }
+
+  // public CargoMotor Direction = CargoMotor.CENTER;
 
   public CargoGrabber() {
     motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
@@ -80,5 +82,9 @@ public class CargoGrabber extends Subsystem {
     motor1.stopMotor();
     motor2.stopMotor();
   }
+
+  /*
+   * public void setDirection(CargoMotor dir) { Direction = dir; }
+   */
 
 }
