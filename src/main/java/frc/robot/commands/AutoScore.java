@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
-import frc.robot.RobotMap.LEVEL;
+import frc.robot.subsystems.Chassis.Level;
 
 public class AutoScore extends CommandGroup {
   /**
@@ -35,8 +35,8 @@ public class AutoScore extends CommandGroup {
     // arm.
     // addParallel(new Follow Line);
     addParallel(new ChassisDriveJerk());
-    addSequential(new LiftGoToLevel(Robot.chassis.Level));
+    addSequential(new LiftGoToLevel(Robot.chassis.level));
     addSequential(new CargoPanelRelease());
-    addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
+    addSequential(new LiftGoToLevel(Level.LEVEL1));
   }
 }

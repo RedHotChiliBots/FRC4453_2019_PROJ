@@ -9,47 +9,45 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.Chassis;
 
-public class LiftGoToLevel extends Command {
-
-  // TODO Need to review passed in argument versus get call for Level during
-  // execute()
-  // Argument not used and get argument has warning "Unlikely Argument Type"
-
-  public LiftGoToLevel(Chassis.Level level) {
+public class ChassisDriveDist extends Command {
+  public ChassisDriveDist() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    System.out.println("Drive Dist constructed.");
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Drive Dist initialize.");
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.setPosMotor(Robot.lLift.motor1, RobotMap.height.get(RobotMap.LIFT.LOWER).get(Robot.chassis.level));
-    Robot.uLift.setPosMotor(Robot.uLift.motor1, RobotMap.height.get(RobotMap.LIFT.UPPER).get(Robot.chassis.level));
+    // System.out.println("Drive execute.");
+    Robot.chassis.driveTeleop();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math.abs(Robot.lLift.motor1.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0)
-        && Math.abs(Robot.uLift.motor1.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("Drive end.");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("Drive interrupted.");
   }
 }

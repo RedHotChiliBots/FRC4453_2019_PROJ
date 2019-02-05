@@ -33,8 +33,8 @@ public class AutoRetrieve extends CommandGroup {
     // arm.
     // follow line
     addParallel(new ChassisDriveJerk());
-    addSequential(new LiftGoToLevel(LEVEL.LOADINGSTATION));
+    addSequential(new LiftGoToLevel(Level.LOADINGSTATION));
     addSequential(new CargoPanelGrab());
-    addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
+    addSequential(new LiftGoToLevel(Level.LEVEL1));
   }
 }
