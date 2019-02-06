@@ -222,6 +222,18 @@ public class Chassis extends Subsystem {
 		collisionDetected = false;
 	}
 
+	public double getPitch() {
+		return ahrs.getRoll();
+	}
+
+	public double getRoll() {
+		return ahrs.getPitch();
+	}
+
+	public double getYaw() {
+		return ahrs.getYaw();
+	}
+
 	public double getLoPressure() {
 		return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0; // ToDo
 	}
