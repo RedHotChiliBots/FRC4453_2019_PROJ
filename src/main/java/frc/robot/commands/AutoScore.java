@@ -16,7 +16,7 @@ public class AutoScore extends CommandGroup {
    * Add your docs here.
    */
   public AutoScore() {
-    // private final Level level = Robot.chassis.level;
+    // private LEVEL level = (LEVEL)Robot.chassis.level;
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -34,9 +34,10 @@ public class AutoScore extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     // addParallel(new Follow Line);
-    addParallel(new ChassisDriveJerk());
-    addSequential(new LiftGoToLevel(Robot.chassis.Level));
+    addSequential(new LiftGoToLevel(Robot.chassis.level));
+    addSequential(new ChassisDriveJerk());
     addSequential(new CargoPanelRelease());
+    addSequential(new ChassisAutoDriveDist());
     addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
   }
 }

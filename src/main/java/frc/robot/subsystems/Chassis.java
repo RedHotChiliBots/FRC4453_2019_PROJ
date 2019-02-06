@@ -22,6 +22,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.LEVEL;
 import frc.robot.commands.ChassisDriveTeleop;
 import frc.robot.subsystems.CargoGrabber.CargoMotor;
 
@@ -31,10 +32,10 @@ import frc.robot.subsystems.CargoGrabber.CargoMotor;
 public class Chassis extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	private WPI_TalonSRX frontleft;
-	private WPI_TalonSRX frontright;
-	private WPI_TalonSRX backleft;
-	private WPI_TalonSRX backright;
+	public WPI_TalonSRX frontleft;
+	public WPI_TalonSRX frontright;
+	public WPI_TalonSRX backleft;
+	public WPI_TalonSRX backright;
 	private MecanumDrive drive;
 
 	private AnalogInput hiPressureSensor;
@@ -49,13 +50,9 @@ public class Chassis extends Subsystem {
 		PANEL, CARGO
 	}
 
-	public enum Level {
-		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
-	}
-
 	public Mode mode = Mode.PANEL;
 
-	public Level level = Level.LEVEL1;
+	public LEVEL level = LEVEL.LEVEL1;
 
 	double last_world_linear_accel_x;
 	double last_world_linear_accel_y;
@@ -184,7 +181,7 @@ public class Chassis extends Subsystem {
 		mode = m;
 	}
 
-	public void setLevel(Level l) {
+	public void setLevel(LEVEL l) {
 		level = l;
 	}
 
@@ -249,9 +246,24 @@ public class Chassis extends Subsystem {
 		}
 	}
 
-	/*
-	 * public void setPos(double pos) {
-	 * 
-	 * frontleft.set(ControlMode.Position, (int) (pos * CHASSIS_TICKS_PER_INCH)); }
-	 */
+	public void setPos(double pos) {
+		frontleft.set(ControlMode.Position, (int) (pos * CHASSIS_TICKS_PER_INCH));
+		frontleft.set(ControlMode.Position, pos);
+		frontright.set(ControlMode.Follower, frontleft.getDeviceID());
+		backleft.set(ControlMode.Follower, frontleft.getDeviceID());
+		backright.set(ControlMode.Follower, frontleft.getDeviceID());
+	}
+
+	public void reset() {
+		frontleft.setSelectedSensorPosition((int) (0.0 * CHASSIS_TICKS_PER_INCH));
+		frontleft.set(ControlMode.Position, (int) (0.0 * CHASSIS_TICKS_PER_INCH));
+		frontright.set(ControlMode.Follower, frontleft.getDeviceID());
+		backleft.set(ControlMode.Follower, frontleft.getDeviceID());
+		backright.set(ControlMode.Follower, frontleft.getDeviceID());
+	}
+
+	public void setPercentOutput() {
+		frontleft.set(ControlMode.setPercentOutput, 0.0);
+	}
+
 }

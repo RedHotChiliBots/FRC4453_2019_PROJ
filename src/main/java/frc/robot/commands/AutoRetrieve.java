@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Chassis.Level;
 
 public class AutoRetrieve extends CommandGroup {
@@ -33,8 +35,13 @@ public class AutoRetrieve extends CommandGroup {
     // arm.
     // follow line
     addParallel(new ChassisDriveJerk());
-    addSequential(new LiftGoToLevel(LEVEL.LOADINGSTATION));
+    if (Robot.chassis.mode == Robot.chassis.mode.PANEL) {
+      addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
+    } else {
+      addSequential(new LiftGoToLevel(RobotMap.LEVEL.LOADINGSTATION));
+    }
     addSequential(new CargoPanelGrab());
-    addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
+    addSequential(new ChassisAutoDriveDist());
+    addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
   }
 }

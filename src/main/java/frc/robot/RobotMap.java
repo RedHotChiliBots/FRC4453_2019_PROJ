@@ -104,7 +104,7 @@ public class RobotMap {
   }
 
   // Heights are inches above base of 19" (Level 1)
-  public static final Map<LIFT, Map<LEVEL, Double>> height = new HashMap<LIFT, Map<LEVEL, Double>>() {
+  public final static Map<LIFT, Map<LEVEL, Double>> height = new HashMap<LIFT, Map<LEVEL, Double>>() {
     {
       put(LIFT.UPPER, new HashMap<LEVEL, Double>() {
         {

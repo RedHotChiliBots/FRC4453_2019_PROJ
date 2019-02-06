@@ -42,10 +42,9 @@ public class Robot extends TimedRobot {
 
   public static Preferences prefs = null;
 
-
   /**
-   * This function is run when the robot is first started up and should be
-   * used for initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for initialization code.
    */
   @Override
   public void robotInit() {
@@ -75,12 +74,13 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
@@ -89,9 +89,9 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called once each time the robot enters Disabled mode.
-   * You can use it to reset any subsystem information you want to clear when
-   * the robot is disabled.
+   * This function is called once each time the robot enters Disabled mode. You
+   * can use it to reset any subsystem information you want to clear when the
+   * robot is disabled.
    */
   @Override
   public void disabledInit() {
@@ -104,14 +104,15 @@ public class Robot extends TimedRobot {
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString code to get the auto name from the text box below the Gyro
+   * between different autonomous modes using the dashboard. The sendable chooser
+   * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+   * remove all of the chooser code and uncomment the getString code to get the
+   * auto name from the text box below the Gyro
    *
-   * <p>You can add additional auto modes by adding additional commands to the
-   * chooser code above (like the commented example) or additional comparisons
-   * to the switch structure below with additional strings & commands.
+   * <p>
+   * You can add additional auto modes by adding additional commands to the
+   * chooser code above (like the commented example) or additional comparisons to
+   * the switch structure below with additional strings & commands.
    */
   @Override
   public void autonomousInit() {
@@ -146,22 +147,22 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-/**
- * 
- */
+  /**
+   * 
+   */
   private int i = 0;
 
   private void telemetry() {
-    switch(i){
-      case 0:
+    switch (i) {
+    case 0:
       SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
-      SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate()); 
+      SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());
       SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
-      SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected()); 
+      SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected());
       i++;
       break;
 
-      case 1:
+    case 1:
       SmartDashboard.putString("Mode", Robot.chassis.mode.name());
       SmartDashboard.putString("Level", Robot.chassis.level.name());
       SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
@@ -170,7 +171,7 @@ public class Robot extends TimedRobot {
       i++;
       break;
 
-      case 2:
+    case 2:
       SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
       SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
       SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
@@ -178,7 +179,7 @@ public class Robot extends TimedRobot {
       i++;
       break;
 
-      case 3:
+    case 3:
       SmartDashboard.putNumber("Lo Pressure", Robot.chassis.getLoPressure());
       SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
       SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());
@@ -186,7 +187,7 @@ public class Robot extends TimedRobot {
       i++;
       break;
 
-      case 4:
+    case 4:
       SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
       SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
       SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());
@@ -195,29 +196,52 @@ public class Robot extends TimedRobot {
     }
   }
 
-
   private void initPrefs() {
-    if (!prefs.containsKey("LLMotorReset")) prefs.putDouble("LLMotorReset", -1.0);
-    if (!prefs.containsKey("CurrentThreshold")) prefs.putDouble("CurrentThreshold", 9.0);
-    if (!prefs.containsKey("LiftPosError")) prefs.putDouble("LiftPosError", 5.0);
-    if (!prefs.containsKey("FStepDistHigh")) prefs.putDouble("FStepDistHigh", 10.0);
-    if (!prefs.containsKey("BStepDistHigh")) prefs.putDouble("BStepDistHigh", 10.0);
-    if (!prefs.containsKey("FStepAngleHigh")) prefs.putDouble("FStepAngleHigh", 18.0);
-    if (!prefs.containsKey("FStepAngleLow")) prefs.putDouble("FStepAngleLow", 14.0);
-    if (!prefs.containsKey("BStepAngleHigh")) prefs.putDouble("BStepAngleHigh", 2.0);
-    if (!prefs.containsKey("BStepAngleLow")) prefs.putDouble("BStepAngleLow", -2.0);
-    if (!prefs.containsKey("BStepDistLow")) prefs.putDouble("BStepDistLow", 4.0);
-    if (!prefs.containsKey("FStepDistLow")) prefs.putDouble("FStepDistLow", 4.0);
-    if (!prefs.containsKey("CargoGrabSpd")) prefs.getDouble("CargoGrabSpd", 0.5);
-    if (!prefs.containsKey("CargoRelSpd")) prefs.getDouble("CargoRelSpd", 0.5);
-    if (prefs.containsKey("BackStepAngleHigh")) prefs.remove("BackStepAngleHigh");
-    if (prefs.containsKey("BackStepAngleLow")) prefs.remove("BackStepAngleLow");
-    if (prefs.containsKey("FrontStepAngleHigh")) prefs.remove("FrontStepAngleHigh");
-    if (prefs.containsKey("FrontStepAngleLow")) prefs.remove("FrontStepAngleLow");
-    if (prefs.containsKey("BackStepDist")) prefs.remove("BackStepDist");
-    if (prefs.containsKey("FrontStepDist")) prefs.remove("FrontStepDist");
-    if (prefs.containsKey("BackStepDistHigh")) prefs.remove("BackStepDistHigh");
-    if (prefs.containsKey("FrontStepAngle")) prefs.remove("FrontStepAngle");
-    if (prefs.containsKey("BackStepAngle")) prefs.remove("BackStepAngle");
-   }
+    if (!prefs.containsKey("LLMotorReset"))
+      prefs.putDouble("LLMotorReset", -1.0);
+    if (!prefs.containsKey("CurrentThreshold"))
+      prefs.putDouble("CurrentThreshold", 9.0);
+    if (!prefs.containsKey("LiftPosError"))
+      prefs.putDouble("LiftPosError", 5.0);
+    if (!prefs.containsKey("FStepDistHigh"))
+      prefs.putDouble("FStepDistHigh", 10.0);
+    if (!prefs.containsKey("BStepDistHigh"))
+      prefs.putDouble("BStepDistHigh", 10.0);
+    if (!prefs.containsKey("FStepAngleHigh"))
+      prefs.putDouble("FStepAngleHigh", 18.0);
+    if (!prefs.containsKey("FStepAngleLow"))
+      prefs.putDouble("FStepAngleLow", 14.0);
+    if (!prefs.containsKey("BStepAngleHigh"))
+      prefs.putDouble("BStepAngleHigh", 2.0);
+    if (!prefs.containsKey("BStepAngleLow"))
+      prefs.putDouble("BStepAngleLow", -2.0);
+    if (!prefs.containsKey("BStepDistLow"))
+      prefs.putDouble("BStepDistLow", 4.0);
+    if (!prefs.containsKey("FStepDistLow"))
+      prefs.putDouble("FStepDistLow", 4.0);
+    if (!prefs.containsKey("CargoGrabSpd"))
+      prefs.getDouble("CargoGrabSpd", 0.5);
+    if (!prefs.containsKey("CargoRelSpd"))
+      prefs.getDouble("CargoRelSpd", 0.5);
+    if (!prefs.containsKey("ChassisDistAllowedErr"))
+      prefs.getDouble("ChassisDistAllowedErr", 10);
+    if (prefs.containsKey("BackStepAngleHigh"))
+      prefs.remove("BackStepAngleHigh");
+    if (prefs.containsKey("BackStepAngleLow"))
+      prefs.remove("BackStepAngleLow");
+    if (prefs.containsKey("FrontStepAngleHigh"))
+      prefs.remove("FrontStepAngleHigh");
+    if (prefs.containsKey("FrontStepAngleLow"))
+      prefs.remove("FrontStepAngleLow");
+    if (prefs.containsKey("BackStepDist"))
+      prefs.remove("BackStepDist");
+    if (prefs.containsKey("FrontStepDist"))
+      prefs.remove("FrontStepDist");
+    if (prefs.containsKey("BackStepDistHigh"))
+      prefs.remove("BackStepDistHigh");
+    if (prefs.containsKey("FrontStepAngle"))
+      prefs.remove("FrontStepAngle");
+    if (prefs.containsKey("BackStepAngle"))
+      prefs.remove("BackStepAngle");
+  }
 }
