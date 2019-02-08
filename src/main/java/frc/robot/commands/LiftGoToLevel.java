@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.LEVEL;
 import frc.robot.subsystems.Chassis;
 
 public class LiftGoToLevel extends Command {
@@ -17,10 +18,12 @@ public class LiftGoToLevel extends Command {
   // TODO Need to review passed in argument versus get call for Level during
   // execute()
   // Argument not used and get argument has warning "Unlikely Argument Type"
+  private LEVEL level = null;
 
-  public LiftGoToLevel(Chassis.Level level) {
+  public LiftGoToLevel(LEVEL level) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    this.level = level;
   }
 
   // Called just before this Command runs the first time
@@ -31,8 +34,13 @@ public class LiftGoToLevel extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.setPosMotor(Robot.lLift.motor1, RobotMap.height.get(RobotMap.LIFT.LOWER).get(Robot.chassis.level));
-    Robot.uLift.setPosMotor(Robot.uLift.motor1, RobotMap.height.get(RobotMap.LIFT.UPPER).get(Robot.chassis.level));
+    if (level == LEVEL.SELECTED) {
+      Robot.lLift.setPosMotor(Robot.lLift.motor1, RobotMap.height.get(RobotMap.LIFT.LOWER).get(RobotMap.level));
+      Robot.uLift.setPosMotor(Robot.uLift.motor1, RobotMap.height.get(RobotMap.LIFT.UPPER).get(RobotMap.level));
+    } else {
+      Robot.lLift.setPosMotor(Robot.lLift.motor1, RobotMap.height.get(RobotMap.LIFT.LOWER).get(level));
+      Robot.uLift.setPosMotor(Robot.uLift.motor1, RobotMap.height.get(RobotMap.LIFT.UPPER).get(level));
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -96,7 +96,13 @@ public class RobotMap {
       BUTTON_9 = 9, BUTTON_10 = 10, BUTTON_11 = 11;
 
   public static enum LEVEL {
-    LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
+    LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP, SELECTED
+  }
+
+  public static LEVEL level;
+
+  public static void setLevel(LEVEL l) {
+    level = l;
   }
 
   public static enum LIFT {

@@ -25,6 +25,7 @@ public class ChassisAutoDriveDist extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.chassis.driveChassis(0.0, 0.75, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,12 +38,13 @@ public class ChassisAutoDriveDist extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.chassis.frontleft.setPercentOutput();
+    Robot.chassis.setPercentOut();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.chassis.setPercentOut();
   }
 }

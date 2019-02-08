@@ -181,10 +181,6 @@ public class Chassis extends Subsystem {
 		mode = m;
 	}
 
-	public void setLevel(LEVEL l) {
-		level = l;
-	}
-
 	public void findJerk() {
 		double curr_world_linear_accel_x = ahrs.getWorldLinearAccelX();
 		double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
@@ -260,22 +256,24 @@ public class Chassis extends Subsystem {
 
 	public void setPos(double pos) {
 		frontleft.set(ControlMode.Position, (int) (pos * CHASSIS_TICKS_PER_INCH));
-		frontleft.set(ControlMode.Position, pos);
-		frontright.set(ControlMode.Follower, frontleft.getDeviceID());
-		backleft.set(ControlMode.Follower, frontleft.getDeviceID());
-		backright.set(ControlMode.Follower, frontleft.getDeviceID());
 	}
 
 	public void reset() {
 		frontleft.setSelectedSensorPosition((int) (0.0 * CHASSIS_TICKS_PER_INCH));
+	}
+
+	public void setPercentOut() {
+		frontleft.set(ControlMode.PercentOutput, 1.0);
+		frontright.set(ControlMode.PercentOutput, 1.0);
+		backleft.set(ControlMode.PercentOutput, 1.0);
+		backright.set(ControlMode.PercentOutput, 1.0);
+	}
+
+	public void setFollow() {
 		frontleft.set(ControlMode.Position, (int) (0.0 * CHASSIS_TICKS_PER_INCH));
 		frontright.set(ControlMode.Follower, frontleft.getDeviceID());
 		backleft.set(ControlMode.Follower, frontleft.getDeviceID());
 		backright.set(ControlMode.Follower, frontleft.getDeviceID());
-	}
-
-	public void setPercentOutput() {
-		frontleft.set(ControlMode.setPercentOutput, 0.0);
 	}
 
 }

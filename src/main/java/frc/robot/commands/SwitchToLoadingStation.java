@@ -9,7 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Chassis.Level;
+import frc.robot.RobotMap;
+import frc.robot.RobotMap.LEVEL;
 
 public class SwitchToLoadingStation extends Command {
   public SwitchToLoadingStation() {
@@ -25,7 +26,7 @@ public class SwitchToLoadingStation extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.setLevel(Level.LOADINGSTATION);
+    RobotMap.setLevel(LEVEL.LOADINGSTATION);
   }
 
   // Make this return true when this Command no longer needs to run execute()
