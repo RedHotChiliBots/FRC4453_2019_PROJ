@@ -71,6 +71,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(climber);
     SmartDashboard.putData("DriveJerk", new ChassisDriveJerk());
     SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
+
+    Robot.climber.retractback();
+    Robot.climber.retractfront();
   }
 
   /**
@@ -95,6 +98,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    Robot.climber.retractback();
+    Robot.climber.retractfront();
   }
 
   @Override

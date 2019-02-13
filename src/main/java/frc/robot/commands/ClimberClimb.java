@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -34,12 +35,14 @@ public class ClimberClimb extends CommandGroup {
     // arm.
 
     System.out.println("Entering ClimberClimb");
-    
-    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbFront, RobotMap.ClimberFrontDown));
+
+    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbFront, RobotMap.ClimberUp));
+    addSequential(new WaitCommand(0.5));
     addSequential(new ClimberDrive(Robot.climber.climbFrontDistanceSensor));
-    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbFront, RobotMap.ClimberFrontUp));
-    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbBack, RobotMap.ClimberBackDown));
+    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbFront, RobotMap.ClimberDown));
+    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbBack, RobotMap.ClimberUp));
+    addSequential(new WaitCommand(0.5));
     addSequential(new ClimberDrive(Robot.climber.climbBackDistanceSensor));
-    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbBack, RobotMap.ClimberBackUp));
+    addSequential(new ClimberSolenoidSwitch(Robot.climber.climbBack, RobotMap.ClimberDown));
   }
 }

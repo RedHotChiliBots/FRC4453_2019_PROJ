@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CargoTeleop;
 import frc.robot.commands.ClimberClimb;
+import frc.robot.commands.ClimberExtend;
+import frc.robot.commands.ClimberRetract;
 import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrip;
 import frc.robot.commands.PanelRelease;
@@ -75,6 +77,9 @@ public class OI {
   private JoystickButton switchToLoadingStation = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
   private JoystickButton switchToShip = new JoystickButton(driver, RobotMap.START);
 
+  private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
+  private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
+
   private static final double DEADZONE = 0.2;
 
   public OI() {
@@ -93,6 +98,8 @@ public class OI {
     switchToLevel3.whenPressed(new SwitchToLevel3());
     switchToLoadingStation.whenPressed(new SwitchToLoadingStation());
     switchToShip.whenPressed(new SwitchToShip());
+    climberDown.whenPressed(new ClimberExtend());
+    climberUp.whenPressed(new ClimberRetract());
   }
 
   public double getDriveX() {

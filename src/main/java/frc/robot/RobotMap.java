@@ -55,11 +55,8 @@ public class RobotMap {
   public static final int ClimberBackUpSolenoid = 4;
   public static final int ClimberBackDownSolenoid = 5;
 
-  public static final DoubleSolenoid.Value ClimberFrontUp = DoubleSolenoid.Value.kForward;
-  public static final DoubleSolenoid.Value ClimberFrontDown = DoubleSolenoid.Value.kReverse;
-
-  public static final DoubleSolenoid.Value ClimberBackUp = DoubleSolenoid.Value.kForward;
-  public static final DoubleSolenoid.Value ClimberBackDown = DoubleSolenoid.Value.kReverse;
+  public static final DoubleSolenoid.Value ClimberUp = DoubleSolenoid.Value.kForward;
+  public static final DoubleSolenoid.Value ClimberDown = DoubleSolenoid.Value.kReverse;
 
   // ============= SENSORS (analog) =============
 

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.ClimberRetract;
 
 /**
  * Add your docs here.
@@ -28,32 +29,36 @@ public class Climber extends Subsystem {
   public AnalogInput climbBackDistanceSensor = null;
 
   public Climber() {
+    System.out.println("Climber init");
     climbFront = new DoubleSolenoid(RobotMap.ClimberFrontUpSolenoid, RobotMap.ClimberFrontDownSolenoid);
     climbBack = new DoubleSolenoid(RobotMap.ClimberBackUpSolenoid, RobotMap.ClimberBackDownSolenoid);
     climbFrontDistanceSensor = new AnalogInput(RobotMap.ClimbFrontDistanceSensor);
     climbBackDistanceSensor = new AnalogInput(RobotMap.ClimbBackDistanceSensor);
+    retractfront();
+    retractback();
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    // setDefaultCommand(new ClimberRetract());
   }
 
   public void extendfront() {
-    climbFront.set(Value.kForward);
+    climbFront.set(RobotMap.ClimberUp);
   }
 
   public void extendback() {
-    climbBack.set(Value.kForward);
+    climbBack.set(RobotMap.ClimberUp);
   }
 
   public void retractfront() {
-    climbFront.set(Value.kReverse);
+    climbFront.set(RobotMap.ClimberDown);
   }
 
   public void retractback() {
-    climbFront.set(Value.kReverse);
+    climbBack.set(RobotMap.ClimberDown);
   }
 
   private static final double MAXDIST = 30.0; // cm
@@ -85,13 +90,13 @@ public class Climber extends Subsystem {
   }
 
   public boolean isFrontClimb() {
-    return Robot.chassis.getPitch() < Robot.prefs.getDouble("FStepAngleHigh", 18.0)
-        && Robot.chassis.getPitch() > Robot.prefs.getDouble("FStepAngleLow", 14.0);
+    return Robot.chassis.getPitch() > -Robot.prefs.getDouble("FStepAngleHigh", 18.0)
+        && Robot.chassis.getPitch() < -Robot.prefs.getDouble("FStepAngleLow", 14.0);
   }
 
   public boolean isBackClimb() {
-    return Robot.chassis.getPitch() < Robot.prefs.getDouble("BStepAngleHigh", 2.0)
-        && Robot.chassis.getPitch() > Robot.prefs.getDouble("BStepAngleLow", -2.0);
+    return Robot.chassis.getPitch() > -Robot.prefs.getDouble("BStepAngleHigh", 2.0)
+        && Robot.chassis.getPitch() < -Robot.prefs.getDouble("BStepAngleLow", -2.0);
   }
 
   public boolean isFrontStep() {
@@ -102,12 +107,13 @@ public class Climber extends Subsystem {
     return isBackClimb() && getDistBackSensor() < Robot.prefs.getDouble("BackStepDist", 2.0);
   }
 
+  // took out loo for angle
   public boolean isStep(AnalogInput distSensor) {
     if (distSensor == climbFrontDistanceSensor) {
-      return isFrontClimb() && getDistSensor(distSensor) < Robot.prefs.getDouble("FStepDistHigh", 10.0)
+      return getDistSensor(distSensor) < Robot.prefs.getDouble("FStepDistHigh", 10.0)
           && getDistSensor(distSensor) > Robot.prefs.getDouble("FStepDistLow", 4.0);
     } else {
-      return isBackClimb() && getDistSensor(distSensor) < Robot.prefs.getDouble("BStepDistHigh", 10.0)
+      return getDistSensor(distSensor) < Robot.prefs.getDouble("BStepDistHigh", 10.0)
           && getDistSensor(distSensor) > Robot.prefs.getDouble("BStepDistLow", 4.0);
     }
   }

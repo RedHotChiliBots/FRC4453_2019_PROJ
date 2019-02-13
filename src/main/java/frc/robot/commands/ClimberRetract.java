@@ -7,61 +7,45 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Climber;
 
-public class ClimberSolenoidSwitch extends Command {
-
-  private DoubleSolenoid solenoid = null;
-  private Value value = null;
-
-  public ClimberSolenoidSwitch(DoubleSolenoid solenoid, Value value) {
+public class ClimberRetract extends Command {
+  public ClimberRetract() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    // requires(Robot.climber);
-    this.solenoid = solenoid;
-    this.value = value;
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Init ClimberSolenoidSwitch");
+    System.out.println("ClimberRetract Init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.cmdSolenoid(solenoid, value);
+    Robot.climber.retractback();
+    Robot.climber.retractfront();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean result = false;
-    if (solenoid == Robot.climber.climbFront) {
-      result = Robot.chassis.ahrs.getRoll() > -Robot.prefs.getDouble("FStepAngleHigh", 18.0)
-          && Robot.chassis.ahrs.getRoll() < -Robot.prefs.getDouble("FStepAngleLow", 14.0);
-    } else {
-      result = Robot.chassis.ahrs.getRoll() > -Robot.prefs.getDouble("BStepAngleHigh", 2.0)
-          && Robot.chassis.ahrs.getRoll() < -Robot.prefs.getDouble("BStepAngleLow", -2.0);
-    }
-    if (result)
-      System.out.println("Finish ClimberSolenoidSwitch");
-    return result;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Ending ClimberSolenoidSwitch");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("ClimberRetract Interrupted");
   }
 }

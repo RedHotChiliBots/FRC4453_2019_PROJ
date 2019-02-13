@@ -263,17 +263,28 @@ public class Chassis extends Subsystem {
 	}
 
 	public void setPercentOut() {
-		frontleft.set(ControlMode.PercentOutput, 1.0);
-		frontright.set(ControlMode.PercentOutput, 1.0);
-		backleft.set(ControlMode.PercentOutput, 1.0);
-		backright.set(ControlMode.PercentOutput, 1.0);
+		frontleft.set(ControlMode.PercentOutput, 0.0);
+		frontright.set(ControlMode.PercentOutput, 0.0);
+		backleft.set(ControlMode.PercentOutput, 0.0);
+		backright.set(ControlMode.PercentOutput, 0.0);
 	}
 
+	private static final double mph = 3.0;
+	private static final double inches = mph * 5280.0 * 12.0;
+	private static final double mSec = 1000.0;
+	private static final double cpr = 4096;
+	private static final int vel = (int) (((inches / mSec) * 100) * cpr);
+
 	public void setFollow() {
+		reset();
+		// TalonSRXPIDSetConfiguration pid =
 		frontleft.set(ControlMode.Position, (int) (0.0 * CHASSIS_TICKS_PER_INCH));
 		frontright.set(ControlMode.Follower, frontleft.getDeviceID());
 		backleft.set(ControlMode.Follower, frontleft.getDeviceID());
 		backright.set(ControlMode.Follower, frontleft.getDeviceID());
+		frontleft.configMotionCruiseVelocity(vel);
+		// frontleft.configMotionAcceleration(sensorUnitsPer100msPerSec);
+		// frontleft.configurePID(pid);
 	}
 
 }

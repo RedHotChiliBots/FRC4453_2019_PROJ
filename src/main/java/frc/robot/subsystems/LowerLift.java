@@ -12,6 +12,7 @@ import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -22,16 +23,15 @@ public class LowerLift extends PIDSubsystem {
   public WPI_TalonSRX motor2;
 
   private static final int COUNTS_PER_REV_MOTOR = 12;
-  private static final int GEAR_RATIO	= 20;
+  private static final int GEAR_RATIO = 20;
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
-  private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; //Lead screw 1 in/rev
+  private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; // Lead screw 1 in/rev
 
-  /*public static enum Level{
-		LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP
-  }
-
-  public Level level = Level.LEVEL1;
-  */
+  /*
+   * public static enum Level{ LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP }
+   * 
+   * public Level level = Level.LEVEL1;
+   */
   /**
    * Add your docs here.
    */
@@ -43,18 +43,20 @@ public class LowerLift extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
-//    motor1.configFactoryDefault();
-    motor1.set(ControlMode.PercentOutput,0.0);
+    // motor1.configFactoryDefault();
+    motor1.setNeutralMode(NeutralMode.Brake);
+    motor1.set(ControlMode.PercentOutput, 0.0);
     motor1.setSubsystem("LowerLift");
-    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
+    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
     motor1.setInverted(false);
     motor1.setSensorPhase(true);
 
     motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
     motor2.configFactoryDefault();
-    motor2.set(ControlMode.PercentOutput,0.0);
+    motor2.setNeutralMode(NeutralMode.Brake);
+    motor2.set(ControlMode.PercentOutput, 0.0);
     motor2.setSubsystem("LowerLift");
-    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,100);
+    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
     motor2.setInverted(false);
     motor2.setSensorPhase(true);
   }
@@ -79,17 +81,16 @@ public class LowerLift extends PIDSubsystem {
     // e.g. yourMotor.set(output);
   }
 
-/*  public void raise(){
-    motor1.set(ControlMode.PercentOutput, -0.5);
-    motor2.set(ControlMode.PercentOutput, 0.5);
-  }
-*/
+  /*
+   * public void raise(){ motor1.set(ControlMode.PercentOutput, -0.5);
+   * motor2.set(ControlMode.PercentOutput, 0.5); }
+   */
 
-  public void lowerMotor(WPI_TalonSRX motor){
+  public void lowerMotor(WPI_TalonSRX motor) {
     motor.set(ControlMode.PercentOutput, 0.25);
   }
 
-  public void stopMotor(WPI_TalonSRX motor){
+  public void stopMotor(WPI_TalonSRX motor) {
     motor.stopMotor();
   }
 
@@ -98,39 +99,35 @@ public class LowerLift extends PIDSubsystem {
     motor1.set(ControlMode.Position, pos);
   }
 
-  public void setPosMotor(WPI_TalonSRX motor, double pos){
-    motor.set(ControlMode.Position, (int)(pos * TICKS_PER_INCH));
+  public void setPosMotor(WPI_TalonSRX motor, double pos) {
+    motor.set(ControlMode.Position, (int) (pos * TICKS_PER_INCH));
   }
 
-  public void resetPosMotor(WPI_TalonSRX motor, double pos){
-    motor.setSelectedSensorPosition((int)(pos * TICKS_PER_INCH));
+  public void resetPosMotor(WPI_TalonSRX motor, double pos) {
+    motor.setSelectedSensorPosition((int) (pos * TICKS_PER_INCH));
   }
 
-  public void setPos(int pos){
+  public void setPos(int pos) {
     setPosMotor(motor1, pos);
     setPosMotor(motor2, pos);
   }
 
-  public void resetPos(int pos){
+  public void resetPos(int pos) {
     resetPosMotor(motor1, pos);
     resetPosMotor(motor2, pos);
   }
 
-/*  public void reset(){
-    motor1.getOutputCurrent();
-    motor2.getOutputCurrent();
+  /*
+   * public void reset(){ motor1.getOutputCurrent(); motor2.getOutputCurrent();
+   * 
+   * if(motor1current > currentThreshold){ motor1.set(ControlMode.PercentOutput,
+   * 0.0); }
+   * 
+   * if (motor2current > currentThreshold){ motor2.set(ControlMode.PercentOutput,
+   * 0.0); } }
+   */
 
-    if(motor1current > currentThreshold){
-      motor1.set(ControlMode.PercentOutput, 0.0);
-    }
-
-    if (motor2current > currentThreshold){
-      motor2.set(ControlMode.PercentOutput, 0.0);
-    }
-  }
-*/
-
-/*  public void goToLevel(RobotMap.LEVEL level){
-    setPos((int) level);
-  }*/
+  /*
+   * public void goToLevel(RobotMap.LEVEL level){ setPos((int) level); }
+   */
 }

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -35,8 +36,10 @@ public class CargoGrabber extends Subsystem {
   public CargoGrabber() {
     motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
     motor1.configFactoryDefault();
+    motor1.setNeutralMode(NeutralMode.Brake);
     motor2 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor2);
     motor2.configFactoryDefault();
+    motor2.setNeutralMode(NeutralMode.Brake);
 
     SmartDashboard.putData(motor1);
     SmartDashboard.putData(motor2);
