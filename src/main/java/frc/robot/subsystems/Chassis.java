@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
+//import edu.wpi.first.wpilibj.RobotDrive;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -100,7 +101,7 @@ public class Chassis extends Subsystem {
 		backright.setSubsystem("Chassis");
 		backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
 
-		drive = new MecanumDrive(frontleft, frontright, backleft, backright);
+		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
 
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
 		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
@@ -131,7 +132,8 @@ public class Chassis extends Subsystem {
 	}
 
 	public void driveChassis(double x, double y, double r) {
-		drive.driveCartesian(y, x, r, ahrs.getYaw());
+		// drive.mecanumDrive_Cartesian(x, y, r, (double) ahrs.getYaw());
+		drive.driveCartesian(x, y, r, ahrs.getYaw());
 	}
 
 	public void driveTeleop() {
@@ -271,9 +273,9 @@ public class Chassis extends Subsystem {
 
 	private static final double mph = 3.0;
 	private static final double inches = mph * 5280.0 * 12.0;
-	private static final double mSec = 1000.0;
+	private static final double mSec = 3600.0 / 10; // 3600 is sec per hour / 10 100mills per sec
 	private static final double cpr = 4096;
-	private static final int vel = (int) (((inches / mSec) * 100) * cpr);
+	private static final int vel = (int) ((inches / mSec) * cpr);
 
 	public void setFollow() {
 		reset();

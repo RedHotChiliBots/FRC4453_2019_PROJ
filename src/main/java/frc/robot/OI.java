@@ -108,7 +108,7 @@ public class OI {
   }
 
   public double getDriveY() {
-    double v = -driver.getY(Hand.kRight);
+    double v = driver.getY(Hand.kRight);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 

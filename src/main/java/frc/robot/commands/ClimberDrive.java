@@ -25,13 +25,18 @@ public class ClimberDrive extends Command {
   @Override
   protected void initialize() {
     System.out.println("init ClimberDrive");
-    Robot.chassis.setFollow();
+    // Robot.chassis.setFollow();
+    Robot.chassis.driveChassis(0.0, 0.45, 0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.setPos(100);
+    // Robot.chassis.setPos(100);
+    Robot.chassis.backleft.feed();
+    Robot.chassis.backright.feed();
+    Robot.chassis.frontleft.feed();
+    Robot.chassis.frontright.feed();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -44,13 +49,15 @@ public class ClimberDrive extends Command {
   @Override
   protected void end() {
     System.out.println("ending ClimberDrive");
-    Robot.chassis.setPercentOut();
+    // Robot.chassis.setPercentOut();
+    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.chassis.setPercentOut();
+    // Robot.chassis.setPercentOut();
+    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
   }
 }
