@@ -144,12 +144,12 @@ public class Chassis extends Subsystem {
 		switch (mode) {
 		case CARGO:
 			x = Robot.oi.getDriveX();
-			y = Robot.oi.getDriveY();
+			y = -Robot.oi.getDriveY();
 			break;
 
 		case PANEL:
 			x = -Robot.oi.getDriveX();
-			y = -Robot.oi.getDriveY();
+			y = Robot.oi.getDriveY();
 			break;
 
 		default:

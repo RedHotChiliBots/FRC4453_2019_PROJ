@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CargoTeleop;
 import frc.robot.commands.ClimberClimb;
+import frc.robot.commands.ClimberClimbNew;
 import frc.robot.commands.ClimberExtend;
 import frc.robot.commands.ClimberRetract;
 import frc.robot.commands.LiftStartup;
@@ -67,6 +68,7 @@ public class OI {
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
   private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
+  private JoystickButton climberClimbNew = new JoystickButton(operator, RobotMap.Y_BUTTON);
 
   private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.DPAD_X_AXIS);
   private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.DPAD_Y_AXIS);
@@ -93,6 +95,7 @@ public class OI {
     panelGrip.whenPressed(new PanelGrip());
     panelRelease.whenPressed(new PanelRelease());
     climberClimb.whenPressed(new ClimberClimb());
+    climberClimbNew.whenPressed(new ClimberClimbNew());
     switchToLevel1.whenPressed(new SwitchToLevel1());
     switchToLevel2.whenPressed(new SwitchToLevel2());
     switchToLevel3.whenPressed(new SwitchToLevel3());

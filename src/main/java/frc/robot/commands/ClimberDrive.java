@@ -19,6 +19,7 @@ public class ClimberDrive extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.distSensor = distSensor;
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
@@ -26,22 +27,25 @@ public class ClimberDrive extends Command {
   protected void initialize() {
     System.out.println("init ClimberDrive");
     // Robot.chassis.setFollow();
-    Robot.chassis.driveChassis(0.0, 0.45, 0.0);
+    // Robot.chassis.driveChassis(0.0, 0.45, 0.0);
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     // Robot.chassis.setPos(100);
-    Robot.chassis.backleft.feed();
-    Robot.chassis.backright.feed();
-    Robot.chassis.frontleft.feed();
-    Robot.chassis.frontright.feed();
+    /*
+     * Robot.chassis.backleft.feed(); Robot.chassis.backright.feed();
+     * Robot.chassis.frontleft.feed(); Robot.chassis.frontright.feed();
+     */
+    Robot.chassis.driveChassis(0.0, 0.3, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    // setTimeout(0.5);
     return Robot.climber.isStep(distSensor);
   }
 
