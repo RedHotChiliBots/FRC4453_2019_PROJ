@@ -40,6 +40,7 @@ public class CargoGrabber extends Subsystem {
     motor2 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor2);
     motor2.configFactoryDefault();
     motor2.setNeutralMode(NeutralMode.Brake);
+    motor2.setInverted(true);
 
     SmartDashboard.putData(motor1);
     SmartDashboard.putData(motor2);

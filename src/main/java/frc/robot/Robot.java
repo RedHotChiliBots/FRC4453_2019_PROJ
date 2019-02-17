@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Preferences;
 
 //import com.sun.tools.javac.comp.Lower;
@@ -164,21 +166,25 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());
       SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
       SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected());
+      SmartDashboard.putString("Mode", Robot.chassis.mode.name());
+      SmartDashboard.putString("Level", Robot.chassis.level.name());
       i++;
       break;
 
     case 1:
-      SmartDashboard.putString("Mode", Robot.chassis.mode.name());
-      SmartDashboard.putString("Level", Robot.chassis.level.name());
+      if (Robot.lLift.motor1.getControlMode() != ControlMode.PercentOutput) {
+        SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
+      }
       SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
-      SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
       SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
+      SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
       i++;
       break;
 
     case 2:
-      SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
-      SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
+      if (Robot.lLift.motor2.getControlMode() != ControlMode.PercentOutput) {
+        SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
+      }
       SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
       SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
       i++;

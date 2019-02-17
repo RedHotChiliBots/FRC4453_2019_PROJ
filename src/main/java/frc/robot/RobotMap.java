@@ -58,6 +58,9 @@ public class RobotMap {
   public static final DoubleSolenoid.Value ClimberUp = DoubleSolenoid.Value.kForward;
   public static final DoubleSolenoid.Value ClimberDown = DoubleSolenoid.Value.kReverse;
 
+  public static final DoubleSolenoid.Value PanelRelease = DoubleSolenoid.Value.kForward;
+  public static final DoubleSolenoid.Value PanelGrab = DoubleSolenoid.Value.kReverse;
+
   // ============= SENSORS (analog) =============
 
   // chassis pressure sensors

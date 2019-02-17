@@ -70,8 +70,8 @@ public class OI {
   private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
   private JoystickButton climberClimbNew = new JoystickButton(operator, RobotMap.Y_BUTTON);
 
-  private JoystickButton panelRelease = new JoystickButton(driver, RobotMap.DPAD_X_AXIS);
-  private JoystickButton panelGrip = new JoystickButton(driver, RobotMap.DPAD_Y_AXIS);
+  private JoystickButton panelRelease = new JoystickButton(operator, RobotMap.RIGHT_BUMPER);
+  private JoystickButton panelGrip = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
 
   private JoystickButton switchToLevel1 = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
   private JoystickButton switchToLevel2 = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
@@ -93,8 +93,8 @@ public class OI {
     switchToPanel.whenPressed(new SwitchToPanel());
     liftReset.whenPressed(new LiftStartup());
     panelGrip.whenPressed(new PanelGrip());
-    panelRelease.whenPressed(new PanelRelease());
-    climberClimb.whenPressed(new ClimberClimb());
+    panelRelease.whileHeld(new PanelRelease());
+    climberClimb.whileHeld(new ClimberClimb());
     climberClimbNew.whenPressed(new ClimberClimbNew());
     switchToLevel1.whenPressed(new SwitchToLevel1());
     switchToLevel2.whenPressed(new SwitchToLevel2());
@@ -122,12 +122,21 @@ public class OI {
 
   public double getCargoL() {
     int v = operator.getPOV();
-    return calcCargo(v);
+    if (v >= 0) {
+      return calcCargo(v);
+    } else {
+      return 0.0;
+    }
+
   }
 
   public double getCargoR() {
     int v = operator.getPOV();
-    return calcCargo(Math.abs(360 - v));
+    if (v >= 0) {
+      return calcCargo(Math.abs(360 - v));
+    } else {
+      return 0.0;
+    }
   }
 
   private double calcCargo(int v) {

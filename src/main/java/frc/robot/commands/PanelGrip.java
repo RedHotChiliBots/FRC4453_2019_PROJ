@@ -14,6 +14,7 @@ public class PanelGrip extends Command {
   public PanelGrip() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.panel);
   }
 
   // Called just before this Command runs the first time

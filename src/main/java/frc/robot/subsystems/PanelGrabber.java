@@ -20,10 +20,10 @@ public class PanelGrabber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private DoubleSolenoid grabber = null; 
+  private DoubleSolenoid grabber = null;
 
-  public PanelGrabber(){
-    grabber = new DoubleSolenoid(RobotMap.PanelGrabberReleaseSolenoid,RobotMap.PanelGrabberGripSolenoid);
+  public PanelGrabber() {
+    grabber = new DoubleSolenoid(RobotMap.PanelGrabberReleaseSolenoid, RobotMap.PanelGrabberGripSolenoid);
   }
 
   @Override
@@ -33,11 +33,11 @@ public class PanelGrabber extends Subsystem {
     setDefaultCommand(new PanelRelease());
   }
 
-  public void grab(){
-    grabber.set(Value.kForward);
+  public void grab() {
+    grabber.set(RobotMap.PanelGrab);
   }
 
-  public void release(){
-    grabber.set(Value.kReverse);
+  public void release() {
+    grabber.set(RobotMap.PanelRelease);
   }
 }
