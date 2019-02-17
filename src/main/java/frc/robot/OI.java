@@ -85,7 +85,6 @@ public class OI {
   private static final double DEADZONE = 0.2;
 
   public OI() {
-
   }
 
   public void init() {
@@ -127,7 +126,6 @@ public class OI {
     } else {
       return 0.0;
     }
-
   }
 
   public double getCargoR() {
