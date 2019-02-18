@@ -107,12 +107,12 @@ public class LowerLift extends PIDSubsystem {
     motor.setSelectedSensorPosition((int) (pos * TICKS_PER_INCH));
   }
 
-  public void setPos(int pos) {
+  public void setPos(double pos) {
     setPosMotor(motor1, pos);
     setPosMotor(motor2, pos);
   }
 
-  public void resetPos(int pos) {
+  public void resetPos(double pos) {
     resetPosMotor(motor1, pos);
     resetPosMotor(motor2, pos);
   }

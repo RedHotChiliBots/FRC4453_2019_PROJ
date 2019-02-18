@@ -20,7 +20,7 @@ public class LowerLiftInitMotor extends Command {
   public LowerLiftInitMotor(WPI_TalonSRX motor) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-//    requires(Robot.lLift);
+    // requires(Robot.lLift);
     this.motor = motor;
   }
 
@@ -29,8 +29,9 @@ public class LowerLiftInitMotor extends Command {
   protected void initialize() {
     pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
     SmartDashboard.putNumber("LLMotorReset", pos);
-    Robot.lLift.resetPosMotor(motor, pos);
-    Robot.lLift.resetMotorConfig(0.0);
+    Robot.lLift.resetPos(pos); // reset both encoder positions, so we can monitor motor2 position
+    // Robot.lLift.resetPosMotor(motor, pos);
+    Robot.lLift.resetMotorConfig(0.0); // command motor1 to position and motor2 to follow
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -42,7 +43,7 @@ public class LowerLiftInitMotor extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   return (Math.abs(motor.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
+    return (Math.abs(motor.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
   }
 
   // Called once after isFinished returns true

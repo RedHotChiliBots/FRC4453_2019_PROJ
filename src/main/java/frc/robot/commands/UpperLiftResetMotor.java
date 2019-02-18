@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class UpperLiftResetMotor extends Command {
-  
+
   private double outputCurrent = 0.0;
 
   private WPI_TalonSRX motor = null;
-  
+
   public UpperLiftResetMotor(WPI_TalonSRX motor) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -27,12 +27,13 @@ public class UpperLiftResetMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.uLift.lowerMotor(motor);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.uLift.lowerMotor(motor);
+    motor.feed();
     outputCurrent = motor.getOutputCurrent();
   }
 
@@ -45,14 +46,14 @@ public class UpperLiftResetMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.uLift.stopMotor(motor);
-    Robot.uLift.resetPosMotor(motor, 0.0);
+    Robot.lLift.stopMotor(motor);
+    Robot.lLift.resetPosMotor(motor, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.uLift.stopMotor(motor);
+    Robot.lLift.stopMotor(motor);
   }
 }
