@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Chassis;
 
 public class SwitchToCargo extends Command {
@@ -22,7 +23,7 @@ public class SwitchToCargo extends Command {
   @Override
   protected void initialize() {
     System.out.println("Init SwitchToCargo");
-    Robot.chassis.setMode(Chassis.Mode.CARGO);
+    Robot.chassis.setMode(RobotMap.MODE.CARGO);
   }
 
   // Called repeatedly when this Command is scheduled to run

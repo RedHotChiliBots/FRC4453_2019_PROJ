@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.RobotMap;
 import frc.robot.Robot;
 import frc.robot.subsystems.Chassis;
 
@@ -22,7 +23,7 @@ public class SwitchToPanel extends Command {
   @Override
   protected void initialize() {
     System.out.println("Init SwitchToPanel");
-    Robot.chassis.setMode(Chassis.Mode.PANEL);
+    Robot.chassis.setMode(RobotMap.MODE.PANEL);
   }
 
   // Called repeatedly when this Command is scheduled to run
