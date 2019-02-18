@@ -115,8 +115,12 @@ public class RobotMap {
 
   // Heights are inches above base of 19" (Level 1)
   public final static Map<LIFT, Map<LEVEL, Double>> height = new HashMap<LIFT, Map<LEVEL, Double>>() {
+    private static final long serialVersionUID = 1L;
+
     {
       put(LIFT.UPPER, new HashMap<LEVEL, Double>() {
+        private static final long serialVersionUID = 1L;
+
         {
           put(LEVEL.LEVEL3, 28.0); // Score Panel & Cargo in Ship & Rocket
           put(LEVEL.LEVEL2, 28.0); // Score Panel & Cargo in Ship & Rocket
@@ -126,6 +130,8 @@ public class RobotMap {
         }
       });
       put(LIFT.LOWER, new HashMap<LEVEL, Double>() {
+        private static final long serialVersionUID = 1L;
+
         {
           put(LEVEL.LEVEL3, 28.0); // Score Panel & Cargo in Ship & Rocket
           put(LEVEL.LEVEL2, 0.0); // Score Panel & Cargo in Ship & Rocket
