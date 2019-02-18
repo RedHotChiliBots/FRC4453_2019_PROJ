@@ -20,7 +20,7 @@ public class LiftInit extends CommandGroup {
     double pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
     SmartDashboard.putNumber("LLMotorReset", pos);
 
-     // Add Commands here:
+    // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
@@ -38,6 +38,6 @@ public class LiftInit extends CommandGroup {
     // arm.
 
     addParallel(new LowerLiftInitMotor(Robot.lLift.motor1));
-//    addSequential(new UpperLiftInitMotor(Robot.uLift.motor1));
+    addSequential(new UpperLiftInitMotor(Robot.uLift.motor1));
   }
 }
