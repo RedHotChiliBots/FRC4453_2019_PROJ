@@ -27,11 +27,6 @@ public class LowerLift extends PIDSubsystem {
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
   private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; // Lead screw 1 in/rev
 
-  /*
-   * public static enum Level{ LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP }
-   * 
-   * public Level level = Level.LEVEL1;
-   */
   /**
    * Add your docs here.
    */
@@ -43,7 +38,7 @@ public class LowerLift extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
-    // motor1.configFactoryDefault();
+    motor1.configFactoryDefault();
     motor1.setNeutralMode(NeutralMode.Brake);
     motor1.set(ControlMode.PercentOutput, 0.0);
     motor1.setSubsystem("LowerLift");
@@ -81,11 +76,6 @@ public class LowerLift extends PIDSubsystem {
     // e.g. yourMotor.set(output);
   }
 
-  /*
-   * public void raise(){ motor1.set(ControlMode.PercentOutput, -0.5);
-   * motor2.set(ControlMode.PercentOutput, 0.5); }
-   */
-
   public void lowerMotor(WPI_TalonSRX motor) {
     motor.set(ControlMode.PercentOutput, 0.25);
   }
@@ -116,16 +106,6 @@ public class LowerLift extends PIDSubsystem {
     resetPosMotor(motor1, pos);
     resetPosMotor(motor2, pos);
   }
-
-  /*
-   * public void reset(){ motor1.getOutputCurrent(); motor2.getOutputCurrent();
-   * 
-   * if(motor1current > currentThreshold){ motor1.set(ControlMode.PercentOutput,
-   * 0.0); }
-   * 
-   * if (motor2current > currentThreshold){ motor2.set(ControlMode.PercentOutput,
-   * 0.0); } }
-   */
 
   /*
    * public void goToLevel(RobotMap.LEVEL level){ setPos((int) level); }
