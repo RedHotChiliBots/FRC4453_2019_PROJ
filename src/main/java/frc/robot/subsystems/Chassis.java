@@ -23,9 +23,9 @@ import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.MODE;
 import frc.robot.RobotMap.LEVEL;
 import frc.robot.commands.ChassisDriveTeleop;
-import frc.robot.subsystems.CargoGrabber.CargoMotor;
 
 /**
  * Add your docs here.
@@ -47,11 +47,11 @@ public class Chassis extends Subsystem {
 	// private boolean panelSelcted = true;
 	// private boolean cargoSelected = false;
 
-	public enum Mode {
-		PANEL, CARGO
-	}
+	// public enum Mode {
+	// PANEL, CARGO
+	// }
 
-	public Mode mode = Mode.PANEL;
+	public MODE mode = MODE.PANEL;
 
 	public LEVEL level = LEVEL.LEVEL1;
 
@@ -179,7 +179,7 @@ public class Chassis extends Subsystem {
 	 * public boolean isCargoSelected(){ return cargoSelected; }
 	 */
 
-	public void setMode(Mode m) {
+	public void setMode(MODE m) {
 		mode = m;
 	}
 
@@ -198,13 +198,13 @@ public class Chassis extends Subsystem {
 		 * if (cargoSelected = true){ if (currentJerkX < -kCollisionThreshold_DeltaG &&
 		 * Math.abs(currentJerkY) < 0.1){ collisionDetected = true; } }
 		 */
-		if (mode == Mode.PANEL) {
+		if (mode == MODE.PANEL) {
 			if (currentJerkX > kCollisionThreshold_DeltaG && Math.abs(currentJerkY) < 0.1) {
 				collisionDetected = true;
 			}
 		}
 
-		if (mode == Mode.CARGO) {
+		if (mode == MODE.CARGO) {
 			if (currentJerkX < -kCollisionThreshold_DeltaG && Math.abs(currentJerkY) < 0.1) {
 				collisionDetected = true;
 			}
@@ -240,16 +240,16 @@ public class Chassis extends Subsystem {
 		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
-	public void cargoPanelGrab(Mode mode) {
-		if (mode == Mode.PANEL) {
+	public void cargoPanelGrab(MODE mode) {
+		if (mode == MODE.PANEL) {
 			Robot.panel.grab();
 		} else {
 			Robot.cargo.grab();
 		}
 	}
 
-	public void cargoPanelRelease(Mode mode, double l, double r) {
-		if (mode == Mode.PANEL) {
+	public void cargoPanelRelease(MODE mode, double l, double r) {
+		if (mode == MODE.PANEL) {
 			Robot.panel.release();
 		} else {
 			Robot.cargo.setGrabRel(l, r);

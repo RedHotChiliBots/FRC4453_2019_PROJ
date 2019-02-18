@@ -28,6 +28,8 @@ public class UpperLiftInitMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init UpperLiftInitMotor");
+
     pos = Robot.prefs.getDouble("ULMotorReset", 2.0);
     SmartDashboard.putNumber("ULMotorReset", pos);
     Robot.uLift.resetPos(pos); // reset both encoder positions, so we can monitor motor2 position
@@ -50,11 +52,13 @@ public class UpperLiftInitMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("End UpperLiftInitMotor");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("Interupt UpperLiftInitMotor");
   }
 }

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.RobotMap.LEVEL;
 
 public class ClimberClimbNew extends CommandGroup {
   /**

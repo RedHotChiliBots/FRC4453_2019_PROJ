@@ -30,8 +30,12 @@ public class LiftStartup extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    System.out.println("Starting LiftStartup");
 
-    addSequential(new LiftReset());
+    addParallel(new LiftLoReset());
+    addSequential(new LiftUpReset());
     addSequential(new LiftInit());
+
+    System.out.println("Ending LiftStartup");
   }
 }

@@ -36,8 +36,11 @@ public class LiftInit extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    System.out.println("Starting LiftInit");
 
     addParallel(new LowerLiftInitMotor(Robot.lLift.motor1));
     addSequential(new UpperLiftInitMotor(Robot.uLift.motor1));
+
+    System.out.println("Ending LiftInit");
   }
 }

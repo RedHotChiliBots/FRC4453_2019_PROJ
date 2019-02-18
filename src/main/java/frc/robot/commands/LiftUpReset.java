@@ -9,13 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class AutoRetrieve extends CommandGroup {
+public class LiftUpReset extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoRetrieve() {
+  public LiftUpReset() {
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -32,15 +32,11 @@ public class AutoRetrieve extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    // follow line
-    addParallel(new ChassisDriveJerk());
-    if (Robot.chassis.mode == RobotMap.MODE.PANEL) {
-      addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
-    } else {
-      addSequential(new LiftGoToLevel(RobotMap.LEVEL.LOADINGSTATION));
-    }
-    addSequential(new CargoPanelGrab());
-    addSequential(new ChassisAutoDriveDist());
-    addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
+    System.out.println("Starting LiftUpReset");
+
+    addParallel(new UpperLiftResetMotor(Robot.uLift.motor1));
+    addSequential(new UpperLiftResetMotor(Robot.uLift.motor2));
+
+    System.out.println("Ending LiftUpReset");
   }
 }

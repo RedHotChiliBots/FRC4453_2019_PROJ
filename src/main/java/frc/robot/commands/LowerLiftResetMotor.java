@@ -13,20 +13,20 @@ import frc.robot.Robot;
 
 public class LowerLiftResetMotor extends Command {
 
-  private double outputCurrent = 0.0;
-
   private WPI_TalonSRX motor = null;
-  
+
   public LowerLiftResetMotor(WPI_TalonSRX motor) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-//    requires(Robot.lLift);
+    // requires(Robot.lLift);
     this.motor = motor;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init LowerLiftResettMotor");
+
     Robot.lLift.lowerMotor(motor);
   }
 
@@ -34,13 +34,12 @@ public class LowerLiftResetMotor extends Command {
   @Override
   protected void execute() {
     motor.feed();
-    outputCurrent = motor.getOutputCurrent();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (outputCurrent > Robot.prefs.getDouble("CurrentThreshold", 9.0));
+    return (motor.getOutputCurrent() > Robot.prefs.getDouble("CurrentThreshold", 9.0));
   }
 
   // Called once after isFinished returns true
@@ -48,6 +47,7 @@ public class LowerLiftResetMotor extends Command {
   protected void end() {
     Robot.lLift.stopMotor(motor);
     Robot.lLift.resetPosMotor(motor, 0.0);
+    System.out.println("End LowerLiftResetMotor");
   }
 
   // Called when another command which requires one or more of the same
@@ -55,5 +55,6 @@ public class LowerLiftResetMotor extends Command {
   @Override
   protected void interrupted() {
     Robot.lLift.stopMotor(motor);
+    System.out.println("Interrupt LowerLiftResetMotor");
   }
 }

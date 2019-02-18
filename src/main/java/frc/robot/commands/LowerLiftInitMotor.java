@@ -27,6 +27,8 @@ public class LowerLiftInitMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init LowerLiftInitMotor");
+
     pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
     SmartDashboard.putNumber("LLMotorReset", pos);
     Robot.lLift.resetPos(pos); // reset both encoder positions, so we can monitor motor2 position
@@ -49,11 +51,14 @@ public class LowerLiftInitMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("End LowerLiftInitMotor");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("Interrupt LowerLiftInitMotor");
+
   }
 }

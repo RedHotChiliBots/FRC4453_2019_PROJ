@@ -172,21 +172,34 @@ public class Robot extends TimedRobot {
       break;
 
     case 1:
-      if (Robot.lLift.motor1.getControlMode() != ControlMode.PercentOutput) {
+      if (Robot.lLift.motor1.getControlMode() == ControlMode.Position) {
         SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
       }
-      SmartDashboard.putNumber("Current", Robot.lLift.motor1.getOutputCurrent());
+      SmartDashboard.putNumber("LL1Current", Robot.lLift.motor1.getOutputCurrent());
       SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
       SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
+      if (Robot.lLift.motor2.getControlMode() == ControlMode.Position) {
+        SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
+      }
+      SmartDashboard.putNumber("LL2Current", Robot.lLift.motor2.getOutputCurrent());
+      SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
+      SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
       i++;
       break;
 
     case 2:
-      if (Robot.lLift.motor2.getControlMode() != ControlMode.PercentOutput) {
-        SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
+      if (Robot.uLift.motor1.getControlMode() == ControlMode.Position) {
+        SmartDashboard.putNumber("ULMotor1Tgt", Robot.uLift.motor1.getClosedLoopTarget());
       }
-      SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
-      SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("UL1Current", Robot.uLift.motor1.getOutputCurrent());
+      SmartDashboard.putNumber("ULMotor1Pos", Robot.uLift.motor1.getSelectedSensorPosition());
+      SmartDashboard.putNumber("ULMotor1Vel", Robot.uLift.motor1.getSelectedSensorVelocity());
+      if (Robot.uLift.motor2.getControlMode() == ControlMode.Position) {
+        SmartDashboard.putNumber("ULMotor2Tgt", Robot.uLift.motor2.getClosedLoopTarget());
+      }
+      SmartDashboard.putNumber("UL2Current", Robot.uLift.motor2.getOutputCurrent());
+      SmartDashboard.putNumber("ULMotor2Pos", Robot.uLift.motor2.getSelectedSensorPosition());
+      SmartDashboard.putNumber("ULMotor2Vel", Robot.uLift.motor2.getSelectedSensorVelocity());
       i++;
       break;
 
@@ -210,6 +223,8 @@ public class Robot extends TimedRobot {
   private void initPrefs() {
     if (!prefs.containsKey("LLMotorReset"))
       prefs.putDouble("LLMotorReset", -1.0);
+    if (!prefs.containsKey("ULMotorReset"))
+      prefs.putDouble("ULMotorReset", -1.0);
     if (!prefs.containsKey("CurrentThreshold"))
       prefs.putDouble("CurrentThreshold", 9.0);
     if (!prefs.containsKey("LiftPosError"))
@@ -236,6 +251,7 @@ public class Robot extends TimedRobot {
       prefs.getDouble("CargoRelSpd", 0.5);
     if (!prefs.containsKey("ChassisDistAllowedErr"))
       prefs.getDouble("ChassisDistAllowedErr", 10);
+
     if (prefs.containsKey("BackStepAngleHigh"))
       prefs.remove("BackStepAngleHigh");
     if (prefs.containsKey("BackStepAngleLow"))
@@ -254,5 +270,7 @@ public class Robot extends TimedRobot {
       prefs.remove("FrontStepAngle");
     if (prefs.containsKey("BackStepAngle"))
       prefs.remove("BackStepAngle");
+    if (prefs.containsKey("LMotorReset"))
+      prefs.remove("LMotorReset");
   }
 }

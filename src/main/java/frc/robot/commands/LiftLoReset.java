@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
-public class LiftReset extends CommandGroup {
+public class LiftLoReset extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LiftReset() {
+  public LiftLoReset() {
 
     // Add Commands here:
     // e.g. addSequential(new Command1());
@@ -32,10 +32,11 @@ public class LiftReset extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    System.out.println("Starting LiftLoReset");
 
     addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
-    addParallel(new LowerLiftResetMotor(Robot.lLift.motor2));
-    addParallel(new UpperLiftResetMotor(Robot.uLift.motor1));
-    addSequential(new UpperLiftResetMotor(Robot.uLift.motor2));
+    addSequential(new LowerLiftResetMotor(Robot.lLift.motor2));
+
+    System.out.println("Ending LiftLoReset");
   }
 }

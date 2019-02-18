@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -18,7 +18,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 /**
  * Add your docs here.
  */
-public class LowerLift extends PIDSubsystem {
+public class LowerLift extends Subsystem {
   public WPI_TalonSRX motor1;
   public WPI_TalonSRX motor2;
 
@@ -31,12 +31,6 @@ public class LowerLift extends PIDSubsystem {
    * Add your docs here.
    */
   public LowerLift() {
-    // Intert a subsystem name and PID values here
-    super("SubsystemName", 1, 2, 3);
-    // Use these to get going:
-    // setSetpoint() - Sets where the PID controller should move the system
-    // to
-    // enable() - Enables the PID controller.
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
     motor1.configFactoryDefault();
     motor1.setNeutralMode(NeutralMode.Brake);
@@ -62,22 +56,8 @@ public class LowerLift extends PIDSubsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  @Override
-  protected double returnPIDInput() {
-    // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
-    // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return 0.0;
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    // Use output to drive your system, like a motor
-    // e.g. yourMotor.set(output);
-  }
-
   public void lowerMotor(WPI_TalonSRX motor) {
-    motor.set(ControlMode.PercentOutput, 0.25);
+    motor.set(ControlMode.PercentOutput, 0.15);
   }
 
   public void stopMotor(WPI_TalonSRX motor) {

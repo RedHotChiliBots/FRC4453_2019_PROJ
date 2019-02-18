@@ -14,8 +14,6 @@ import frc.robot.Robot;
 
 public class UpperLiftResetMotor extends Command {
 
-  private double outputCurrent = 0.0;
-
   private WPI_TalonSRX motor = null;
 
   public UpperLiftResetMotor(WPI_TalonSRX motor) {
@@ -27,6 +25,8 @@ public class UpperLiftResetMotor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init UpperLiftResetMotor");
+
     Robot.uLift.lowerMotor(motor);
   }
 
@@ -34,13 +34,12 @@ public class UpperLiftResetMotor extends Command {
   @Override
   protected void execute() {
     motor.feed();
-    outputCurrent = motor.getOutputCurrent();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (outputCurrent > Robot.prefs.getDouble("CurrentThreshold", 9.0));
+    return (motor.getOutputCurrent() > Robot.prefs.getDouble("CurrentThreshold", 9.0));
   }
 
   // Called once after isFinished returns true
@@ -48,6 +47,7 @@ public class UpperLiftResetMotor extends Command {
   protected void end() {
     Robot.lLift.stopMotor(motor);
     Robot.lLift.resetPosMotor(motor, 0.0);
+    System.out.println("End UpperLiftResetMotor");
   }
 
   // Called when another command which requires one or more of the same
@@ -55,5 +55,6 @@ public class UpperLiftResetMotor extends Command {
   @Override
   protected void interrupted() {
     Robot.lLift.stopMotor(motor);
+    System.out.println("Interrupt UpperLiftResetMotor");
   }
 }
