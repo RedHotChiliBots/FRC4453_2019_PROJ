@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
 import frc.robot.Robot;
-import frc.robot.subsystems.Chassis;
 
 public class SwitchToPanel extends Command {
   public SwitchToPanel() {
