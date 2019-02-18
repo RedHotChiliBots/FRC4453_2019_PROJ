@@ -240,6 +240,10 @@ public class Chassis extends Subsystem {
 		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
+	public MODE getMode() {
+		return mode;
+	}
+
 	public void cargoPanelGrab(MODE mode) {
 		if (mode == MODE.PANEL) {
 			Robot.panel.grab();
