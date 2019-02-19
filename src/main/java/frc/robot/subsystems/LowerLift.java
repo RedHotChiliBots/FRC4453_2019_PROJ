@@ -8,11 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Gains;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -27,27 +26,25 @@ public class LowerLift extends Subsystem {
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
   private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; // Lead screw 1 in/rev
 
+  double _lockedDistance = 0;
+  double _targetAngle = 0;
+
+  private Gains kGains_Distance = new Gains(0.1, 0.0, 0.0, 0.0, 100, 0.50);
+  private Gains kGains_Turning = new Gains(2.0, 0.0, 4.0, 0.0, 200, 1.0);
+
   /**
    * Add your docs here.
    */
   public LowerLift() {
     motor1 = new WPI_TalonSRX(RobotMap.lowerLiftMotor1);
-    motor1.configFactoryDefault();
-    motor1.setNeutralMode(NeutralMode.Brake);
     motor1.set(ControlMode.PercentOutput, 0.0);
     motor1.setSubsystem("LowerLift");
-    motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
-    motor1.setInverted(false);
-    motor1.setSensorPhase(true);
 
     motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
-    motor2.configFactoryDefault();
-    motor2.setNeutralMode(NeutralMode.Brake);
     motor2.set(ControlMode.PercentOutput, 0.0);
     motor2.setSubsystem("LowerLift");
-    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
-    motor2.setInverted(false);
-    motor2.setSensorPhase(true);
+
+    RobotMap.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
   }
 
   @Override
@@ -57,7 +54,7 @@ public class LowerLift extends Subsystem {
   }
 
   public void lowerMotor(WPI_TalonSRX motor) {
-    motor.set(ControlMode.PercentOutput, 0.15);
+    motor.set(ControlMode.PercentOutput, 0.2);
   }
 
   public void stopMotor(WPI_TalonSRX motor) {

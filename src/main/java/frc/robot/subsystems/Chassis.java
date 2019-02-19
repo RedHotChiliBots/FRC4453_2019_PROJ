@@ -81,26 +81,31 @@ public class Chassis extends Subsystem {
 		frontleft.set(ControlMode.PercentOutput, 0.0);
 		frontleft.setNeutralMode(NeutralMode.Brake);
 		frontleft.setSubsystem("Chassis");
-		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
-
+		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout
 		frontright.configFactoryDefault();
 		frontright.set(ControlMode.PercentOutput, 0.0);
 		frontright.setNeutralMode(NeutralMode.Brake);
 		frontright.setSubsystem("Csassis");
-		frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
-
+		frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout
 		backleft.configFactoryDefault();
 		backleft.set(ControlMode.PercentOutput, 0.0);
 		backleft.setNeutralMode(NeutralMode.Brake);
 		backleft.setSubsystem("Chassis");
-		backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+		backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout, 0, 100);
 
 		backright.configFactoryDefault();
 		backright.set(ControlMode.PercentOutput, 0.0);
 		backright.setNeutralMode(NeutralMode.Brake);
 		backright.setSubsystem("Chassis");
-		backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
-
+		backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout
 		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
 
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);

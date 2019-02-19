@@ -81,6 +81,25 @@ public class OI {
   private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
   private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
 
+  /*
+   * Andrew's new config private JoystickButton switchToCargo = new
+   * JoystickButton(driver, RobotMap.RIGHT_BUMPER); private JoystickButton
+   * switchToPanel = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+   * 
+   * private JoystickButton climberClimbNew = new JoystickButton(driver,
+   * RobotMap.X_BUTTON);
+   * 
+   * private JoystickButton panelRelease = new JoystickButton(operator,
+   * RobotMap.RIGHT_BUMPER); private JoystickButton panelGrip = new
+   * JoystickButton(operator, RobotMap.LEFT_BUMPER);
+   * 
+   * private JoystickButton switchToLevel1 = new JoystickButton(operator,
+   * RobotMap.Y_BUTTON); private JoystickButton switchToLevel2 = new
+   * JoystickButton(operator, RobotMap.B_BUTTON); private JoystickButton
+   * switchToLevel3 = new JoystickButton(operator, RobotMap.A_BUTTON); private
+   * JoystickButton switchToShip = new JoystickButton(operator,
+   * RobotMap.X_BUTTON);
+   */
   private static final double DEADZONE = 0.2;
 
   public OI() {
@@ -101,6 +120,17 @@ public class OI {
     switchToShip.whenPressed(new SwitchToShip());
     climberDown.whenPressed(new ClimberExtend());
     climberUp.whenPressed(new ClimberRetract());
+
+    /*
+     * Andrew's new config switchToCargo.whenPressed(new SwitchToCargo());
+     * switchToPanel.whenPressed(new SwitchToPanel());
+     * climberClimbNew.whenPressed(new ClimberClimbNew()); panelGrip.whenPressed(new
+     * PanelGrip()); panelRelease.whileHeld(new PanelRelease());
+     * switchToLevel1.whenPressed(new SwitchToLevel1());
+     * switchToLevel2.whenPressed(new SwitchToLevel2());
+     * switchToLevel3.whenPressed(new SwitchToLevel3());
+     * switchToShip.whenPressed(new SwitchToShip());
+     */
   }
 
   public double getDriveX() {
@@ -108,16 +138,28 @@ public class OI {
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
+  /*
+   * Andrew's new config public double getDriveX() { double v =
+   * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
+   */
   public double getDriveY() {
     double v = driver.getY(Hand.kRight);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
+  /*
+   * Andrew's new config public double getDriveY() { double v =
+   * driver.getY(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
+   */
   public double getDriveR() {
     double v = driver.getX(Hand.kLeft);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
+  /*
+   * Andrew's new config public double getDriveR() { double v =
+   * driver.getX(Hand.kRight); return Math.abs(v) < DEADZONE ? 0.0 : v; }
+   */
   public double getCargoL() {
     int v = operator.getPOV();
     if (v >= 0) {
