@@ -33,10 +33,10 @@ import frc.robot.commands.ChassisDriveTeleop;
 public class Chassis extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	public WPI_TalonSRX frontleft;
-	public WPI_TalonSRX frontright;
-	public WPI_TalonSRX backleft;
-	public WPI_TalonSRX backright;
+	private WPI_TalonSRX frontleft;
+	private WPI_TalonSRX frontright;
+	private WPI_TalonSRX backleft;
+	private WPI_TalonSRX backright;
 	private MecanumDrive drive;
 
 	private AnalogInput hiPressureSensor;
@@ -51,14 +51,13 @@ public class Chassis extends Subsystem {
 	// PANEL, CARGO
 	// }
 
-	public MODE mode = MODE.PANEL;
+	private MODE mode = MODE.PANEL;
+	private LEVEL level = LEVEL.LEVEL1;
 
-	public LEVEL level = LEVEL.LEVEL1;
+	private double last_world_linear_accel_x;
+	private double last_world_linear_accel_y;
 
-	double last_world_linear_accel_x;
-	double last_world_linear_accel_y;
-
-	final static double kCollisionThreshold_DeltaG = 0.2f;
+	private final static double kCollisionThreshold_DeltaG = 0.2f;
 
 	// Define navX board
 	public AHRS ahrs = null;
@@ -188,6 +187,18 @@ public class Chassis extends Subsystem {
 		mode = m;
 	}
 
+	public MODE getMode() {
+		return mode;
+	}
+
+	public void setLevel(LEVEL l) {
+		level = l;
+	}
+
+	public LEVEL getLevel() {
+		return level;
+	}
+
 	public void findJerk() {
 		double curr_world_linear_accel_x = ahrs.getWorldLinearAccelX();
 		double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
@@ -243,10 +254,6 @@ public class Chassis extends Subsystem {
 
 	public double getHiPressure() {
 		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
-	}
-
-	public MODE getMode() {
-		return mode;
 	}
 
 	public void cargoPanelGrab(MODE mode) {

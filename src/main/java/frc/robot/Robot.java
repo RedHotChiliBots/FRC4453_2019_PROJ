@@ -166,8 +166,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());
       SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
       SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected());
-      SmartDashboard.putString("Mode", Robot.chassis.mode.name());
-      SmartDashboard.putString("Level", Robot.chassis.level.name());
+      SmartDashboard.putString("Mode", Robot.chassis.getMode().name());
+      SmartDashboard.putString("Level", Robot.chassis.getLevel().name());
       i++;
       break;
 
