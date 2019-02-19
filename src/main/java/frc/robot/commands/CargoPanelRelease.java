@@ -24,7 +24,7 @@ public class CargoPanelRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.cargoPanelRelease(Robot.chassis.mode, 1.0, 1.0);
+    Robot.chassis.cargoPanelRelease(Robot.chassis.getMode(), 1.0, 1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
