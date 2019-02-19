@@ -32,7 +32,7 @@ public class UpperLiftInitMotor extends Command {
 
     pos = Robot.prefs.getDouble("ULMotorReset", 2.0);
     SmartDashboard.putNumber("ULMotorReset", pos);
-    Robot.uLift.resetPos(pos); // reset both encoder positions, so we can monitor motor2 position
+    Robot.uLift.resetPosMotor(pos); // reset both encoder positions, so we can monitor motor2 position
     // Robot.lLift.resetPosMotor(motor, pos);
     Robot.uLift.resetMotorConfig(0.0); // command motor1 to position and motor2 to follow
   }

@@ -14,8 +14,6 @@ import frc.robot.Gains;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FollowerType;
 
 /**
  * Add your docs here.
@@ -59,33 +57,28 @@ public class UpperLift extends Subsystem {
     motor.stopMotor();
   }
 
-  private final double target_turn = 0.0; // Always moving straight line
-
   public void resetMotorConfig(double pos) {
-    motor2.set(ControlMode.MotionMagic, pos, DemandType.AuxPID, target_turn);
-    motor1.follow(motor2, FollowerType.AuxOutput1);
-    motor2.set(ControlMode.Follower, motor1.getDeviceID());
-    motor1.set(ControlMode.Position, pos);
+    Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
   }
 
-  public void setPosMotor(WPI_TalonSRX motor, double pos) {
-    motor.set(ControlMode.Position, (int) (pos * Library.TICKS_PER_INCH));
+  // public void setPosMotor(WPI_TalonSRX motor, double pos) {
+  public void setPosMotor(double pos) {
+    Library.setSensorPosition(motor1, motor2, pos * Library.TICKS_PER_INCH);
+    // motor.set(ControlMode.Position, (int) (pos * Library.TICKS_PER_INCH));
   }
 
-  public void resetPosMotor(WPI_TalonSRX motor, double pos) {
-    motor.setSelectedSensorPosition((int) (pos * Library.TICKS_PER_INCH));
+  public void resetPosMotor(double pos) {
+    Library.resetSensors(motor1, motor2, pos * Library.TICKS_PER_INCH);
+    // motor.setSelectedSensorPosition((int) (pos * Library.TICKS_PER_INCH));
   }
 
-  public void setPos(double pos) {
-    setPosMotor(motor1, pos);
-    setPosMotor(motor2, pos);
-  }
-
-  public void resetPos(double pos) {
-    resetPosMotor(motor1, pos);
-    resetPosMotor(motor2, pos);
-  }
-
+  /*
+   * public void setPos(double pos) { // setPosMotor(motor1, pos); //
+   * setPosMotor(motor2, pos); setPosMotor(pos); }
+   * 
+   * public void resetPos(double pos) { // resetPosMotor(motor1, pos); //
+   * resetPosMotor(motor2, pos); resetPosMotor(pos); }
+   */
   /*
    * public void goToLevel(RobotMap.LEVEL level){ setPos((int) level); }
    */

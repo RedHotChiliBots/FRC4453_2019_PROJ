@@ -38,8 +38,8 @@ public class LiftGoToLevel extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.setPosMotor(Robot.lLift.motor1, RobotMap.height.get(RobotMap.LIFT.LOWER).get(level));
-    Robot.uLift.setPosMotor(Robot.uLift.motor1, RobotMap.height.get(RobotMap.LIFT.UPPER).get(level));
+    Robot.lLift.setPosMotor(RobotMap.height.get(RobotMap.LIFT.LOWER).get(level));
+    Robot.uLift.setPosMotor(RobotMap.height.get(RobotMap.LIFT.UPPER).get(level));
   }
 
   // Make this return true when this Command no longer needs to run execute()

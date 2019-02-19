@@ -46,7 +46,7 @@ public class LowerLiftResetMotor extends Command {
   @Override
   protected void end() {
     Robot.lLift.stopMotor(motor);
-    Robot.lLift.resetPosMotor(motor, 0.0);
+    Robot.lLift.resetPosMotor(0.0);
     System.out.println("End LowerLiftResetMotor");
   }
 

@@ -7,7 +7,10 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
@@ -181,16 +184,28 @@ public class Library {
 
     /* Initialize */
     motor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-    zeroSensors(motor1, motor2);
+    resetSensors(motor1, motor2, 0.0);
 
     motor1.selectProfileSlot(kSlot_Distance, PID_PRIMARY);
     motor1.selectProfileSlot(kSlot_Turning, PID_TURN);
   }
 
-  public static void zeroSensors(WPI_TalonSRX motor1, WPI_TalonSRX motor2) {
-    motor1.getSensorCollection().setQuadraturePosition(0, kTimeoutMs);
-    motor2.getSensorCollection().setQuadraturePosition(0, kTimeoutMs);
+  public static void resetSensors(WPI_TalonSRX motor1, WPI_TalonSRX motor2, double pos) {
+    motor1.getSensorCollection().setQuadraturePosition((int) pos, kTimeoutMs);
+    motor2.getSensorCollection().setQuadraturePosition((int) pos, kTimeoutMs);
     System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
   }
 
+  public static void setSensorPosition(WPI_TalonSRX motor1, WPI_TalonSRX motor2, double pos) {
+    /*
+     * Configured for MotionMagic on Quad Encoders' Sum and Auxiliary PID on Quad
+     * Encoders' Difference
+     */
+    // pos - is in target sensor units
+    // tartet_turn - is always 0 for our application
+    double target_turn = 0.0;
+    double target_sensorUnits = pos;
+    motor1.set(ControlMode.MotionMagic, target_sensorUnits, DemandType.AuxPID, target_turn);
+    motor2.follow(motor1, FollowerType.AuxOutput1);
+  }
 }

@@ -31,7 +31,7 @@ public class LowerLiftInitMotor extends Command {
 
     pos = Robot.prefs.getDouble("LLMotorReset", 2.0);
     SmartDashboard.putNumber("LLMotorReset", pos);
-    Robot.lLift.resetPos(pos); // reset both encoder positions, so we can monitor motor2 position
+    Robot.lLift.resetPosMotor(pos); // reset both encoder positions, so we can monitor motor2 position
     // Robot.lLift.resetPosMotor(motor, pos);
     Robot.lLift.resetMotorConfig(0.0); // command motor1 to position and motor2 to follow
   }
