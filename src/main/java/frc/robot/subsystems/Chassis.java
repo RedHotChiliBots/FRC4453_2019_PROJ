@@ -256,6 +256,10 @@ public class Chassis extends Subsystem {
 		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
+	public double getClosedLoopError() {
+		return frontleft.getClosedLoopError();
+	}
+
 	public void cargoPanelGrab(MODE mode) {
 		if (mode == MODE.PANEL) {
 			Robot.panel.grab();

@@ -31,8 +31,7 @@ public class ChassisAutoDriveDist extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math.abs(Robot.chassis.frontleft.getClosedLoopError()) < Robot.prefs.getDouble("ChassisDistAllowedErr",
-        5.0));
+    return (Math.abs(Robot.chassis.getClosedLoopError()) < Robot.prefs.getDouble("ChassisDistAllowedErr", 5.0));
   }
 
   // Called once after isFinished returns true
