@@ -108,7 +108,7 @@ public class RobotMap {
   }
 
   public static enum LEVEL {
-    LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP, SELECTED
+    LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP, SELECTED, CURRENT
   }
 
   public static LEVEL level;
