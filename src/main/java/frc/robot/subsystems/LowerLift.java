@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Gains;
 import frc.robot.RobotMap;
+import frc.robot.Library;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -20,11 +21,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class LowerLift extends Subsystem {
   public WPI_TalonSRX motor1;
   public WPI_TalonSRX motor2;
-
-  private static final int COUNTS_PER_REV_MOTOR = 12;
-  private static final int GEAR_RATIO = 20;
-  private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
-  private static final double TICKS_PER_INCH = COUNTS_PER_REV_GEARBOX; // Lead screw 1 in/rev
 
   double _lockedDistance = 0;
   double _targetAngle = 0;
@@ -44,7 +40,7 @@ public class LowerLift extends Subsystem {
     motor2.set(ControlMode.PercentOutput, 0.0);
     motor2.setSubsystem("LowerLift");
 
-    RobotMap.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
+    Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
   }
 
   @Override
@@ -67,11 +63,11 @@ public class LowerLift extends Subsystem {
   }
 
   public void setPosMotor(WPI_TalonSRX motor, double pos) {
-    motor.set(ControlMode.Position, (int) (pos * TICKS_PER_INCH));
+    motor.set(ControlMode.Position, (int) (pos * Library.TICKS_PER_INCH));
   }
 
   public void resetPosMotor(WPI_TalonSRX motor, double pos) {
-    motor.setSelectedSensorPosition((int) (pos * TICKS_PER_INCH));
+    motor.setSelectedSensorPosition((int) (pos * Library.TICKS_PER_INCH));
   }
 
   public void setPos(double pos) {

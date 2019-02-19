@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.Library;
 import frc.robot.Gains;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -41,7 +42,7 @@ public class UpperLift extends Subsystem {
     motor2.set(ControlMode.PercentOutput, 0.0);
     motor2.setSubsystem("UpperLift");
 
-    RobotMap.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
+    Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
   }
 
   @Override
@@ -68,11 +69,11 @@ public class UpperLift extends Subsystem {
   }
 
   public void setPosMotor(WPI_TalonSRX motor, double pos) {
-    motor.set(ControlMode.Position, (int) (pos * RobotMap.TICKS_PER_INCH));
+    motor.set(ControlMode.Position, (int) (pos * Library.TICKS_PER_INCH));
   }
 
   public void resetPosMotor(WPI_TalonSRX motor, double pos) {
-    motor.setSelectedSensorPosition((int) (pos * RobotMap.TICKS_PER_INCH));
+    motor.setSelectedSensorPosition((int) (pos * Library.TICKS_PER_INCH));
   }
 
   public void setPos(double pos) {
