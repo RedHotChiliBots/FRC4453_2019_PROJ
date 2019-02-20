@@ -15,14 +15,14 @@ import frc.robot.Robot;
 
 public class UpperLiftInitMotor extends Command {
 
-  private WPI_TalonSRX motor = null;
+  // private WPI_TalonSRX motor = null;
   private double pos = 0.0;
 
-  public UpperLiftInitMotor(WPI_TalonSRX motor) {
+  public UpperLiftInitMotor() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     // requires(Robot.lLift);
-    this.motor = motor;
+    // this.motor = motor;
   }
 
   // Called just before this Command runs the first time
@@ -34,19 +34,22 @@ public class UpperLiftInitMotor extends Command {
     SmartDashboard.putNumber("ULMotorReset", pos);
     Robot.uLift.resetPosMotor(pos); // reset both encoder positions, so we can monitor motor2 position
     // Robot.lLift.resetPosMotor(motor, pos);
-    Robot.uLift.resetMotorConfig(0.0); // command motor1 to position and motor2 to follow
+    // Robot.uLift.resetMotorConfig(0.0); // command motor1 to position and motor2
+    // to follow
+    Robot.uLift.setPosMotor(0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    motor.feed();
+    Robot.uLift.motor1.feed();
+    Robot.uLift.motor2.feed();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math.abs(motor.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
+    return (Math.abs(Robot.uLift.motor1.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
   }
 
   // Called once after isFinished returns true
