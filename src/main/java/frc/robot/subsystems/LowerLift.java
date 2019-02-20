@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Gains;
 import frc.robot.RobotMap;
 import frc.robot.Library;
 
@@ -22,12 +21,6 @@ public class LowerLift extends Subsystem {
   public WPI_TalonSRX motor1;
   public WPI_TalonSRX motor2;
 
-  double _lockedDistance = 0;
-  double _targetAngle = 0;
-
-  private Gains kGains_Distance = new Gains(0.1, 0.0, 0.0, 0.0, 100, 0.50);
-  private Gains kGains_Turning = new Gains(2.0, 0.0, 4.0, 0.0, 200, 1.0);
-
   /**
    * Add your docs here.
    */
@@ -40,7 +33,7 @@ public class LowerLift extends Subsystem {
     motor2.set(ControlMode.PercentOutput, 0.0);
     motor2.setSubsystem("LowerLift");
 
-    Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
+    Library.ConfigMotionMagic(motor1, motor2);
   }
 
   @Override
@@ -57,8 +50,8 @@ public class LowerLift extends Subsystem {
     motor.stopMotor();
   }
 
-  public void resetMotorConfig(double pos) {
-    Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
+  public void resetMotorConfig() {
+    Library.ConfigMotionMagic(motor1, motor2);
   }
 
   // public void setPosMotor(WPI_TalonSRX motor, double pos) {
