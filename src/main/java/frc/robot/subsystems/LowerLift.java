@@ -29,21 +29,16 @@ public class LowerLift extends Subsystem {
     motor1.set(ControlMode.PercentOutput, 0.0);
     motor1.setSubsystem("LowerLift");
 
-<<<<<<< HEAD
     /*
      * motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
      * motor2.set(ControlMode.PercentOutput, 0.0); motor2.setSubsystem("LowerLift");
      * 
      * Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
-     */ }
-=======
-    motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
-    motor2.set(ControlMode.PercentOutput, 0.0);
-    motor2.setSubsystem("LowerLift");
+     */ }motor2=new WPI_TalonSRX(RobotMap.lowerLiftMotor2);motor2.set(ControlMode.PercentOutput,0.0);motor2.setSubsystem("LowerLift");
 
-    Library.ConfigMotionMagic(motor1, motor2);
+  Library.ConfigMotionMagic(motor1,motor2);
+
   }
->>>>>>> 643aa1a46995193701af664df0f53a3b6fda14ce
 
   @Override
   public void initDefaultCommand() {
