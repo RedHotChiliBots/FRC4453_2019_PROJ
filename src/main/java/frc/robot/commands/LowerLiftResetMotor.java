@@ -27,7 +27,7 @@ public class LowerLiftResetMotor extends Command {
   protected void initialize() {
     System.out.println("Init LowerLiftResettMotor");
 
-    Robot.lLift.lowerMotor(motor);
+    Robot.lLift.lowerMotor();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -45,7 +45,7 @@ public class LowerLiftResetMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.stopMotor(motor);
+    Robot.lLift.stopMotor();
     // Robot.lLift.resetPosMotor(0.0);
     System.out.println("End LowerLiftResetMotor");
   }
@@ -54,7 +54,7 @@ public class LowerLiftResetMotor extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor(motor);
+    Robot.lLift.stopMotor();
     System.out.println("Interrupt LowerLiftResetMotor");
   }
 }

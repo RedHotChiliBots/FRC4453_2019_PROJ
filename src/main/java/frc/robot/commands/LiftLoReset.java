@@ -35,7 +35,7 @@ public class LiftLoReset extends CommandGroup {
     System.out.println("Starting LiftLoReset");
 
     addParallel(new LowerLiftResetMotor(Robot.lLift.motor1));
-    addSequential(new LowerLiftResetMotor(Robot.lLift.motor2));
+    // addSequential(new LowerLiftResetMotor(Robot.lLift.motor2));
 
     System.out.println("Ending LiftLoReset");
   }

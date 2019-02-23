@@ -42,7 +42,7 @@ public class LowerLiftInitMotor extends Command {
   @Override
   protected void execute() {
     Robot.lLift.motor1.feed();
-    Robot.lLift.motor2.feed();
+    // Robot.lLift.motor2.feed();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -72,14 +72,15 @@ public class Library {
      * @return
      */
     motor1.configFactoryDefault();
-    motor2.configFactoryDefault();
+    // motor2.configFactoryDefault();
     motor1.setNeutralMode(NeutralMode.Brake);
-    motor2.setNeutralMode(NeutralMode.Brake);
+    // motor2.setNeutralMode(NeutralMode.Brake);
 
     /* Configure the left Talon's selected sensor as local QuadEncoder */
-    motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, // Local Feedback Source
-        PID_PRIMARY, // PID Slot for Source [0, 1]
-        kTimeoutMs); // Configuration Timeout
+    // motor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, // Local
+    // Feedback Source
+    // PID_PRIMARY, // PID Slot for Source [0, 1]
+    // kTimeoutMs); // Configuration Timeout
 
     /*
      * Configure the Remote Talon's selected sensor as a remote sensor for the right
@@ -120,15 +121,15 @@ public class Library {
     /* Configure output and sensor direction */
     motor1.setInverted(false);
     motor1.setSensorPhase(true);
-    motor2.setInverted(false);
-    motor2.setSensorPhase(true);
+    // motor2.setInverted(false);
+    // motor2.setSensorPhase(true);
 
     /* Set status frame periods to ensure we don't have stale data */
     motor1.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, kTimeoutMs);
     motor1.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, kTimeoutMs);
     motor1.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, kTimeoutMs);
     motor1.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, kTimeoutMs);
-    motor2.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, kTimeoutMs);
+    // motor2.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, kTimeoutMs);
 
     /* Configure neutral deadband */
     motor1.configNeutralDeadband(kNeutralDeadband, kTimeoutMs);
@@ -144,8 +145,8 @@ public class Library {
      */
     motor1.configPeakOutputForward(+1.0, kTimeoutMs);
     motor1.configPeakOutputReverse(-1.0, kTimeoutMs);
-    motor2.configPeakOutputForward(+1.0, kTimeoutMs);
-    motor2.configPeakOutputReverse(-1.0, kTimeoutMs);
+    // motor2.configPeakOutputForward(+1.0, kTimeoutMs);
+    // motor2.configPeakOutputReverse(-1.0, kTimeoutMs);
 
     /* FPID Gains for distance servo */
     motor1.config_kP(kSlot_Distance, kGains_Distance.kP, kTimeoutMs);
@@ -192,7 +193,7 @@ public class Library {
 
   public static void resetSensors(WPI_TalonSRX motor1, WPI_TalonSRX motor2, double pos) {
     motor1.getSensorCollection().setQuadraturePosition((int) pos, kTimeoutMs);
-    motor2.getSensorCollection().setQuadraturePosition((int) pos, kTimeoutMs);
+    // motor2.getSensorCollection().setQuadraturePosition((int) pos, kTimeoutMs);
     System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
   }
 
@@ -206,6 +207,6 @@ public class Library {
     double target_turn = 0.0;
     double target_sensorUnits = pos;
     motor1.set(ControlMode.MotionMagic, target_sensorUnits, DemandType.AuxPID, target_turn);
-    motor2.follow(motor1, FollowerType.AuxOutput1);
+    // motor2.follow(motor1, FollowerType.AuxOutput1);
   }
 }

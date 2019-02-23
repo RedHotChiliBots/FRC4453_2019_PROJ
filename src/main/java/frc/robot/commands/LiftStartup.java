@@ -33,7 +33,7 @@ public class LiftStartup extends CommandGroup {
     System.out.println("Starting LiftStartup");
 
     addParallel(new LiftLoReset());
-    addSequential(new LiftUpReset());
+    // addSequential(new LiftUpReset());
     addSequential(new LiftInit());
 
     System.out.println("Ending LiftStartup");

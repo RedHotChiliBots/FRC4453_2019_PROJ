@@ -39,7 +39,7 @@ public class LiftInit extends CommandGroup {
     System.out.println("Starting LiftInit");
 
     addParallel(new LowerLiftInitMotor());
-    addSequential(new UpperLiftInitMotor());
+    // addSequential(new UpperLiftInitMotor());
 
     System.out.println("Ending LiftInit");
   }

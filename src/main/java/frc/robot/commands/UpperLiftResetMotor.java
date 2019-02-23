@@ -45,7 +45,7 @@ public class UpperLiftResetMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.stopMotor(motor);
+    Robot.lLift.stopMotor();
     // Robot.lLift.resetPosMotor(0.0);
     System.out.println("End UpperLiftResetMotor");
   }
@@ -54,7 +54,7 @@ public class UpperLiftResetMotor extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor(motor);
+    Robot.lLift.stopMotor();
     System.out.println("Interrupt UpperLiftResetMotor");
   }
 }

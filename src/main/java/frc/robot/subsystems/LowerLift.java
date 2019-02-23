@@ -36,12 +36,12 @@ public class LowerLift extends Subsystem {
     motor1.set(ControlMode.PercentOutput, 0.0);
     motor1.setSubsystem("LowerLift");
 
-    motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
-    motor2.set(ControlMode.PercentOutput, 0.0);
-    motor2.setSubsystem("LowerLift");
-
-    Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
-  }
+    /*
+     * motor2 = new WPI_TalonSRX(RobotMap.lowerLiftMotor2);
+     * motor2.set(ControlMode.PercentOutput, 0.0); motor2.setSubsystem("LowerLift");
+     * 
+     * Library.ConfigMotionMagic(motor1, motor2, kGains_Distance, kGains_Turning);
+     */ }
 
   @Override
   public void initDefaultCommand() {
@@ -49,12 +49,12 @@ public class LowerLift extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void lowerMotor(WPI_TalonSRX motor) {
-    motor.set(ControlMode.PercentOutput, 0.2);
+  public void lowerMotor() {
+    motor1.set(ControlMode.PercentOutput, 0.2);
   }
 
-  public void stopMotor(WPI_TalonSRX motor) {
-    motor.stopMotor();
+  public void stopMotor() {
+    motor1.stopMotor();
   }
 
   public void resetMotorConfig(double pos) {
@@ -63,12 +63,12 @@ public class LowerLift extends Subsystem {
 
   // public void setPosMotor(WPI_TalonSRX motor, double pos) {
   public void setPosMotor(double pos) {
-    Library.setSensorPosition(motor1, motor2, pos * Library.TICKS_PER_INCH);
+    // Library.setSensorPosition(motor1, pos * Library.TICKS_PER_INCH);
     // motor.set(ControlMode.Position, (int) (pos * Library.TICKS_PER_INCH));
   }
 
   public void resetPosMotor(double pos) {
-    Library.resetSensors(motor1, motor2, pos * Library.TICKS_PER_INCH);
+    // Library.resetSensors(motor1, motor2, pos * Library.TICKS_PER_INCH);
     // motor.setSelectedSensorPosition((int) (pos * Library.TICKS_PER_INCH));
   }
 
