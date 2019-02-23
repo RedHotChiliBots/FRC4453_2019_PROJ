@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -63,8 +66,35 @@ public class Library {
   public final static int kSlot_Velocity = SLOT_2;
   public final static int kSlot_MotProf = SLOT_3;
 
-  public static void ConfigMotionMagic(WPI_TalonSRX motor1, WPI_TalonSRX motor2, Gains kGains_Distance,
-      Gains kGains_Turning) {
+  public final static Map<String, Double> gainsDistance = new HashMap<String, Double>() {
+    private static final long serialVersionUID = 1L;
+    {
+      put("kCruiseVel", 1.0);
+      put("kAccel", 1.0);
+      put("kP", 10.0);
+      put("kI", 0.0);
+      put("kD", 0.0);
+      put("kF", 0.0);
+      put("kIzone", 100.0);
+      put("kPeakOutput", 1.0);
+    }
+  };
+
+  public final static Map<String, Double> gainsTurning = new HashMap<String, Double>() {
+    private static final long serialVersionUID = 1L;
+    {
+      put("kCruiseVel", 1.0);
+      put("kAccel", 1.0);
+      put("kP", 10.0);
+      put("kI", 0.0);
+      put("kD", 0.0);
+      put("kF", 0.0);
+      put("kIzone", 200.0);
+      put("kPeakOutput", 1.0);
+    }
+  };
+
+  public static void ConfigMotionMagic(WPI_TalonSRX motor1, WPI_TalonSRX motor2) {
 
     /**
      * Feedback Sensor Configuration
@@ -149,21 +179,21 @@ public class Library {
     // motor2.configPeakOutputReverse(-1.0, kTimeoutMs);
 
     /* FPID Gains for distance servo */
-    motor1.config_kP(kSlot_Distance, kGains_Distance.kP, kTimeoutMs);
-    motor1.config_kI(kSlot_Distance, kGains_Distance.kI, kTimeoutMs);
-    motor1.config_kD(kSlot_Distance, kGains_Distance.kD, kTimeoutMs);
-    motor1.config_kF(kSlot_Distance, kGains_Distance.kF, kTimeoutMs);
-    motor1.config_IntegralZone(kSlot_Distance, kGains_Distance.kIzone, kTimeoutMs);
-    motor1.configClosedLoopPeakOutput(kSlot_Distance, kGains_Distance.kPeakOutput, kTimeoutMs);
+    motor1.config_kP(kSlot_Distance, gainsDistance.get("kP"), kTimeoutMs);
+    motor1.config_kI(kSlot_Distance, gainsDistance.get("kI"), kTimeoutMs);
+    motor1.config_kD(kSlot_Distance, gainsDistance.get("kD"), kTimeoutMs);
+    motor1.config_kF(kSlot_Distance, gainsDistance.get("kF"), kTimeoutMs);
+    motor1.config_IntegralZone(kSlot_Distance, gainsDistance.get("kIzone").intValue(), kTimeoutMs);
+    motor1.configClosedLoopPeakOutput(kSlot_Distance, gainsDistance.get("kPeakOutput"), kTimeoutMs);
     motor1.configAllowableClosedloopError(kSlot_Distance, 0, kTimeoutMs);
 
     /* FPID Gains for turn servo */
-    motor1.config_kP(kSlot_Turning, kGains_Turning.kP, kTimeoutMs);
-    motor1.config_kI(kSlot_Turning, kGains_Turning.kI, kTimeoutMs);
-    motor1.config_kD(kSlot_Turning, kGains_Turning.kD, kTimeoutMs);
-    motor1.config_kF(kSlot_Turning, kGains_Turning.kF, kTimeoutMs);
-    motor1.config_IntegralZone(kSlot_Turning, (int) kGains_Turning.kIzone, kTimeoutMs);
-    motor1.configClosedLoopPeakOutput(kSlot_Turning, kGains_Turning.kPeakOutput, kTimeoutMs);
+    motor1.config_kP(kSlot_Turning, gainsTurning.get("kP"), kTimeoutMs);
+    motor1.config_kI(kSlot_Turning, gainsTurning.get("kI"), kTimeoutMs);
+    motor1.config_kD(kSlot_Turning, gainsTurning.get("kD"), kTimeoutMs);
+    motor1.config_kF(kSlot_Turning, gainsTurning.get("kF"), kTimeoutMs);
+    motor1.config_IntegralZone(kSlot_Turning, (int) gainsTurning.get("kIzone").intValue(), kTimeoutMs);
+    motor1.configClosedLoopPeakOutput(kSlot_Turning, gainsTurning.get("kPeakOutput"), kTimeoutMs);
     motor1.configAllowableClosedloopError(kSlot_Turning, 0, kTimeoutMs);
 
     /**
