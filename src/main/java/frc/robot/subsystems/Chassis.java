@@ -15,8 +15,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -133,6 +139,20 @@ public class Chassis extends Subsystem {
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
 		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
 
+		cameras = NetworkTableInstance.getDefault().getTable("Vision");
+
+		// Setup vision PID loops
+		pid_strafe = new PIDController(1.0, 0.0, 0.0, new StrafeSource(), new StrafeOutput());
+		pid_turn = new PIDController(1.0, 0.0, 0.0, new TurnSource(), new TurnOutput());
+
+		pid_strafe.setAbsoluteTolerance(1.0);
+		pid_turn.setAbsoluteTolerance(1.0);
+
+		pid_strafe.setSetpoint(0.0);
+		pid_turn.setSetpoint(0.0);
+		pid_strafe.enable();
+		pid_turn.enable();
+
 		// Add Sendable data to dashboard
 		SmartDashboard.putData("Front Left", frontleft);
 		SmartDashboard.putData("Front Right", frontright);
@@ -197,14 +217,109 @@ public class Chassis extends Subsystem {
 		driveChassis(x, y, r);
 	}
 
+	// Vision stuff
+
+	NetworkTable cameras;
+
+	double current_strafe = 0;
+	double current_turn = 0;
+
+	PIDController pid_strafe;
+	PIDController pid_turn;
+
+	/**
+	 * Gets the camera subtable for the current mode.
+	 */
+	NetworkTable getCamera() {
+		if (Robot.grabber.getMode() == MODE.CARGO) {
+			return cameras.getSubTable("Front");
+		} else {
+			return cameras.getSubTable("Rear");
+		}
+	}
+
+	class StrafeSource implements PIDSource {
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			return PIDSourceType.kDisplacement;
+		}
+
+		@Override
+		public double pidGet() {
+			if (getCamera().getEntry("Lock").getBoolean(false) == false) {
+				return 0.0;
+			}
+
+			return getCamera().getEntry("Strafe").getDouble(0.0);
+		}
+	}
+
+	class TurnSource implements PIDSource {
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			return PIDSourceType.kDisplacement;
+		}
+
+		@Override
+		public double pidGet() {
+			if (getCamera().getEntry("Lock").getBoolean(false) == false) {
+				return 0.0;
+			}
+
+			return getCamera().getEntry("Turn").getDouble(0.0);
+		}
+	}
+
+	class StrafeOutput implements PIDOutput {
+		@Override
+		public void pidWrite(double output) {
+			current_strafe = output;
+		}
+	}
+
+	class TurnOutput implements PIDOutput {
+		@Override
+		public void pidWrite(double output) {
+			current_turn = output;
+		}
+	}
+
+	/**
+	 * Prepares PID loops for driving. In particular, resets PID loops, clears
+	 * output variables, and re-enables PID loops.
+	 */
+	public void driveVisionStart() {
+		pid_strafe.reset();
+		pid_turn.reset();
+		current_strafe = 0;
+		current_turn = 0;
+		pid_turn.enable();
+		pid_strafe.enable();
+	}
+
+	/**
+	 * Drives chassis motors using vision PID loops. NOTE: please call
+	 * driveVisionStart() before using this.
+	 */
+	public void driveVision() {
+		driveChassis(current_strafe, 0.0, current_turn);
+	}
+
+	public boolean visionFinished() {
+		return getCamera().getEntry("Lock").getBoolean(false) && !pid_strafe.onTarget() && !pid_turn.onTarget();
+	}
+
 	/**
 	 * Drive routines TBD or to be removed
 	 */
-	public void driveVision() {
-	}
-
-	public void followLine() {
-	}
 
 	public void distFromBay() {
 	}

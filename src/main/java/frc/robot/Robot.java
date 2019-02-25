@@ -49,8 +49,8 @@ public class Robot extends TimedRobot {
     initPrefs();
 
     oi = new OI();
+    grabber = new Grabber(); // MUST be before chassis because of vision
     chassis = new Chassis();
-    grabber = new Grabber();
     lift = new Lift();
     climber = new Climber();
     oi.init();
