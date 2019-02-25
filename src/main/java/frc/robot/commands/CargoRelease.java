@@ -27,7 +27,7 @@ public class CargoRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.grabber.cargoRel();
+    Robot.grabber.cargoRel(Robot.oi.getCargoL(), Robot.oi.getCargoR());
   }
 
   // Make this return true when this Command no longer needs to run execute()
