@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.DIR;
 import frc.robot.RobotMap.MODE;
 
 import frc.robot.commands.GrabberStop;
@@ -27,8 +28,8 @@ import frc.robot.commands.GrabberStop;
 public class Grabber extends Subsystem {
 
   // Define Cargo Motors
-  private WPI_TalonSRX motor1 = null;
-  private WPI_TalonSRX motor2 = null;
+  private WPI_TalonSRX motorL = null;
+  private WPI_TalonSRX motorR = null;
 
   // Define Panel Solenoid
   private DoubleSolenoid panel = null;
@@ -36,24 +37,28 @@ public class Grabber extends Subsystem {
   // Define Mode variable
   private MODE mode = null;
 
-  // public CargoMotor Direction = CargoMotor.CENTER;
+  private DIR dir = null;
 
   public Grabber() {
 
     // Initialize Cargo motors
-    motor1 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor1);
-    motor1.configFactoryDefault();
-    motor1.setNeutralMode(NeutralMode.Brake);
-    motor1.setSubsystem("Grabber");
-    motor2.setInverted(false);
-    motor1.set(ControlMode.PercentOutput, 0.0);
+    motorL = new WPI_TalonSRX(RobotMap.cargoGrabberMotorL);
+    motorL.configFactoryDefault();
+    motorL.setNeutralMode(NeutralMode.Brake);
+    motorL.setSubsystem("Grabber");
+    motorL.setInverted(false);
+    motorL.set(ControlMode.PercentOutput, 0.0);
+    motorL.configPeakOutputForward(+1.0, RobotMap.kTimeoutMs);
+    motorL.configPeakOutputReverse(-1.0, RobotMap.kTimeoutMs);
 
-    motor2 = new WPI_TalonSRX(RobotMap.cargoGrabberMotor2);
-    motor2.configFactoryDefault();
-    motor2.setNeutralMode(NeutralMode.Brake);
-    motor2.setSubsystem("Grabber");
-    motor2.setInverted(true);
-    motor2.set(ControlMode.PercentOutput, 0.0);
+    motorR = new WPI_TalonSRX(RobotMap.cargoGrabberMotorR);
+    motorR.configFactoryDefault();
+    motorR.setNeutralMode(NeutralMode.Brake);
+    motorR.setSubsystem("Grabber");
+    motorR.setInverted(true);
+    motorR.set(ControlMode.PercentOutput, 0.0);
+    motorR.configPeakOutputForward(+1.0, RobotMap.kTimeoutMs);
+    motorR.configPeakOutputReverse(-1.0, RobotMap.kTimeoutMs);
 
     // Initialize Panel solenoid
     panel = new DoubleSolenoid(RobotMap.PanelGrabberReleaseSolenoid, RobotMap.PanelGrabberGripSolenoid);
@@ -61,9 +66,11 @@ public class Grabber extends Subsystem {
     // Initialze Mode to PANEL
     mode = MODE.PANEL;
 
+    dir = DIR.CENTER;
+
     // Add Sendable data to dashboard
-    SmartDashboard.putData("Cargo Motor1", motor1);
-    SmartDashboard.putData("Cargo Motor2", motor2);
+    SmartDashboard.putData("Cargo motorL", motorL);
+    SmartDashboard.putData("Cargo motorR", motorR);
     SmartDashboard.putData("Panel Grabber", panel);
   }
 
@@ -80,37 +87,45 @@ public class Grabber extends Subsystem {
     return mode;
   }
 
+  public void setDir(DIR d) {
+    dir = d;
+  }
+
+  public DIR getDir() {
+    return dir;
+  }
+
   public void cargoGrab() {
     double spd = Robot.prefs.getDouble("CargoGrabSpd", 0.5);
-    motor1.set(ControlMode.PercentOutput, -spd);
-    motor2.set(ControlMode.PercentOutput, spd);
+    motorL.set(ControlMode.PercentOutput, spd);
+    motorR.set(ControlMode.PercentOutput, spd);
   }
 
   public void cargoRel(double l, double r) {
-    motor1.set(ControlMode.PercentOutput, l);
-    motor2.set(ControlMode.PercentOutput, r);
+    motorL.set(ControlMode.PercentOutput, -l);
+    motorR.set(ControlMode.PercentOutput, -r);
   }
 
-  public void cargoRel(RobotMap.CargoMotor dir) {
-    double spd = Robot.prefs.getDouble("CargoRelSpd", 0.5);
+  public void cargoRel() {
+    double spd = -Robot.prefs.getDouble("CargoRelSpd", 0.5);
     switch (dir) {
     case LEFT:
-      motor1.set(ControlMode.PercentOutput, spd);
+      motorL.set(ControlMode.PercentOutput, spd);
       break;
     case RIGHT:
-      motor2.set(ControlMode.PercentOutput, -spd);
+      motorR.set(ControlMode.PercentOutput, spd);
       break;
     case CENTER:
-      motor1.set(ControlMode.PercentOutput, spd);
-      motor2.set(ControlMode.PercentOutput, -spd);
+      motorL.set(ControlMode.PercentOutput, spd);
+      motorR.set(ControlMode.PercentOutput, spd);
       break;
     default:
     }
   }
 
   public void cargoStop() {
-    motor1.stopMotor();
-    motor2.stopMotor();
+    motorL.stopMotor();
+    motorR.stopMotor();
   }
 
   public void panelGrab() {
@@ -136,19 +151,27 @@ public class Grabber extends Subsystem {
    * public boolean isCargoSelected(){ return cargoSelected; }
    */
 
-  public void grabCargoPanel(MODE mode) {
-    if (mode == MODE.PANEL) {
+  public void grabCargoPanel() {
+    switch (mode) {
+    case PANEL:
       panelGrab();
-    } else {
+      break;
+    case CARGO:
       cargoGrab();
+      break;
+    default:
     }
   }
 
-  public void relCargoPanel(MODE mode, double l, double r) {
-    if (mode == MODE.PANEL) {
+  public void relCargoPanel() {
+    switch (mode) {
+    case PANEL:
       panelRel();
-    } else {
-      cargoRel(l, r);
+      break;
+    case CARGO:
+      cargoRel();
+      break;
+    default:
     }
   }
 

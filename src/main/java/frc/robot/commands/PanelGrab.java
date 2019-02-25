@@ -10,10 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoPanelRelease extends Command {
-  public CargoPanelRelease() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class PanelGrab extends Command {
+  public PanelGrab() {
+    requires(Robot.grabber);
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +23,7 @@ public class CargoPanelRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.grabber.relCargoPanel(Robot.grabber.getMode(), 1.0, 1.0);
+    Robot.grabber.panelGrab();
   }
 
   // Make this return true when this Command no longer needs to run execute()

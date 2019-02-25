@@ -15,7 +15,7 @@ import frc.robot.commands.ClimberClimbNew;
 import frc.robot.commands.ClimberExtend;
 import frc.robot.commands.ClimberRetract;
 import frc.robot.commands.LiftStartup;
-import frc.robot.commands.PanelGrip;
+import frc.robot.commands.PanelGrab;
 import frc.robot.commands.PanelRelease;
 import frc.robot.commands.SwitchToCargo;
 import frc.robot.commands.SwitchToLevel1;
@@ -70,7 +70,7 @@ public class OI {
   private JoystickButton climberClimbNew = new JoystickButton(operator, RobotMap.Y_BUTTON);
 
   private JoystickButton panelRelease = new JoystickButton(operator, RobotMap.RIGHT_BUMPER);
-  private JoystickButton panelGrip = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
+  private JoystickButton panelGrab = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
 
   private JoystickButton switchToLevel1 = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
   private JoystickButton switchToLevel2 = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
@@ -109,7 +109,7 @@ public class OI {
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
     liftReset.whenPressed(new LiftStartup());
-    panelGrip.whenPressed(new PanelGrip());
+    panelGrab.whenPressed(new PanelGrab());
     panelRelease.whileHeld(new PanelRelease());
     climberClimb.whileHeld(new ClimberClimb());
     climberClimbNew.whenPressed(new ClimberClimbNew());

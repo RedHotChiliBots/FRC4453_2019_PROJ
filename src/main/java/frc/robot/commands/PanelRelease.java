@@ -12,8 +12,6 @@ import frc.robot.Robot;
 
 public class PanelRelease extends Command {
   public PanelRelease() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.grabber);
   }
 

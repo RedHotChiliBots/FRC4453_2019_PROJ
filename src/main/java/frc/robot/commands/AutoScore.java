@@ -36,7 +36,7 @@ public class AutoScore extends CommandGroup {
     addParallel(new ChassisAutoDriveVision());
     addSequential(new LiftGoToLevel(Robot.lift.getLevel()));
     addSequential(new ChassisDriveJerk());
-    addSequential(new CargoPanelRelease());
+    addSequential(new GrabberRel());
     addSequential(new ChassisAutoDriveVision());
     addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
   }

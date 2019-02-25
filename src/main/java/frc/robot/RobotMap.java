@@ -33,14 +33,11 @@ public class RobotMap {
   public static int backRightMotor = 4;
 
   // lifts
-  public static int upperLiftMotor1 = 5;
-  public static int upperLiftMotor2 = 6;
-  public static int lowerLiftMotor1 = 7;
-  public static int lowerLiftMotor2 = 8;
+  public static int liftMotor = 5;
 
   // cargo grabber
-  public static int cargoGrabberMotor1 = 9;
-  public static int cargoGrabberMotor2 = 10;
+  public static int cargoGrabberMotorL = 9;
+  public static int cargoGrabberMotorR = 10;
 
   // ============= SOLENOIDS (dio) =============
 
@@ -95,7 +92,15 @@ public class RobotMap {
   TRIGGER_1 = 1, BUTTON_2 = 2, BUTTON_3 = 3, BUTTON_4 = 4, BUTTON_5 = 5, BUTTON_6 = 6, BUTTON_7 = 7, BUTTON_8 = 8,
       BUTTON_9 = 9, BUTTON_10 = 10, BUTTON_11 = 11;
 
-  public static enum CargoMotor {
+  // ============= CONSTANTS =============
+
+  public final static int kTimeoutMs = 30;
+  public final static double kNeutralDeadband = 0.001;
+  public final static int PID_PRIMARY = 0;
+  public final static int SLOT_0 = 0;
+  public final static int kSlot_Distance = SLOT_0;
+
+  public static enum DIR {
     LEFT, RIGHT, CENTER
   }
 

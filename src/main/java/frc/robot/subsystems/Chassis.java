@@ -79,9 +79,6 @@ public class Chassis extends Subsystem {
 	private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION)
 			/ (CHASSIS_WHEEL_DIAMETER * Math.PI);
 
-	private final static int kTimeoutMs = 30;
-	private final static int PID_PRIMARY = 0;
-
 	public Chassis() {
 
 		// Initialize drive train for Mechanam
@@ -95,29 +92,29 @@ public class Chassis extends Subsystem {
 		frontleft.setNeutralMode(NeutralMode.Brake);
 		frontleft.setSubsystem("Chassis");
 		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				PID_PRIMARY, // PID Slot for Source [0, 1]
-				kTimeoutMs); // Configuration Timeout
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout
 		frontright.configFactoryDefault();
 		frontright.set(ControlMode.PercentOutput, 0.0);
 		frontright.setNeutralMode(NeutralMode.Brake);
 		frontright.setSubsystem("Csassis");
 		frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				PID_PRIMARY, // PID Slot for Source [0, 1]
-				kTimeoutMs); // Configuration Timeout
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout
 		backleft.configFactoryDefault();
 		backleft.set(ControlMode.PercentOutput, 0.0);
 		backleft.setNeutralMode(NeutralMode.Brake);
 		backleft.setSubsystem("Chassis");
 		backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				PID_PRIMARY, // PID Slot for Source [0, 1]
-				kTimeoutMs); // Configuration Timeout, 0, 100);
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout, 0, 100);
 		backright.configFactoryDefault();
 		backright.set(ControlMode.PercentOutput, 0.0);
 		backright.setNeutralMode(NeutralMode.Brake);
 		backright.setSubsystem("Chassis");
 		backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				PID_PRIMARY, // PID Slot for Source [0, 1]
-				kTimeoutMs); // Configuration Timeout
+				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+				RobotMap.kTimeoutMs); // Configuration Timeout
 		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
 
 		// Initialize AHRS board

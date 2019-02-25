@@ -40,7 +40,7 @@ public class AutoRetrieve extends CommandGroup {
       addSequential(new LiftGoToLevel(RobotMap.LEVEL.LOADINGSTATION));
     }
 
-    addSequential(new CargoPanelGrab());
+    addSequential(new GrabberGrab());
     addSequential(new ChassisAutoDriveVision());
     addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
   }

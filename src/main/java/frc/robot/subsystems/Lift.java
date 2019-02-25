@@ -26,8 +26,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
  * Add your docs here.
  */
 public class Lift extends Subsystem {
+
   // Define lift motor
   public WPI_TalonSRX motor = null;
+
   // Define lift level
   private LEVEL level = null;
 
@@ -48,13 +50,6 @@ public class Lift extends Subsystem {
   private static final int TICKS_PER_100MS = (int) (TICKS_PER_MIN / (60 * 10)); // 60sec/min; 10 100ms/sec
   private static final int TICKS_PER_100MS_PER_SEC = (int) (TICKS_PER_100MS * 4.0); // max speed in .25 sec
 
-  private final static int SLOT_0 = 0;
-
-  private final static int kTimeoutMs = 30;
-  private final static double kNeutralDeadband = 0.001;
-  private final static int PID_PRIMARY = 0;
-  private final static int kSlot_Distance = SLOT_0;
-
   public final static Map<String, Double> gainsDistance = new HashMap<String, Double>() {
     private static final long serialVersionUID = 1L;
     {
@@ -74,7 +69,7 @@ public class Lift extends Subsystem {
    */
   public Lift() {
     // Configure lift motor for motion magic
-    motor = new WPI_TalonSRX(RobotMap.upperLiftMotor1);
+    motor = new WPI_TalonSRX(RobotMap.liftMotor);
     motor.set(ControlMode.PercentOutput, 0.0);
     motor.setSubsystem("UpperLift");
     motor.configFactoryDefault();
@@ -123,36 +118,36 @@ public class Lift extends Subsystem {
   public void initMotorConfig() {
     /* Configure the left Talon's selected sensor as local QuadEncoder */
     motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, // Local Feedback Source
-        PID_PRIMARY, // PID Slot for Source [0, 1]
-        kTimeoutMs); // Configuration Timeout
+        RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+        RobotMap.kTimeoutMs); // Configuration Timeout
 
     /* Configure output and sensor direction */
     motor.setInverted(false);
     motor.setSensorPhase(true);
 
     /* Configure neutral deadband */
-    motor.configNeutralDeadband(kNeutralDeadband, kTimeoutMs);
+    motor.configNeutralDeadband(RobotMap.kNeutralDeadband, RobotMap.kTimeoutMs);
 
     /**
      * Max out the peak output (for all modes). However you can limit the output of
      * a given PID object with configClosedLoopPeakOutput().
      */
-    motor.configPeakOutputForward(+1.0, kTimeoutMs);
-    motor.configPeakOutputReverse(-1.0, kTimeoutMs);
+    motor.configPeakOutputForward(+1.0, RobotMap.kTimeoutMs);
+    motor.configPeakOutputReverse(-1.0, RobotMap.kTimeoutMs);
 
     /* Motion Magic Configurations */
-    motor.configMotionAcceleration(TICKS_PER_100MS_PER_SEC, kTimeoutMs);
-    motor.configMotionCruiseVelocity(TICKS_PER_100MS, kTimeoutMs);
+    motor.configMotionAcceleration(TICKS_PER_100MS_PER_SEC, RobotMap.kTimeoutMs);
+    motor.configMotionCruiseVelocity(TICKS_PER_100MS, RobotMap.kTimeoutMs);
 
     /* FPID Gains for distance servo */
-    motor.config_kP(kSlot_Distance, gainsDistance.get("kP"), kTimeoutMs);
-    motor.config_kI(kSlot_Distance, gainsDistance.get("kI"), kTimeoutMs);
-    motor.config_kD(kSlot_Distance, gainsDistance.get("kD"), kTimeoutMs);
-    motor.config_kF(kSlot_Distance, gainsDistance.get("kF"), kTimeoutMs);
-    motor.config_IntegralZone(kSlot_Distance, gainsDistance.get("kIzone").intValue(), kTimeoutMs);
+    motor.config_kP(RobotMap.kSlot_Distance, gainsDistance.get("kP"), RobotMap.kTimeoutMs);
+    motor.config_kI(RobotMap.kSlot_Distance, gainsDistance.get("kI"), RobotMap.kTimeoutMs);
+    motor.config_kD(RobotMap.kSlot_Distance, gainsDistance.get("kD"), RobotMap.kTimeoutMs);
+    motor.config_kF(RobotMap.kSlot_Distance, gainsDistance.get("kF"), RobotMap.kTimeoutMs);
+    motor.config_IntegralZone(RobotMap.kSlot_Distance, gainsDistance.get("kIzone").intValue(), RobotMap.kTimeoutMs);
 
-    motor.configClosedLoopPeakOutput(kSlot_Distance, gainsDistance.get("kPeakOutput"), kTimeoutMs);
-    motor.configAllowableClosedloopError(kSlot_Distance, 0, kTimeoutMs);
+    motor.configClosedLoopPeakOutput(RobotMap.kSlot_Distance, gainsDistance.get("kPeakOutput"), RobotMap.kTimeoutMs);
+    motor.configAllowableClosedloopError(RobotMap.kSlot_Distance, 0, RobotMap.kTimeoutMs);
 
     /**
      * 1ms per loop. PID loop can be slowed down if need be. For example, - if
@@ -161,7 +156,7 @@ public class Lift extends Subsystem {
      * very slow causing the derivative error to be near zero.
      */
     int closedLoopTimeMs = 1;
-    motor.configClosedLoopPeriod(0, closedLoopTimeMs, kTimeoutMs);
+    motor.configClosedLoopPeriod(0, closedLoopTimeMs, RobotMap.kTimeoutMs);
   }
 
   public void setTgtPosition(double pos) {
@@ -169,6 +164,6 @@ public class Lift extends Subsystem {
   }
 
   public void resetEncoder(double pos) {
-    motor.getSensorCollection().setQuadraturePosition((int) pos * TICKS_PER_INCH, kTimeoutMs);
+    motor.getSensorCollection().setQuadraturePosition((int) pos * TICKS_PER_INCH, RobotMap.kTimeoutMs);
   }
 }
