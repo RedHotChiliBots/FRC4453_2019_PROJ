@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -131,6 +132,22 @@ public class OI {
      * switchToLevel3.whenPressed(new SwitchToLevel3());
      * switchToShip.whenPressed(new SwitchToShip());
      */
+  }
+
+  public void setDriverRumble(GenericHID.RumbleType t) {
+    driver.setRumble(t, 1);
+  }
+
+  public void resetDriverRumble(GenericHID.RumbleType t) {
+    driver.setRumble(t, 0);
+  }
+
+  public void setOperatorRumble(GenericHID.RumbleType t) {
+    operator.setRumble(t, 1);
+  }
+
+  public void resetOperatorRumble(GenericHID.RumbleType t) {
+    operator.setRumble(t, 0);
   }
 
   public double getDriveX() {

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -57,6 +58,9 @@ public class RobotMap {
 
   public static final DoubleSolenoid.Value PanelRelease = DoubleSolenoid.Value.kForward;
   public static final DoubleSolenoid.Value PanelGrab = DoubleSolenoid.Value.kReverse;
+
+  public static final GenericHID.RumbleType leftRumble = GenericHID.RumbleType.kLeftRumble;
+  public static final GenericHID.RumbleType rightRumble = GenericHID.RumbleType.kRightRumble;
 
   // ============= SENSORS (analog) =============
 
