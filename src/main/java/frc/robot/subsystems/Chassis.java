@@ -11,26 +11,24 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
-
-import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.MODE;
-
 import frc.robot.commands.ChassisDriveTeleop;
 
 /**
@@ -227,6 +225,8 @@ public class Chassis extends Subsystem {
 	PIDController pid_strafe;
 	PIDController pid_turn;
 
+	boolean rumble_enabled = false;
+
 	/**
 	 * Gets the camera subtable for the current mode.
 	 */
@@ -303,6 +303,29 @@ public class Chassis extends Subsystem {
 		current_turn = 0;
 		pid_turn.enable();
 		pid_strafe.enable();
+	}
+
+	public void enableRumble() {
+		rumble_enabled = true;
+	}
+
+	public void disableRumble() {
+		rumble_enabled = false;
+	}
+
+	public void doRumble() {
+		if (rumble_enabled && getCamera().getEntry("Lock").getBoolean(false)) {
+			double strafe = getCamera().getEntry("Strafe").getNumber(0.0).doubleValue();
+			if (strafe < 5.0) {
+				Robot.oi.setDriverRumble(RumbleType.kLeftRumble);
+			}
+			if (strafe > -5.0) {
+				Robot.oi.setDriverRumble(RumbleType.kRightRumble);
+			}
+		} else {
+			Robot.oi.resetDriverRumble(RumbleType.kLeftRumble);
+			Robot.oi.resetDriverRumble(RumbleType.kRightRumble);
+		}
 	}
 
 	/**

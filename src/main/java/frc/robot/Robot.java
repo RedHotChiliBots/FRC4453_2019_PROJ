@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     telemetry();
     chassis.findJerk();
+    chassis.doRumble();
   }
 
   /**
