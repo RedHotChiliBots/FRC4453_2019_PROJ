@@ -50,19 +50,19 @@ import frc.robot.commands.ChassisDriveTeleop;
 public class Chassis extends Subsystem {
 
 	// Wheels and Drive type
-	private WPI_TalonSRX frontleft;
-	private WPI_TalonSRX frontright;
-	private WPI_TalonSRX backleft;
-	private WPI_TalonSRX backright;
-	private MecanumDrive drive;
+	private WPI_TalonSRX frontleft = null;
+	private WPI_TalonSRX frontright = null;
+	private WPI_TalonSRX backleft = null;
+	private WPI_TalonSRX backright = null;
+	private MecanumDrive drive = null;
 
 	// "jerk" detection
 	private boolean collisionDetected = false;
 
-	private double last_world_linear_accel_x;
-	private double last_world_linear_accel_y;
+	private double last_world_linear_accel_x = 0.0;
+	private double last_world_linear_accel_y = 0.0;
 
-	private final double kCollisionThreshold_DeltaG = 0.2f;
+	private final double kCollisionThreshold_DeltaG = 0.2;
 
 	// Define navX board
 	public AHRS ahrs = null;
