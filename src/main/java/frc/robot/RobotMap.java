@@ -85,8 +85,12 @@ public class RobotMap {
   A_BUTTON = 1, B_BUTTON = 2, X_BUTTON = 3, Y_BUTTON = 4, LEFT_BUMPER = 5, RIGHT_BUMPER = 6, BACK = 7, START = 8,
       LEFT_STICK = 9, RIGHT_STICK = 10;
 
-  // Attack 3-Axis Joystick Definitions
+  public static final int
+  // button board
+  BTN_1 = 1, BTN_2 = 2, BTN_3 = 3, BTN_4 = 4, BTN_5 = 5, BTN_6 = 6, BTN_7 = 7, BTN_8 = 8, BTN_9 = 9, BTN_10 = 10,
+      BTN_11 = 11, BTN_12 = 12, BTN_13 = 13, BTN_14 = 14, BTN_15 = 15, BTN_16 = 16;
 
+  // Attack 3-Axis Joystick Definitions
   public static final int
   // attack 3 axis
   X_AXIS = 0, Y_AXIS = 1, THROTTLE_AXIS = 2;

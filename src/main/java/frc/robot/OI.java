@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -61,6 +62,7 @@ public class OI {
 
   private XboxController driver = new XboxController(0);
   private XboxController operator = new XboxController(1);
+  private Joystick btnBoard = new Joystick(2);
 
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.A_BUTTON);
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.B_BUTTON);
@@ -82,6 +84,7 @@ public class OI {
   private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
   private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
 
+  private JoystickButton xyz = new JoystickButton(btnBoard, RobotMap.BTN_1);
   /*
    * Andrew's new config private JoystickButton switchToCargo = new
    * JoystickButton(driver, RobotMap.RIGHT_BUMPER); private JoystickButton
