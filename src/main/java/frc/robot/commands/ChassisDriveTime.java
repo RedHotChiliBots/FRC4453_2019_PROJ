@@ -7,54 +7,52 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class UpperLiftResetMotor extends Command {
+public class ChassisDriveTime extends Command {
+  double sec;
 
-  private WPI_TalonSRX motor = null;
+  public ChassisDriveTime(double sec) {
+    System.out.println("Drive Dist constructed.");
 
-  public UpperLiftResetMotor(WPI_TalonSRX motor) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    this.motor = motor;
+    requires(Robot.chassis);
+
+    this.sec = sec;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Init UpperLiftResetMotor");
-
-    Robot.uLift.lowerMotor(motor);
+    setTimeout(sec); // set 4 second timeout
+    System.out.println("Drive Dist initialize.");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    motor.feed();
+    // System.out.println("Drive execute.");
+    Robot.chassis.driveChassis(0.0, 0.3, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (motor.getOutputCurrent() > Robot.prefs.getDouble("CurrentThreshold", 9.0));
+    return isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lLift.stopMotor();
-    // Robot.lLift.resetPosMotor(0.0);
-    System.out.println("End UpperLiftResetMotor");
+    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    System.out.println("Drive end.");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lLift.stopMotor();
-    System.out.println("Interrupt UpperLiftResetMotor");
+    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    System.out.println("Drive interrupted.");
   }
 }

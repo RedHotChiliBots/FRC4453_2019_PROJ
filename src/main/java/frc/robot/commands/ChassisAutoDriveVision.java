@@ -89,7 +89,7 @@ public class ChassisAutoDriveVision extends Command {
   @Override
   protected void initialize() {
     NetworkTable vision = NetworkTableInstance.getDefault().getTable("Vision");
-    if (Robot.chassis.getMode() == MODE.CARGO) {
+    if (Robot.grabber.getMode() == MODE.CARGO) {
       camera = vision.getSubTable("Front");
     } else {
       camera = vision.getSubTable("Rear");

@@ -18,60 +18,73 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+
 import com.kauailabs.navx.frc.AHRS;
-//import edu.wpi.first.wpilibj.RobotDrive;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.Library;
 import frc.robot.RobotMap.MODE;
-import frc.robot.RobotMap.LEVEL;
+
 import frc.robot.commands.ChassisDriveTeleop;
 
 /**
- * Add your docs here.
+ * Chassis - Manage Drive Train
+ * 
+ * The chassis subsystem is responsible for controlling the drive wheels in
+ * Mecanum mode for TeleOp and Autonomous modes.
+ * 
+ * In TeleOp mode the driver's joystick controls the robot using field oriented
+ * mode where, y pushes and pulls the robot away and towards the driver x moves
+ * the robot left and right of the driver r rotates the robots orientation
+ * 
+ * In Autonomous mode the robot is controlled by the error terms provided by the
+ * Vision code. The x error term provides the PID error causing the robot to
+ * move left or right to center on the line. The r error term provides the PID
+ * error causing the robot to rotate facing the scoring face. The y value is a
+ * constant speed until "jerk" is detected when the robot stops.
+ * 
+ * "Jerk" is declared when deceleration of the robot is detected in its forward
+ * direction. This condition is used to identify the scoring face and stop,
+ * score.
  */
 public class Chassis extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+
+	// Wheels and Drive type
 	private WPI_TalonSRX frontleft;
 	private WPI_TalonSRX frontright;
 	private WPI_TalonSRX backleft;
 	private WPI_TalonSRX backright;
 	private MecanumDrive drive;
 
-	private AnalogInput hiPressureSensor;
-	private AnalogInput loPressureSensor;
-
+	// "jerk" detection
 	private boolean collisionDetected = false;
-
-	// private boolean panelSelcted = true;
-	// private boolean cargoSelected = false;
-
-	// public enum Mode {
-	// PANEL, CARGO
-	// }
-
-	private MODE mode = MODE.PANEL;
-	private LEVEL level = LEVEL.LEVEL1;
 
 	private double last_world_linear_accel_x;
 	private double last_world_linear_accel_y;
 
-	private final static double kCollisionThreshold_DeltaG = 0.2f;
+	private final double kCollisionThreshold_DeltaG = 0.2f;
 
 	// Define navX board
 	public AHRS ahrs = null;
 
+	// Hi & Lo Pressure Sensors
+	private AnalogInput hiPressureSensor = null;
+	private AnalogInput loPressureSensor = null;
+	private static final double PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
+
+	// Define Encoder constants
 	private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per wheel revs.
 	private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096; // Quad encoder, counts per rev
 	private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
 	private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO * CHASSIS_ENCODER_TICKS_PER_REVOLUTION)
 			/ (CHASSIS_WHEEL_DIAMETER * Math.PI);
 
-	private static final double PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
+	private final static int kTimeoutMs = 30;
+	private final static int PID_PRIMARY = 0;
 
 	public Chassis() {
+
+		// Initialize drive train for Mechanam
 		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);
 		frontright = new WPI_TalonSRX(RobotMap.frontRightMotor);
 		backleft = new WPI_TalonSRX(RobotMap.backLeftMotor);
@@ -82,71 +95,94 @@ public class Chassis extends Subsystem {
 		frontleft.setNeutralMode(NeutralMode.Brake);
 		frontleft.setSubsystem("Chassis");
 		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				Library.PID_PRIMARY, // PID Slot for Source [0, 1]
-				Library.kTimeoutMs); // Configuration Timeout
+				PID_PRIMARY, // PID Slot for Source [0, 1]
+				kTimeoutMs); // Configuration Timeout
 		frontright.configFactoryDefault();
 		frontright.set(ControlMode.PercentOutput, 0.0);
 		frontright.setNeutralMode(NeutralMode.Brake);
 		frontright.setSubsystem("Csassis");
 		frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				Library.PID_PRIMARY, // PID Slot for Source [0, 1]
-				Library.kTimeoutMs); // Configuration Timeout
+				PID_PRIMARY, // PID Slot for Source [0, 1]
+				kTimeoutMs); // Configuration Timeout
 		backleft.configFactoryDefault();
 		backleft.set(ControlMode.PercentOutput, 0.0);
 		backleft.setNeutralMode(NeutralMode.Brake);
 		backleft.setSubsystem("Chassis");
 		backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				Library.PID_PRIMARY, // PID Slot for Source [0, 1]
-				Library.kTimeoutMs); // Configuration Timeout, 0, 100);
-
+				PID_PRIMARY, // PID Slot for Source [0, 1]
+				kTimeoutMs); // Configuration Timeout, 0, 100);
 		backright.configFactoryDefault();
 		backright.set(ControlMode.PercentOutput, 0.0);
 		backright.setNeutralMode(NeutralMode.Brake);
 		backright.setSubsystem("Chassis");
 		backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				Library.PID_PRIMARY, // PID Slot for Source [0, 1]
-				Library.kTimeoutMs); // Configuration Timeout
+				PID_PRIMARY, // PID Slot for Source [0, 1]
+				kTimeoutMs); // Configuration Timeout
 		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
 
-		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
-		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
-
+		// Initialize AHRS board
 		try {
-			/* Communicate w/navX-MXP via the MXP SPI Bus. */
-			/* Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB */
 			/*
-			 * See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for
-			 * details.
+			 * Communicate w/ navX-MXP via the MXP SPI Bus. Alternatively: I2C.Port.kMXP,
+			 * SerialPort.Port.kMXP or SerialPort.Port.kUSB See
+			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.
 			 */
 			ahrs = new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
 
-		SmartDashboard.putData(frontleft);
-		SmartDashboard.putData(frontright);
-		SmartDashboard.putData(backleft);
-		SmartDashboard.putData(backright);
+		// Initialize pressure sensors
+		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
+		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
+
+		// Add Sendable data to dashboard
+		SmartDashboard.putData("Front Left", frontleft);
+		SmartDashboard.putData("Front Right", frontright);
+		SmartDashboard.putData("Back Left", backleft);
+		SmartDashboard.putData("Back Right", backright);
+		SmartDashboard.putData("Hi Pressure", hiPressureSensor);
+		SmartDashboard.putData("Lo Pressure", loPressureSensor);
 	}
 
 	@Override
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		// Default command is Teleop
 		setDefaultCommand(new ChassisDriveTeleop());
 	}
 
+	/**
+	 * Get Hi and Lo pressure sensors in PSI
+	 */
+	public double getLoPressure() {
+		return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
+	}
+
+	public double getHiPressure() {
+		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
+	}
+
+	/*****************************************************************
+	 * Drive routines
+	 *****************************************************************/
+
+	/**
+	 * Main mecanum drive
+	 */
 	public void driveChassis(double x, double y, double r) {
-		// drive.mecanumDrive_Cartesian(x, y, r, (double) ahrs.getYaw());
 		drive.driveCartesian(x, y, r, ahrs.getYaw());
 	}
 
+	/**
+	 * Teleop Drive assumes resetting "front" of robot based on Panel/Cargo Using
+	 * field oriented control may be preferred over resetting front
+	 */
 	public void driveTeleop() {
 		double x = 0.0;
 		double y = 0.0;
 		double r = 0.0;
 
-		switch (mode) {
+		switch (Robot.grabber.getMode()) {
 		case CARGO:
 			x = Robot.oi.getDriveX();
 			y = -Robot.oi.getDriveY();
@@ -164,6 +200,9 @@ public class Chassis extends Subsystem {
 		driveChassis(x, y, r);
 	}
 
+	/**
+	 * Drive routines TBD or to be removed
+	 */
 	public void driveVision() {
 	}
 
@@ -173,33 +212,10 @@ public class Chassis extends Subsystem {
 	public void distFromBay() {
 	}
 
-	/*
-	 * public void switchPanelCargo(){ if (panelSelcted = true){ panelSelcted =
-	 * false; cargoSelected = true; }
+	/**
+	 * Detect "jerk" in direction of travel; Ignore being hit from side or behind
 	 * 
-	 * if (cargoSelected = true){ cargoSelected = false; panelSelcted = true; } }
-	 * 
-	 * public boolean isPanelSelected(){ return panelSelcted; }
-	 * 
-	 * public boolean isCargoSelected(){ return cargoSelected; }
 	 */
-
-	public void setMode(MODE m) {
-		mode = m;
-	}
-
-	public MODE getMode() {
-		return mode;
-	}
-
-	public void setLevel(LEVEL l) {
-		level = l;
-	}
-
-	public LEVEL getLevel() {
-		return level;
-	}
-
 	public void findJerk() {
 		double curr_world_linear_accel_x = ahrs.getWorldLinearAccelX();
 		double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
@@ -208,20 +224,13 @@ public class Chassis extends Subsystem {
 		double currentJerkY = curr_world_linear_accel_Y - last_world_linear_accel_y;
 		last_world_linear_accel_y = curr_world_linear_accel_Y;
 
-		/*
-		 * if (panelSelcted = true){ if (currentJerkX > kCollisionThreshold_DeltaG &&
-		 * Math.abs(currentJerkY) < 0.1){ collisionDetected = true; } }
-		 * 
-		 * if (cargoSelected = true){ if (currentJerkX < -kCollisionThreshold_DeltaG &&
-		 * Math.abs(currentJerkY) < 0.1){ collisionDetected = true; } }
-		 */
-		if (mode == MODE.PANEL) {
+		if (Robot.grabber.getMode() == MODE.PANEL) {
 			if (currentJerkX > kCollisionThreshold_DeltaG && Math.abs(currentJerkY) < 0.1) {
 				collisionDetected = true;
 			}
 		}
 
-		if (mode == MODE.CARGO) {
+		if (Robot.grabber.getMode() == MODE.CARGO) {
 			if (currentJerkX < -kCollisionThreshold_DeltaG && Math.abs(currentJerkY) < 0.1) {
 				collisionDetected = true;
 			}
@@ -229,7 +238,7 @@ public class Chassis extends Subsystem {
 
 	}
 
-	public boolean IsCollisionDetected() {
+	public boolean isCollisionDetected() {
 		return collisionDetected;
 	}
 
@@ -237,6 +246,9 @@ public class Chassis extends Subsystem {
 		collisionDetected = false;
 	}
 
+	/**
+	 * Get AHRS info - Pitch, Roll, Yaw in degrees
+	 */
 	public double getPitch() {
 		return ahrs.getRoll();
 	}
@@ -248,66 +260,4 @@ public class Chassis extends Subsystem {
 	public double getYaw() {
 		return ahrs.getYaw();
 	}
-
-	public double getLoPressure() {
-		return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0; // ToDo
-	}
-
-	public double getHiPressure() {
-		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
-	}
-
-	public double getClosedLoopError() {
-		return frontleft.getClosedLoopError();
-	}
-
-	public void cargoPanelGrab(MODE mode) {
-		if (mode == MODE.PANEL) {
-			Robot.panel.grab();
-		} else {
-			Robot.cargo.grab();
-		}
-	}
-
-	public void cargoPanelRelease(MODE mode, double l, double r) {
-		if (mode == MODE.PANEL) {
-			Robot.panel.release();
-		} else {
-			Robot.cargo.setGrabRel(l, r);
-		}
-	}
-
-	public void setPos(double pos) {
-		frontleft.set(ControlMode.Position, (int) (pos * CHASSIS_TICKS_PER_INCH));
-	}
-
-	public void reset() {
-		frontleft.setSelectedSensorPosition((int) (0.0 * CHASSIS_TICKS_PER_INCH));
-	}
-
-	public void setPercentOut() {
-		frontleft.set(ControlMode.PercentOutput, 0.0);
-		frontright.set(ControlMode.PercentOutput, 0.0);
-		backleft.set(ControlMode.PercentOutput, 0.0);
-		backright.set(ControlMode.PercentOutput, 0.0);
-	}
-
-	private static final double mph = 3.0;
-	private static final double inches = mph * 5280.0 * 12.0;
-	private static final double mSec = 3600.0 / 10; // 3600 is sec per hour / 10 100mills per sec
-	private static final double cpr = 4096;
-	private static final int vel = (int) ((inches / mSec) * cpr);
-
-	public void setFollow() {
-		reset();
-		// TalonSRXPIDSetConfiguration pid =
-		frontleft.set(ControlMode.Position, (int) (0.0 * CHASSIS_TICKS_PER_INCH));
-		frontright.set(ControlMode.Follower, frontleft.getDeviceID());
-		backleft.set(ControlMode.Follower, frontleft.getDeviceID());
-		backright.set(ControlMode.Follower, frontleft.getDeviceID());
-		frontleft.configMotionCruiseVelocity(vel);
-		// frontleft.configMotionAcceleration(sensorUnitsPer100msPerSec);
-		// frontleft.configurePID(pid);
-	}
-
 }

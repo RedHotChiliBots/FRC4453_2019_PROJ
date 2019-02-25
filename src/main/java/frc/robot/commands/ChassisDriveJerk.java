@@ -34,8 +34,8 @@ public class ChassisDriveJerk extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(Robot.chassis.IsCollisionDetected()){
-//      Robot.chassis.resetCollisionDetected();
+    if (Robot.chassis.isCollisionDetected()) {
+      // Robot.chassis.resetCollisionDetected();
       return true;
     } else {
       return false;
@@ -54,5 +54,5 @@ public class ChassisDriveJerk extends Command {
   protected void interrupted() {
     System.out.println("DriveJerk interrupted.");
   }
-  
+
 }

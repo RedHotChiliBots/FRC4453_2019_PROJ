@@ -12,9 +12,7 @@ import frc.robot.Robot;
 
 public class CargoGrab extends Command {
   public CargoGrab() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.cargo);
+    requires(Robot.grabber);
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +23,7 @@ public class CargoGrab extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargo.grab();
+    Robot.grabber.cargoGrab();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,13 +35,13 @@ public class CargoGrab extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cargo.stop();
+    Robot.grabber.cargoStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.cargo.stop();
+    Robot.grabber.cargoStop();
   }
 }

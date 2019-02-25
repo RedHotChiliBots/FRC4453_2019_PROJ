@@ -14,13 +14,13 @@ public class CargoStop extends Command {
   public CargoStop() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.cargo);
+    requires(Robot.grabber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.cargo.stop();
+    Robot.grabber.cargoStop();
   }
 
   // Called repeatedly when this Command is scheduled to run

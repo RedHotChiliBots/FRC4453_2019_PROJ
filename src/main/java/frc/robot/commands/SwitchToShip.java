@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotMap;
+import frc.robot.Robot;
 import frc.robot.RobotMap.LEVEL;
 
 public class SwitchToShip extends Command {
@@ -25,7 +25,7 @@ public class SwitchToShip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.setLevel(LEVEL.SHIP);
+    Robot.lift.setLevel(LEVEL.SHIP);
   }
 
   // Make this return true when this Command no longer needs to run execute()

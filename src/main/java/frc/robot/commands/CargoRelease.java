@@ -10,16 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import frc.robot.Robot;
-import frc.robot.subsystems.CargoGrabber;
+import frc.robot.RobotMap;
 
 public class CargoRelease extends Command {
 
-  CargoGrabber.CargoMotor dir = null;
+  RobotMap.CargoMotor dir = null;
 
-  public CargoRelease(CargoGrabber.CargoMotor dir) {
+  public CargoRelease(RobotMap.CargoMotor dir) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.cargo);
+    requires(Robot.grabber);
     this.dir = dir;
   }
 
@@ -31,7 +31,7 @@ public class CargoRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargo.release(dir);
+    Robot.grabber.cargoRel(dir);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -43,13 +43,13 @@ public class CargoRelease extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cargo.stop();
+    Robot.grabber.cargoStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.cargo.stop();
+    Robot.grabber.cargoStop();
   }
 }

@@ -29,24 +29,22 @@ public class LiftGoToLevel extends Command {
   @Override
   protected void initialize() {
     if (level == LEVEL.SELECTED) {
-      level = RobotMap.level;
+      level = Robot.lift.getLevel();
     } else if (level == LEVEL.CURRENT) {
-      level = Robot.chassis.getLevel();
+      level = Robot.lift.getLevel();
     }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lLift.setPosMotor(RobotMap.height.get(RobotMap.LIFT.LOWER).get(level));
-    Robot.uLift.setPosMotor(RobotMap.height.get(RobotMap.LIFT.UPPER).get(level));
+    Robot.lift.setTgtPosition(RobotMap.height.get(level));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math.abs(Robot.lLift.motor1.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0)
-        && Math.abs(Robot.uLift.motor1.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
+    return (Math.abs(Robot.lift.motor.getClosedLoopError()) < Robot.prefs.getDouble("LiftPosError", 5.0));
   }
 
   // Called once after isFinished returns true

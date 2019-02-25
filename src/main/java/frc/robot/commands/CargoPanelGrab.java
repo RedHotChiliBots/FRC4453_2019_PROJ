@@ -25,7 +25,7 @@ public class CargoPanelGrab extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.cargoPanelGrab(Robot.chassis.getMode());
+    Robot.grabber.grabCargoPanel(Robot.grabber.getMode());
   }
 
   // Make this return true when this Command no longer needs to run execute()

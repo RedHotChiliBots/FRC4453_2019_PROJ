@@ -11,36 +11,50 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * Climber - Manage Climb Pistons
+ * 
+ * The Climber subsystem provides distance sensors and piston control to allow
+ * for autonomous climb to Level 2.
  */
 public class Climber extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
+  // Front & Back Climb Solenoids
   public DoubleSolenoid climbFront = null;
   public DoubleSolenoid climbBack = null;
 
+  // Front & Back Distance Sensors
   public AnalogInput climbFrontDistanceSensor = null;
   public AnalogInput climbBackDistanceSensor = null;
 
   public Climber() {
     System.out.println("Climber init");
+
+    // Initialize climb solenoids
     climbFront = new DoubleSolenoid(RobotMap.ClimberFrontUpSolenoid, RobotMap.ClimberFrontDownSolenoid);
     climbBack = new DoubleSolenoid(RobotMap.ClimberBackUpSolenoid, RobotMap.ClimberBackDownSolenoid);
+
+    // Initialize distance sensors
     climbFrontDistanceSensor = new AnalogInput(RobotMap.ClimbFrontDistanceSensor);
     climbBackDistanceSensor = new AnalogInput(RobotMap.ClimbBackDistanceSensor);
+
     retractfront();
     retractback();
+
+    // Add Sendable data to dashboard
+    SmartDashboard.putData("Climb Front", climbFront);
+    SmartDashboard.putData("Climb Back", climbBack);
+    SmartDashboard.putData("Front Sensor", climbFrontDistanceSensor);
+    SmartDashboard.putData("Back Sensor", climbBackDistanceSensor);
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
     // setDefaultCommand(new ClimberRetract());
   }
 

@@ -10,20 +10,17 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Preferences;
-
-//import com.sun.tools.javac.comp.Lower;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.commands.ChassisDriveJerk;
 import frc.robot.commands.ChassisDriveTeleop;
-import frc.robot.subsystems.CargoGrabber;
+
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.LowerLift;
-import frc.robot.subsystems.PanelGrabber;
-import frc.robot.subsystems.UpperLift;
+import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,10 +33,8 @@ public class Robot extends TimedRobot {
   public static OI oi;
 
   public static Chassis chassis;
-  public static CargoGrabber cargo;
-  public static UpperLift uLift;
-  public static LowerLift lLift;
-  public static PanelGrabber panel;
+  public static Grabber grabber;
+  public static Lift lift;
   public static Climber climber;
 
   public static Preferences prefs = null;
@@ -55,10 +50,8 @@ public class Robot extends TimedRobot {
 
     oi = new OI();
     chassis = new Chassis();
-    cargo = new CargoGrabber();
-    uLift = new UpperLift();
-    lLift = new LowerLift();
-    panel = new PanelGrabber();
+    grabber = new Grabber();
+    lift = new Lift();
     climber = new Climber();
     oi.init();
 
@@ -66,10 +59,8 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData(Scheduler.getInstance());
     SmartDashboard.putData(chassis);
-    SmartDashboard.putData(cargo);
-    SmartDashboard.putData(uLift);
-    SmartDashboard.putData(lLift);
-    SmartDashboard.putData(panel);
+    SmartDashboard.putData(grabber);
+    SmartDashboard.putData(lift);
     SmartDashboard.putData(climber);
     SmartDashboard.putData("DriveJerk", new ChassisDriveJerk());
     SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
@@ -165,45 +156,23 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
       SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());
       SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
-      SmartDashboard.putBoolean("Collision Detected", Robot.chassis.IsCollisionDetected());
-      SmartDashboard.putString("Mode", Robot.chassis.getMode().name());
-      SmartDashboard.putString("Level", Robot.chassis.getLevel().name());
+      SmartDashboard.putBoolean("Collision Detected", Robot.chassis.isCollisionDetected());
+      SmartDashboard.putString("Mode", Robot.grabber.getMode().name());
+      SmartDashboard.putString("Level", Robot.lift.getLevel().name());
       i++;
       break;
 
     case 1:
-      if (Robot.lLift.motor1.getControlMode() == ControlMode.Position) {
-        SmartDashboard.putNumber("LLMotor1Tgt", Robot.lLift.motor1.getClosedLoopTarget());
+      if (Robot.lift.motor.getControlMode() == ControlMode.Position) {
+        SmartDashboard.putNumber("Lift Target", Robot.lift.motor.getClosedLoopTarget());
       }
-      SmartDashboard.putNumber("LL1Current", Robot.lLift.motor1.getOutputCurrent());
-      SmartDashboard.putNumber("LLMotor1Pos", Robot.lLift.motor1.getSelectedSensorPosition());
-      SmartDashboard.putNumber("LLMotor1Vel", Robot.lLift.motor1.getSelectedSensorVelocity());
-      if (Robot.lLift.motor2.getControlMode() == ControlMode.Position) {
-        SmartDashboard.putNumber("LLMotor2Tgt", Robot.lLift.motor2.getClosedLoopTarget());
-      }
-      SmartDashboard.putNumber("LL2Current", Robot.lLift.motor2.getOutputCurrent());
-      SmartDashboard.putNumber("LLMotor2Pos", Robot.lLift.motor2.getSelectedSensorPosition());
-      SmartDashboard.putNumber("LLMotor2Vel", Robot.lLift.motor2.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("Lift Current", Robot.lift.motor.getOutputCurrent());
+      SmartDashboard.putNumber("Lift Position", Robot.lift.motor.getSelectedSensorPosition());
+      SmartDashboard.putNumber("Lift Velocity", Robot.lift.motor.getSelectedSensorVelocity());
       i++;
       break;
 
     case 2:
-      if (Robot.uLift.motor1.getControlMode() == ControlMode.Position) {
-        SmartDashboard.putNumber("ULMotor1Tgt", Robot.uLift.motor1.getClosedLoopTarget());
-      }
-      SmartDashboard.putNumber("UL1Current", Robot.uLift.motor1.getOutputCurrent());
-      SmartDashboard.putNumber("ULMotor1Pos", Robot.uLift.motor1.getSelectedSensorPosition());
-      SmartDashboard.putNumber("ULMotor1Vel", Robot.uLift.motor1.getSelectedSensorVelocity());
-      if (Robot.uLift.motor2.getControlMode() == ControlMode.Position) {
-        SmartDashboard.putNumber("ULMotor2Tgt", Robot.uLift.motor2.getClosedLoopTarget());
-      }
-      SmartDashboard.putNumber("UL2Current", Robot.uLift.motor2.getOutputCurrent());
-      SmartDashboard.putNumber("ULMotor2Pos", Robot.uLift.motor2.getSelectedSensorPosition());
-      SmartDashboard.putNumber("ULMotor2Vel", Robot.uLift.motor2.getSelectedSensorVelocity());
-      i++;
-      break;
-
-    case 3:
       SmartDashboard.putNumber("Lo Pressure", Robot.chassis.getLoPressure());
       SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
       SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());
@@ -211,7 +180,7 @@ public class Robot extends TimedRobot {
       i++;
       break;
 
-    case 4:
+    case 3:
       SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
       SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
       SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());

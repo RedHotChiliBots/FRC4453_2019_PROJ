@@ -7,43 +7,51 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoTeleop extends Command {
-  public CargoTeleop() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.cargo);
+public class LiftResetMotor extends Command {
+
+  private WPI_TalonSRX motor = null;
+
+  public LiftResetMotor() {
+    requires(Robot.lift);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init LowerLiftResettMotor");
+
+    Robot.lift.lowerMotor();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargo.setGrabRel(Robot.oi.getCargoL(), Robot.oi.getCargoR());
+    motor.feed();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return (motor.getOutputCurrent() > Robot.prefs.getDouble("CurrentThreshold", 9.0));
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cargo.stop();
+    Robot.lift.stopMotor();
+    // Robot.lLift.resetPosMotor(0.0);
+    System.out.println("End LowerLiftResetMotor");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.cargo.stop();
+    Robot.lift.stopMotor();
+    System.out.println("Interrupt LowerLiftResetMotor");
   }
 }

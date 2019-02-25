@@ -34,13 +34,14 @@ public class AutoRetrieve extends CommandGroup {
     // arm.
     // follow line
     addParallel(new ChassisDriveJerk());
-    if (Robot.chassis.getMode() == RobotMap.MODE.PANEL) {
+    if (Robot.grabber.getMode() == RobotMap.MODE.PANEL) {
       addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
     } else {
       addSequential(new LiftGoToLevel(RobotMap.LEVEL.LOADINGSTATION));
     }
+
     addSequential(new CargoPanelGrab());
-    addSequential(new ChassisAutoDriveDist());
+    addSequential(new ChassisAutoDriveVision());
     addSequential(new LiftGoToLevel(RobotMap.LEVEL.LEVEL1));
   }
 }
