@@ -34,10 +34,10 @@ public class AutoScore extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     addParallel(new ChassisAutoDriveVision());
-    addSequential(new LiftGoToLevel(Robot.lift.getLevel()));
+    addSequential(new LiftGoToLevel());// Go to selected level
     addSequential(new ChassisDriveJerk());
     addSequential(new GrabberRel());
     addSequential(new ChassisAutoDriveVision());
-    addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
+    addSequential(new LiftGoToLevel());// Go to level 1
   }
 }

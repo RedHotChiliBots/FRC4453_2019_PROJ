@@ -19,26 +19,35 @@ public class LiftGoToLevel extends Command {
   // Argument not used and get argument has warning "Unlikely Argument Type"
   private LEVEL level = null;
 
-  public LiftGoToLevel(LEVEL level) {
+  public LiftGoToLevel() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    this.level = null;
+  }
+
+  public LiftGoToLevel(LEVEL level) {
+    requires(Robot.lift);
     this.level = level;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (level == LEVEL.SELECTED) {
-      level = Robot.lift.getLevel();
-    } else if (level == LEVEL.CURRENT) {
-      level = Robot.lift.getLevel();
+    if (this.level == null) {
+      this.level = Robot.lift.level;
     }
+    Robot.lift.setTgtPosition(RobotMap.height.get(this.level));
+
+    /*
+     * if (level == LEVEL.SELECTED) { level = Robot.lift.getLevel(); } else { level
+     * = Robot.lift.setLevel(level); }
+     */
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lift.setTgtPosition(RobotMap.height.get(level));
+    Robot.lift.feedMotor();
   }
 
   // Make this return true when this Command no longer needs to run execute()

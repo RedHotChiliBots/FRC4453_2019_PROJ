@@ -31,7 +31,7 @@ public class Lift extends Subsystem {
   public WPI_TalonSRX motor = null;
 
   // Define lift level
-  private LEVEL level = null;
+  public LEVEL level = null;
 
   // Lift Motor, Encoder, Gearbox Calcs
   private static final int COUNTS_PER_REV_MOTOR = 12;
@@ -110,6 +110,10 @@ public class Lift extends Subsystem {
 
   public void stopMotor() {
     motor.stopMotor();
+  }
+
+  public void feedMotor() {
+    motor.feed();
   }
 
   /**

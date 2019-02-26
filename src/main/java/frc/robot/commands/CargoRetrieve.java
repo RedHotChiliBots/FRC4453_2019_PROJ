@@ -33,11 +33,11 @@ public class CargoRetrieve extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    //find line
-    //addParallel() followline
+    // find line
+    // addParallel() followline
     addSequential(new ChassisDriveJerk());
-    addSequential(new LiftGoToLevel(RobotMap.LEVEL.LOADINGSTATION));
+    addSequential(new LiftGoToLevel());// Go to loadingstation
     addSequential(new CargoGrab());
-    //back up 
+    // back up
   }
 }
