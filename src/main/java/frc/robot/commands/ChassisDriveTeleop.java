@@ -22,7 +22,7 @@ public class ChassisDriveTeleop extends Command {
   @Override
   protected void initialize() {
     System.out.println("Drive initialize.");
-    Robot.chassis.enableRumble();
+    // Robot.chassis.enableRumble();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -42,7 +42,7 @@ public class ChassisDriveTeleop extends Command {
   @Override
   protected void end() {
     System.out.println("Drive end.");
-    Robot.chassis.disableRumble();
+    // Robot.chassis.disableRumble();
   }
 
   // Called when another command which requires one or more of the same
@@ -50,6 +50,6 @@ public class ChassisDriveTeleop extends Command {
   @Override
   protected void interrupted() {
     System.out.println("Drive interrupted.");
-    Robot.chassis.disableRumble();
+    // Robot.chassis.disableRumble();
   }
 }

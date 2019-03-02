@@ -14,9 +14,6 @@ import frc.robot.RobotMap.LEVEL;
 
 public class LiftGoToLevel extends Command {
 
-  // TODO Need to review passed in argument versus get call for Level during
-  // execute()
-  // Argument not used and get argument has warning "Unlikely Argument Type"
   private LEVEL level = null;
 
   public LiftGoToLevel() {

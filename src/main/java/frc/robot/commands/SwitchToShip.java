@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap.LEVEL;
+import frc.robot.RobotMap.MODE;
 
 public class SwitchToShip extends Command {
   public SwitchToShip() {
@@ -25,7 +26,11 @@ public class SwitchToShip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lift.setLevel(LEVEL.SHIP);
+    if (Robot.grabber.mode == MODE.PANEL) {
+      Robot.lift.setLevel(LEVEL.LEVEL1);
+    } else {
+      Robot.lift.setLevel(LEVEL.SHIP);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

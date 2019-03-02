@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AutoRetrieveScore;
 import frc.robot.commands.ClimberClimb;
 import frc.robot.commands.ClimberClimbNew;
 import frc.robot.commands.ClimberExtend;
@@ -84,6 +85,8 @@ public class OI {
   private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
   private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
 
+  private JoystickButton autoRetrieveScore = new JoystickButton(operator, RobotMap.X_BUTTON);
+
   private JoystickButton xyz = new JoystickButton(btnBoard, RobotMap.BTN_1);
   /*
    * Andrew's new config private JoystickButton switchToCargo = new
@@ -124,6 +127,7 @@ public class OI {
     switchToShip.whenPressed(new SwitchToShip());
     climberDown.whenPressed(new ClimberExtend());
     climberUp.whenPressed(new ClimberRetract());
+    autoRetrieveScore.whenPressed(new AutoRetrieveScore());
 
     /*
      * Andrew's new config switchToCargo.whenPressed(new SwitchToCargo());

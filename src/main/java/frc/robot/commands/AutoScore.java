@@ -31,11 +31,11 @@ public class AutoScore extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addParallel(new ChassisAutoDriveVision());
-    addSequential(new LiftGoToLevel());// Go to selected level
-    addSequential(new ChassisDriveJerk());
-    addSequential(new GrabberRel());
-    addSequential(new ChassisAutoDriveVision());
-    addSequential(new LiftGoToLevel());// Go to level 1
-  }
+    /*
+     * addParallel(new ChassisAutoDriveVision()); addSequential(new
+     * LiftGoToLevel());// Go to selected level addSequential(new
+     * ChassisDriveJerk()); addSequential(new GrabberRel()); addSequential(new
+     * ChassisAutoDriveVision()); addSequential(new LiftGoToLevel());// Go to level
+     * 1
+     */ }
 }

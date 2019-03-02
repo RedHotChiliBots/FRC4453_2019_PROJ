@@ -50,8 +50,8 @@ public class RobotMap {
   public static final int ClimberFrontUpSolenoid = 2;
   public static final int ClimberFrontDownSolenoid = 3;
 
-  public static final int ClimberBackUpSolenoid = 4;
-  public static final int ClimberBackDownSolenoid = 5;
+  public static final int ClimberBackUpSolenoid = 5;
+  public static final int ClimberBackDownSolenoid = 6;
 
   public static final DoubleSolenoid.Value ClimberUp = DoubleSolenoid.Value.kForward;
   public static final DoubleSolenoid.Value ClimberDown = DoubleSolenoid.Value.kReverse;

@@ -19,7 +19,6 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.DIR;
 import frc.robot.RobotMap.MODE;
-
 import frc.robot.commands.GrabberStop;
 
 /**
@@ -35,7 +34,7 @@ public class Grabber extends Subsystem {
   private DoubleSolenoid panel = null;
 
   // Define Mode variable
-  private MODE mode = null;
+  public MODE mode = null;
 
   private DIR dir = null;
 
