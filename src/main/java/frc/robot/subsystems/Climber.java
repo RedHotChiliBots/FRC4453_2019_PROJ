@@ -46,12 +46,6 @@ public class Climber extends Subsystem {
 
     retractfront();
     retractback();
-
-    // Add Sendable data to dashboard
-    SmartDashboard.putData("Climb Front", climbFront);
-    SmartDashboard.putData("Climb Back", climbBack);
-    SmartDashboard.putData("Front Sensor", climbFrontDistanceSensor);
-    SmartDashboard.putData("Back Sensor", climbBackDistanceSensor);
   }
 
   @Override

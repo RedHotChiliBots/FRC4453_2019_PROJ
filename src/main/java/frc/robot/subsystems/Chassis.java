@@ -66,7 +66,7 @@ public class Chassis extends Subsystem {
 	private double last_world_linear_accel_x = 0.0;
 	private double last_world_linear_accel_y = 0.0;
 
-	private final double kCollisionThreshold_DeltaG = 0.2;
+	private final double kCollisionThreshold_DeltaG = 0.5;
 
 	// Define navX board
 	public AHRS ahrs = null;
@@ -143,11 +143,14 @@ public class Chassis extends Subsystem {
 		cameras = NetworkTableInstance.getDefault().getTable("Vision");
 
 		// Setup vision PID loops
-		pid_strafe = new PIDController(1.0, 0.0, 0.0, new StrafeSource(), new StrafeOutput());
-		pid_turn = new PIDController(1.0, 0.0, 0.0, new TurnSource(), new TurnOutput());
+		pid_strafe = new PIDController(0.1, 0.0, 0.0, new StrafeSource(), new StrafeOutput());
+		pid_turn = new PIDController(0.1, 0.0, 0.0, new TurnSource(), new TurnOutput());
 
 		pid_strafe.setAbsoluteTolerance(1.0);
 		pid_turn.setAbsoluteTolerance(1.0);
+
+		pid_strafe.setOutputRange(-0.25, 0.25);
+		pid_turn.setOutputRange(-0.25, 0.25);
 
 		pid_strafe.setSetpoint(0.0);
 		pid_turn.setSetpoint(0.0);
@@ -336,11 +339,15 @@ public class Chassis extends Subsystem {
 	 * driveVisionStart() before using this.
 	 */
 	public void driveVision() {
-		driveChassis(current_strafe, 0.0, current_turn);
+		if (Robot.grabber.getMode() == MODE.CARGO) {
+			driveChassis(-current_strafe, 0.0, current_turn);
+		} else {
+			driveChassis(current_strafe, 0.0, current_turn);
+		}
 	}
 
 	public boolean visionFinished() {
-		return getCamera().getEntry("Lock").getBoolean(false) && !pid_strafe.onTarget() && !pid_turn.onTarget();
+		return !getCamera().getEntry("Lock").getBoolean(false);
 	}
 
 	/**

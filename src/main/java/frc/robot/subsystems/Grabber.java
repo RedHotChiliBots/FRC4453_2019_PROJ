@@ -40,7 +40,7 @@ public class Grabber extends Subsystem {
 
   public Grabber() {
     super("Grabber");
-    
+
     // Initialize Cargo motors
     motorL = new WPI_TalonSRX(RobotMap.cargoGrabberMotorL);
     motorL.configFactoryDefault();

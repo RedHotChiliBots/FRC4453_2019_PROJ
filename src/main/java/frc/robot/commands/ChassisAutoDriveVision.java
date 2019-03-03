@@ -31,17 +31,19 @@ public class ChassisAutoDriveVision extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.chassis.visionFinished();
+    return Robot.chassis.visionFinished() || Robot.chassis.isCollisionDetected();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.chassis.resetCollisionDetected();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.chassis.resetCollisionDetected();
   }
 }

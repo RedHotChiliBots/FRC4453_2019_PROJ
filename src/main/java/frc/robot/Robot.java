@@ -148,6 +148,12 @@ public class Robot extends TimedRobot {
   private int i = 0;
 
   private void telemetry() {
+
+    SmartDashboard.putData(chassis);
+    SmartDashboard.putData(grabber);
+    SmartDashboard.putData(lift);
+    SmartDashboard.putData(climber);
+
     switch (i) {
     case 0:
       SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
@@ -155,6 +161,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
       SmartDashboard.putBoolean("Collision Detected", Robot.chassis.isCollisionDetected());
       SmartDashboard.putString("Mode", Robot.grabber.getMode().name());
+      SmartDashboard.putString("Dir", Robot.grabber.getDir().name());
       SmartDashboard.putString("Level", Robot.lift.getLevel().name());
       i++;
       break;
@@ -174,22 +181,20 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Hi Pressure", Robot.chassis.getHiPressure());
       SmartDashboard.putBoolean("Front Climb", Robot.climber.isFrontClimb());
       SmartDashboard.putBoolean("Back Climb", Robot.climber.isBackClimb());
+      SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
+      SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
       i++;
       break;
 
     case 3:
-      SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
-      SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
       SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());
       SmartDashboard.putNumber("Back Dist", Robot.climber.getDistBackSensor());
+      SmartDashboard.putData("Climb Front", Robot.climber.climbFront);
+      SmartDashboard.putData("Climb Back", Robot.climber.climbBack);
       i++;
       break;
 
       case 4:
-      SmartDashboard.putData(chassis);
-      SmartDashboard.putData(grabber);
-      SmartDashboard.putData(lift);
-      SmartDashboard.putData(climber);
       i = 0;
     }
   }
