@@ -18,7 +18,7 @@ public class LiftGoToLevel extends Command {
 
   public LiftGoToLevel() {
     requires(Robot.lift);
-    this.level = Robot.lift.level;
+    this.level = null;
   }
 
   public LiftGoToLevel(LEVEL level) {
@@ -29,6 +29,9 @@ public class LiftGoToLevel extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    if (level == null){
+      level = Robot.lift.level;
+    }
     Robot.lift.setTgtPosition(RobotMap.height.get(this.level));
   }
 
