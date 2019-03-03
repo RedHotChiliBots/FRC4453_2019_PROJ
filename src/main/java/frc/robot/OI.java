@@ -22,11 +22,14 @@ import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrab;
 import frc.robot.commands.PanelRelease;
 import frc.robot.commands.SwitchToCargo;
+import frc.robot.commands.SwitchToCenter;
+import frc.robot.commands.SwitchToLeft;
 import frc.robot.commands.SwitchToLevel1;
 import frc.robot.commands.SwitchToLevel2;
 import frc.robot.commands.SwitchToLevel3;
 import frc.robot.commands.SwitchToLoadingStation;
 import frc.robot.commands.SwitchToPanel;
+import frc.robot.commands.SwitchToRight;
 import frc.robot.commands.SwitchToShip;
 
 /**
@@ -66,15 +69,15 @@ public class OI {
   private XboxController operator = new XboxController(1);
   private Joystick btnBoard = new Joystick(2);
 
+  // private JoystickButton climberClimb = new JoystickButton(driver,
+  // RobotMap.Y_BUTTON);
 
+  // private JoystickButton climberDown = new JoystickButton(operator,
+  // RobotMap.A_BUTTON);
+  // private JoystickButton climberUp = new JoystickButton(operator,
+  // RobotMap.B_BUTTON);
 
-//  private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
-
-//  private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
-//  private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
-
-
-
+  // Driver joystick controls
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
 
@@ -84,6 +87,7 @@ public class OI {
 
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
+  // Operator joystick controls
   private JoystickButton switchToLevel1 = new JoystickButton(operator, RobotMap.X_BUTTON);
   private JoystickButton switchToLevel2 = new JoystickButton(operator, RobotMap.Y_BUTTON);
   private JoystickButton switchToLevel3 = new JoystickButton(operator, RobotMap.B_BUTTON);
@@ -95,8 +99,19 @@ public class OI {
   private JoystickButton panelRelease = new JoystickButton(operator, RobotMap.RIGHT_BUMPER);
   private JoystickButton panelGrab = new JoystickButton(operator, RobotMap.LEFT_BUMPER);
 
+  // ButtonBoard controls
+  private JoystickButton bbSelectPanel = new JoystickButton(btnBoard, RobotMap.BTN_1);
+  private JoystickButton bbSelectCargo = new JoystickButton(btnBoard, RobotMap.BTN_2);
+  private JoystickButton bbSelectLoad = new JoystickButton(btnBoard, RobotMap.BTN_3);
+  private JoystickButton bbSelectShip = new JoystickButton(btnBoard, RobotMap.BTN_4);
+  private JoystickButton bbSelectLvl1 = new JoystickButton(btnBoard, RobotMap.BTN_5);
+  private JoystickButton bbSelectLvl2 = new JoystickButton(btnBoard, RobotMap.BTN_6);
+  private JoystickButton bbSelectLvl3 = new JoystickButton(btnBoard, RobotMap.BTN_7);
+  private JoystickButton bbSelectLeft = new JoystickButton(btnBoard, RobotMap.BTN_8);
+  private JoystickButton bbSelectCenter = new JoystickButton(btnBoard, RobotMap.BTN_9);
+  private JoystickButton bbSelectRight = new JoystickButton(btnBoard, RobotMap.BTN_10);
+  private JoystickButton bbGoToSelection = new JoystickButton(btnBoard, RobotMap.BTN_11);
 
-  private JoystickButton xyz = new JoystickButton(btnBoard, RobotMap.BTN_1);
   /*
    * Andrew's new config private JoystickButton switchToCargo = new
    * JoystickButton(driver, RobotMap.RIGHT_BUMPER); private JoystickButton
@@ -127,17 +142,30 @@ public class OI {
     liftReset.whenPressed(new LiftStartup());
     panelGrab.whenPressed(new PanelGrab());
     panelRelease.whenPressed(new PanelRelease());
-//    climberClimb.whileHeld(new ClimberClimb());
+    // climberClimb.whileHeld(new ClimberClimb());
     climberClimbNew.whenPressed(new ClimberClimbNew());
     switchToLevel1.whenPressed(new SwitchToLevel1());
     switchToLevel2.whenPressed(new SwitchToLevel2());
     switchToLevel3.whenPressed(new SwitchToLevel3());
     switchToLoadingStation.whenPressed(new SwitchToLoadingStation());
     switchToShip.whenPressed(new SwitchToShip());
-//    climberDown.whenPressed(new ClimberExtend());
-//    climberUp.whenPressed(new ClimberRetract());
+    // climberDown.whenPressed(new ClimberExtend());
+    // climberUp.whenPressed(new ClimberRetract());
     autoRetrieveScore.whenPressed(new AutoRetrieveScore());
     liftGoToLevel.whenPressed(new LiftGoToLevel());
+
+    bbSelectPanel.whenPressed(new SwitchToPanel());
+    bbSelectCargo.whenPressed(new SwitchToCargo());
+    bbSelectLoad.whenPressed(new SwitchToLoadingStation());
+    bbSelectShip.whenPressed(new SwitchToShip());
+    bbSelectLvl1.whenPressed(new SwitchToLevel1());
+    bbSelectLvl2.whenPressed(new SwitchToLevel2());
+    bbSelectLvl3.whenPressed(new SwitchToLevel3());
+    bbSelectLeft.whenPressed(new SwitchToLeft());
+    bbSelectCenter.whenPressed(new SwitchToCenter());
+    bbSelectRight.whenPressed(new SwitchToRight());
+    bbGoToSelection.whenPressed(new LiftGoToLevel());
+
     /*
      * Andrew's new config switchToCargo.whenPressed(new SwitchToCargo());
      * switchToPanel.whenPressed(new SwitchToPanel());
