@@ -87,7 +87,7 @@ public class Chassis extends Subsystem {
 	// / (CHASSIS_WHEEL_DIAMETER * Math.PI);
 
 	public Chassis() {
-
+		super("Chassis");
 		// Initialize drive train for Mechanam
 		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);
 		frontright = new WPI_TalonSRX(RobotMap.frontRightMotor);

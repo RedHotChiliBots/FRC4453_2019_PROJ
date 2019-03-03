@@ -69,6 +69,8 @@ public class Lift extends Subsystem {
    * Add your docs here.
    */
   public Lift() {
+    super("Lift");
+
     // Configure lift motor for motion magic
     motor = new WPI_TalonSRX(RobotMap.liftMotor);
     motor.set(ControlMode.PercentOutput, 0.0);

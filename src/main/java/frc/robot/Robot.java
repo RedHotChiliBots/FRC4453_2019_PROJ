@@ -58,10 +58,6 @@ public class Robot extends TimedRobot {
     chassis.ahrs.zeroYaw();
 
     SmartDashboard.putData(Scheduler.getInstance());
-    SmartDashboard.putData(chassis);
-    SmartDashboard.putData(grabber);
-    SmartDashboard.putData(lift);
-    SmartDashboard.putData(climber);
     SmartDashboard.putData("DriveJerk", new ChassisDriveJerk());
     SmartDashboard.putData("DriveTeleop", new ChassisDriveTeleop());
 
@@ -186,6 +182,14 @@ public class Robot extends TimedRobot {
       SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
       SmartDashboard.putNumber("Front Dist", Robot.climber.getDistFrontSensor());
       SmartDashboard.putNumber("Back Dist", Robot.climber.getDistBackSensor());
+      i++;
+      break;
+
+      case 4:
+      SmartDashboard.putData(chassis);
+      SmartDashboard.putData(grabber);
+      SmartDashboard.putData(lift);
+      SmartDashboard.putData(climber);
       i = 0;
     }
   }

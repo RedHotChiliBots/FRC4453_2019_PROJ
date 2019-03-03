@@ -33,6 +33,7 @@ public class Climber extends Subsystem {
   public AnalogInput climbBackDistanceSensor = null;
 
   public Climber() {
+    super("Climber");
     System.out.println("Climber init");
 
     // Initialize climb solenoids
