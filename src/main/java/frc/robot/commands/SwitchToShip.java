@@ -14,23 +14,23 @@ import frc.robot.RobotMap.MODE;
 
 public class SwitchToShip extends Command {
   public SwitchToShip() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-  }
+    System.out.println("Init SwitchToShip");
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
     if (Robot.grabber.mode == MODE.PANEL) {
       Robot.lift.setLevel(LEVEL.LEVEL1);
     } else {
       Robot.lift.setLevel(LEVEL.SHIP);
     }
+  }
+
+  // Called repeatedly when this Command is scheduled to run
+  @Override
+  protected void execute() {
   }
 
   // Make this return true when this Command no longer needs to run execute()

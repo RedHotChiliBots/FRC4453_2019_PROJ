@@ -13,13 +13,12 @@ import frc.robot.RobotMap.LEVEL;
 
 public class SwitchToLevel3 extends Command {
   public SwitchToLevel3() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init SwitchToLevel3");
     Robot.lift.setLevel(LEVEL.LEVEL3);
   }
 

@@ -15,8 +15,6 @@ public class isSensor extends Command {
   private AnalogInput distSensor = null;
 
   public isSensor(AnalogInput distSensor) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     this.distSensor = distSensor;
   }
 

@@ -18,8 +18,6 @@ public class ClimberSolenoidSwitch extends Command {
   private Value value = null;
 
   public ClimberSolenoidSwitch(DoubleSolenoid solenoid, Value value) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     // requires(Robot.climber);
     this.solenoid = solenoid;
     this.value = value;

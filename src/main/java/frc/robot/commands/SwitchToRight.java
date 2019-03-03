@@ -13,7 +13,6 @@ import frc.robot.RobotMap.DIR;
 
 public class SwitchToRight extends Command {
   public SwitchToRight() {
-
   }
 
   // Called just before this Command runs the first time

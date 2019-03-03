@@ -13,20 +13,18 @@ import frc.robot.RobotMap.DIR;
 
 public class SwitchToCenter extends Command {
   public SwitchToCenter() {
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Init SwitchToLeft");
+    System.out.println("Init SwitchToCenter");
     Robot.grabber.setDir(DIR.CENTER);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
   }
 
   // Make this return true when this Command no longer needs to run execute()

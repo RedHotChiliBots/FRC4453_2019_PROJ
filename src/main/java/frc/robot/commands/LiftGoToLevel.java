@@ -17,9 +17,8 @@ public class LiftGoToLevel extends Command {
   private LEVEL level = null;
 
   public LiftGoToLevel() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    this.level = null;
+    requires(Robot.lift);
+    this.level = Robot.lift.level;
   }
 
   public LiftGoToLevel(LEVEL level) {
@@ -30,15 +29,7 @@ public class LiftGoToLevel extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (this.level == null) {
-      this.level = Robot.lift.level;
-    }
     Robot.lift.setTgtPosition(RobotMap.height.get(this.level));
-
-    /*
-     * if (level == LEVEL.SELECTED) { level = Robot.lift.getLevel(); } else { level
-     * = Robot.lift.setLevel(level); }
-     */
   }
 
   // Called repeatedly when this Command is scheduled to run

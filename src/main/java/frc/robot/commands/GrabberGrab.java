@@ -14,7 +14,6 @@ import frc.robot.RobotMap.MODE;
 public class GrabberGrab extends Command {
 
   public GrabberGrab() {
-    ;
   }
 
   // Called just before this Command runs the first time

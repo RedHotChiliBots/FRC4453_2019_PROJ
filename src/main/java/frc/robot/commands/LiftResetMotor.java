@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.Faults;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -42,7 +40,6 @@ public class LiftResetMotor extends Command {
   @Override
   protected void end() {
     Robot.lift.stopMotor();
-    // Robot.lLift.resetPosMotor(0.0);
     System.out.println("End LowerLiftResetMotor");
   }
 

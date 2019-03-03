@@ -37,5 +37,6 @@ public class AutoScore extends CommandGroup {
      * ChassisDriveJerk()); addSequential(new GrabberRel()); addSequential(new
      * ChassisAutoDriveVision()); addSequential(new LiftGoToLevel());// Go to level
      * 1
-     */ }
+     */
+  }
 }

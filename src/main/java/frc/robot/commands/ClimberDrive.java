@@ -16,29 +16,19 @@ public class ClimberDrive extends Command {
   private AnalogInput distSensor = null;
 
   public ClimberDrive(AnalogInput distSensor) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    this.distSensor = distSensor;
     requires(Robot.chassis);
+    this.distSensor = distSensor;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     System.out.println("init ClimberDrive");
-    // Robot.chassis.setFollow();
-    // Robot.chassis.driveChassis(0.0, 0.45, 0.0);
-
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // Robot.chassis.setPos(100);
-    /*
-     * Robot.chassis.backleft.feed(); Robot.chassis.backright.feed();
-     * Robot.chassis.frontleft.feed(); Robot.chassis.frontright.feed();
-     */
     Robot.chassis.driveChassis(0.0, 0.3, 0.0);
   }
 

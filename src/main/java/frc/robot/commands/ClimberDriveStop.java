@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class ClimberDriveStop extends Command {
   public ClimberDriveStop() {
     // Use requires() here to declare subsystem dependencies
-
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +24,6 @@ public class ClimberDriveStop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    requires(Robot.chassis);
     Robot.chassis.driveChassis(0.0, 0.0, 0.0);
   }
 

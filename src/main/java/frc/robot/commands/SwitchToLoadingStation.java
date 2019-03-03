@@ -14,13 +14,13 @@ import frc.robot.RobotMap.MODE;
 
 public class SwitchToLoadingStation extends Command {
   public SwitchToLoadingStation() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Init SwitchToLoadingStation");
+
     if (Robot.grabber.mode == MODE.PANEL) {
       Robot.lift.setLevel(LEVEL.LEVEL1);
     } else {
