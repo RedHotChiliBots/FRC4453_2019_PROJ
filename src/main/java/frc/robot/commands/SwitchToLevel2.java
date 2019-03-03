@@ -20,12 +20,12 @@ public class SwitchToLevel2 extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.lift.setLevel(LEVEL.LEVEL2);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lift.setLevel(LEVEL.LEVEL2);
   }
 
   // Make this return true when this Command no longer needs to run execute()

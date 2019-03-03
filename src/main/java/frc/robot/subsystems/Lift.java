@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -35,11 +36,11 @@ public class Lift extends Subsystem {
 
   // Lift Motor, Encoder, Gearbox Calcs
   private static final int COUNTS_PER_REV_MOTOR = 12;
-  private static final int GEAR_RATIO = 48;
+  private static final int GEAR_RATIO = 20;
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
-  private static final double BARREL_DIA = 2.0;
+  private static final double BARREL_DIA = 1.5;
   private static final double INCHES_PER_REV = Math.PI * BARREL_DIA;
-  public static final int TICKS_PER_INCH = (int) (COUNTS_PER_REV_GEARBOX * INCHES_PER_REV); // Lead screw 1 in/rev
+  public static final int TICKS_PER_INCH = (int) (COUNTS_PER_REV_GEARBOX / INCHES_PER_REV); // Lead screw 1 in/rev
 
   // Calculate max velocity in tics / 100ms for 600rpm
   private static final double RISE = 78 - 19; // inches
@@ -55,8 +56,8 @@ public class Lift extends Subsystem {
     {
       put("kCruiseVel", 1.0);
       put("kAccel", 1.0);
-      put("kP", 10.0);
-      put("kI", 0.0);
+      put("kP", 20.0);
+      put("kI", 0.01);
       put("kD", 0.0);
       put("kF", 0.0);
       put("kIzone", 100.0);
@@ -105,7 +106,7 @@ public class Lift extends Subsystem {
    * Lift motor methods in PercentOutput mode
    */
   public void lowerMotor() {
-    motor.set(ControlMode.PercentOutput, 0.2);
+    motor.set(ControlMode.PercentOutput, -0.35);
   }
 
   public void stopMotor() {
@@ -126,7 +127,7 @@ public class Lift extends Subsystem {
         RobotMap.kTimeoutMs); // Configuration Timeout
 
     /* Configure output and sensor direction */
-    motor.setInverted(false);
+    motor.setInverted(true);
     motor.setSensorPhase(true);
 
     /* Configure neutral deadband */
@@ -151,7 +152,7 @@ public class Lift extends Subsystem {
     motor.config_IntegralZone(RobotMap.kSlot_Distance, gainsDistance.get("kIzone").intValue(), RobotMap.kTimeoutMs);
 
     motor.configClosedLoopPeakOutput(RobotMap.kSlot_Distance, gainsDistance.get("kPeakOutput"), RobotMap.kTimeoutMs);
-    motor.configAllowableClosedloopError(RobotMap.kSlot_Distance, 0, RobotMap.kTimeoutMs);
+    motor.configAllowableClosedloopError(RobotMap.kSlot_Distance, 2, RobotMap.kTimeoutMs);
 
     /**
      * 1ms per loop. PID loop can be slowed down if need be. For example, - if
@@ -169,5 +170,11 @@ public class Lift extends Subsystem {
 
   public void resetEncoder(double pos) {
     motor.getSensorCollection().setQuadraturePosition((int) pos * TICKS_PER_INCH, RobotMap.kTimeoutMs);
+  }
+
+  public boolean isLimit() {
+    Faults f = new Faults();
+    motor.getFaults(f);
+    return f.ReverseLimitSwitch;
   }
 }

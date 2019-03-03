@@ -32,7 +32,7 @@ public class LiftInitMotor extends Command {
     SmartDashboard.putNumber("Lift Pos Error", pos);
 
     Robot.lift.resetEncoder(pos); // reset both encoder positions, so we can monitor motor2 position
-    Robot.lift.setTgtPosition(pos);
+    Robot.lift.setTgtPosition(0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run

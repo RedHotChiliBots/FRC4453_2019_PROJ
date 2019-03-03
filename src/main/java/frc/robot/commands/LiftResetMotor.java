@@ -14,8 +14,6 @@ import frc.robot.Robot;
 
 public class LiftResetMotor extends Command {
 
-  private WPI_TalonSRX motor = null;
-
   public LiftResetMotor() {
     requires(Robot.lift);
   }
@@ -31,15 +29,13 @@ public class LiftResetMotor extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    motor.feed();
+    Robot.lift.lowerMotor();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    Faults f = new Faults();
-    motor.getFaults(f);
-    return f.ForwardLimitSwitch;
+    return Robot.lift.isLimit();
   }
 
   // Called once after isFinished returns true
