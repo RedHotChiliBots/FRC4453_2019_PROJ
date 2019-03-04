@@ -143,13 +143,13 @@ public class Chassis extends Subsystem {
 		cameras = NetworkTableInstance.getDefault().getTable("Vision");
 
 		// Setup vision PID loops
-		pid_strafe = new PIDController(0.1, 0.0, 0.0, new StrafeSource(), new StrafeOutput());
-		pid_turn = new PIDController(0.1, 0.0, 0.0, new TurnSource(), new TurnOutput());
+		pid_strafe = new PIDController(0.4, 0.01, 0.0, new StrafeSource(), new StrafeOutput());
+		pid_turn = new PIDController(0.02, 0.0, 0.0, new TurnSource(), new TurnOutput());
 
 		pid_strafe.setAbsoluteTolerance(1.0);
 		pid_turn.setAbsoluteTolerance(1.0);
 
-		pid_strafe.setOutputRange(-0.25, 0.25);
+		pid_strafe.setOutputRange(-0.5, 0.5);
 		pid_turn.setOutputRange(-0.25, 0.25);
 
 		pid_strafe.setSetpoint(0.0);
@@ -203,20 +203,22 @@ public class Chassis extends Subsystem {
 		double y = 0.0;
 		double r = 0.0;
 
-		switch (Robot.grabber.getMode()) {
-		case CARGO:
-			x = Robot.oi.getDriveX();
-			y = -Robot.oi.getDriveY();
-			break;
+		// switch (Robot.grabber.getMode()) {
+		// case CARGO:
+		// 	x = -Robot.oi.getDriveX();
+		// 	y = -Robot.oi.getDriveY();
+		// 	break;
 
-		case PANEL:
-			x = -Robot.oi.getDriveX();
-			y = Robot.oi.getDriveY();
-			break;
+		// case PANEL:
+		// 	x = Robot.oi.getDriveX();
+		// 	y = Robot.oi.getDriveY();
+		// 	break;
 
-		default:
-		}
-
+		// default:
+		// }
+		 
+		x = -Robot.oi.getDriveX();
+		y = -Robot.oi.getDriveY();
 		r = Robot.oi.getDriveR();
 		driveChassis(x, y, r);
 	}
@@ -340,9 +342,11 @@ public class Chassis extends Subsystem {
 	 */
 	public void driveVision() {
 		if (Robot.grabber.getMode() == MODE.CARGO) {
-			driveChassis(-current_strafe, 0.0, current_turn);
+			drive.driveCartesian(-current_strafe, -0.0, -current_turn);
+			//driveChassis(0.0, current_strafe,-current_turn);
 		} else {
-			driveChassis(current_strafe, 0.0, current_turn);
+			drive.driveCartesian(current_strafe, 0.0, current_turn);
+			//driveChassis(0.0, -current_strafe, current_turn);
 		}
 	}
 
