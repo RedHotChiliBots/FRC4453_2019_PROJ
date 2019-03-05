@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap.ACTION;
 import frc.robot.RobotMap.LEVEL;
 
 public class SwitchToLevel1 extends Command {
@@ -21,6 +22,7 @@ public class SwitchToLevel1 extends Command {
   protected void initialize() {
     System.out.println("Init SwitchToLevel1");
     Robot.lift.setLevel(LEVEL.LEVEL1);
+    Robot.grabber.setAction(ACTION.RELEASE);
   }
 
   // Called repeatedly when this Command is scheduled to run

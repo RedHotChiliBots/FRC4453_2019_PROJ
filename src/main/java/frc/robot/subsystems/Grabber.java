@@ -17,8 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.ACTION;
 import frc.robot.RobotMap.DIR;
 import frc.robot.RobotMap.MODE;
+import frc.robot.commands.CargoTeleop;
 import frc.robot.commands.GrabberStop;
 
 /**
@@ -35,6 +37,7 @@ public class Grabber extends Subsystem {
 
   // Define Mode variable
   public MODE mode = null;
+  public ACTION action = null;
 
   private DIR dir = null;
 
@@ -46,7 +49,7 @@ public class Grabber extends Subsystem {
     motorL.configFactoryDefault();
     motorL.setNeutralMode(NeutralMode.Brake);
     motorL.setSubsystem("Grabber");
-    motorL.setInverted(false);
+    motorL.setInverted(true);
     motorL.set(ControlMode.PercentOutput, 0.0);
     motorL.configPeakOutputForward(+1.0, RobotMap.kTimeoutMs);
     motorL.configPeakOutputReverse(-1.0, RobotMap.kTimeoutMs);
@@ -55,7 +58,7 @@ public class Grabber extends Subsystem {
     motorR.configFactoryDefault();
     motorR.setNeutralMode(NeutralMode.Brake);
     motorR.setSubsystem("Grabber");
-    motorR.setInverted(true);
+    motorR.setInverted(false);
     motorR.set(ControlMode.PercentOutput, 0.0);
     motorR.configPeakOutputForward(+1.0, RobotMap.kTimeoutMs);
     motorR.configPeakOutputReverse(-1.0, RobotMap.kTimeoutMs);
@@ -65,6 +68,7 @@ public class Grabber extends Subsystem {
 
     // Initialze Mode to PANEL
     mode = MODE.PANEL;
+    action = ACTION.GRAB;
 
     dir = DIR.CENTER;
 
@@ -76,15 +80,23 @@ public class Grabber extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new GrabberStop());
+    setDefaultCommand(new CargoTeleop());
   }
 
   public void setMode(MODE m) {
     mode = m;
   }
 
+  public void setAction(ACTION a) {
+    action = a;
+  }
+
   public MODE getMode() {
     return mode;
+  }
+
+  public ACTION getAction() {
+    return action;
   }
 
   public void setDir(DIR d) {
@@ -95,13 +107,22 @@ public class Grabber extends Subsystem {
     return dir;
   }
 
+  public double getMotorLCurrent() {
+    return motorL.getOutputCurrent();
+  }
+
+  public double getMotorRCurrent() {
+    return motorR.getOutputCurrent();
+  }
+
   public void cargoGrab() {
     double spd = Robot.prefs.getDouble("CargoGrabSpd", 0.5);
     motorL.set(ControlMode.PercentOutput, spd);
     motorR.set(ControlMode.PercentOutput, spd);
   }
 
-  public void cargoRel(double l, double r) {
+  public void cargoTeleop(double l, double r) {
+    // System.out.println("POV Angle: " + Robot.oi.operator.getPOV());
     motorL.set(ControlMode.PercentOutput, -l);
     motorR.set(ControlMode.PercentOutput, -r);
   }

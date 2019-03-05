@@ -120,6 +120,10 @@ public class RobotMap {
     LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP, SELECTED, CURRENT
   }
 
+  public static enum ACTION {
+    GRAB, RELEASE
+  }
+
   // Heights are inches above base of 19" (Level 1)
   public final static Map<LEVEL, Double> height = new HashMap<LEVEL, Double>() {
     private static final long serialVersionUID = 1L;

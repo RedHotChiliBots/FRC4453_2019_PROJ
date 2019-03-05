@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap.ACTION;
 import frc.robot.RobotMap.LEVEL;
 import frc.robot.RobotMap.MODE;
 
@@ -26,6 +27,8 @@ public class SwitchToLoadingStation extends Command {
     } else {
       Robot.lift.setLevel(LEVEL.LOADINGSTATION);
     }
+
+    Robot.grabber.setAction(ACTION.GRAB);
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -13,6 +13,8 @@ import frc.robot.Robot;
 
 public class CargoRelease extends Command {
 
+  private double curr = 0.0;
+
   public CargoRelease() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -22,18 +24,20 @@ public class CargoRelease extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    curr = Robot.prefs.getDouble("GrabberMotorMinCurrent", 5);
+    setTimeout(0.25);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.grabber.cargoRel(Robot.oi.getCargoL(), Robot.oi.getCargoR());
+    Robot.grabber.cargoRel();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isTimedOut() && (Robot.grabber.getMotorLCurrent() < curr || Robot.grabber.getMotorLCurrent() < curr);
   }
 
   // Called once after isFinished returns true

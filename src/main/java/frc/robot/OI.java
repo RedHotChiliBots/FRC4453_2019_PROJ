@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.AutoRetrieveScore;
+import frc.robot.commands.CargoGrab;
+import frc.robot.commands.CargoRelease;
 import frc.robot.commands.ClimberClimb;
 import frc.robot.commands.ClimberClimbNew;
 import frc.robot.commands.ClimberExtend;
@@ -66,7 +68,7 @@ public class OI {
   // button.whenReleased(new ExampleCommand());
 
   private XboxController driver = new XboxController(0);
-  private XboxController operator = new XboxController(1);
+  public XboxController operator = new XboxController(1);
   private Joystick btnBoard = new Joystick(2);
 
   // private JoystickButton climberClimb = new JoystickButton(driver,
@@ -78,8 +80,10 @@ public class OI {
   // RobotMap.B_BUTTON);
 
   // Driver joystick controls
-  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
-  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+//  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+//  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+  private JoystickButton cargoRelease = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+  private JoystickButton cargoGrab = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
 
   private JoystickButton autoRetrieveScore = new JoystickButton(driver, RobotMap.A_BUTTON);
 
@@ -137,8 +141,10 @@ public class OI {
   }
 
   public void init() {
-    switchToCargo.whenPressed(new SwitchToCargo());
-    switchToPanel.whenPressed(new SwitchToPanel());
+//    switchToCargo.whenPressed(new SwitchToCargo());
+    //    switchToPanel.whenPressed(new SwitchToPanel());
+    cargoGrab.whenPressed(new CargoGrab());
+    cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
     panelGrab.whenPressed(new PanelGrab());
     panelRelease.whenPressed(new PanelRelease());

@@ -8,41 +8,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.RobotMap.ACTION;
-import frc.robot.RobotMap.LEVEL;
 
-public class SwitchToLevel2 extends Command {
-  public SwitchToLevel2() {
+import frc.robot.Robot;
+
+public class CargoTeleop extends Command {
+
+  public CargoTeleop() {
+    requires(Robot.grabber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Init SwitchToLevel2");
-    Robot.lift.setLevel(LEVEL.LEVEL2);
-    Robot.grabber.setAction(ACTION.RELEASE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.grabber.cargoTeleop(Robot.oi.getCargoL(), Robot.oi.getCargoR());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.grabber.cargoStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.grabber.cargoStop();
   }
 }

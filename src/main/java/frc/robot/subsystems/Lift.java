@@ -103,6 +103,10 @@ public class Lift extends Subsystem {
   public LEVEL getLevel() {
     return level;
   }
+  
+  public double getMotorCurrent() {
+    return motor.getOutputCurrent();
+  }
 
   /**
    * Lift motor methods in PercentOutput mode

@@ -18,12 +18,14 @@ public class PanelGrab extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Panel Grab initialize");
+    
+    Robot.grabber.panelGrab();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.grabber.panelGrab();
   }
 
   // Make this return true when this Command no longer needs to run execute()

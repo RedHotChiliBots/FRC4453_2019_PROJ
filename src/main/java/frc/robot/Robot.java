@@ -163,6 +163,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putString("Mode", Robot.grabber.getMode().name());
       SmartDashboard.putString("Dir", Robot.grabber.getDir().name());
       SmartDashboard.putString("Level", Robot.lift.getLevel().name());
+      SmartDashboard.putString("Action", Robot.grabber.getAction().name());
       i++;
       break;
 
@@ -170,7 +171,7 @@ public class Robot extends TimedRobot {
       if (Robot.lift.motor.getControlMode() == ControlMode.Position) {
         SmartDashboard.putNumber("Lift Target", Robot.lift.motor.getClosedLoopTarget());
       }
-      SmartDashboard.putNumber("Lift Current", Robot.lift.motor.getOutputCurrent());
+      SmartDashboard.putNumber("Lift Current", Robot.lift.getMotorCurrent());
       SmartDashboard.putNumber("Lift Position", Robot.lift.motor.getSelectedSensorPosition());
       SmartDashboard.putNumber("Lift Velocity", Robot.lift.motor.getSelectedSensorVelocity());
       i++;
@@ -191,6 +192,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Back Dist", Robot.climber.getDistBackSensor());
       SmartDashboard.putData("Climb Front", Robot.climber.climbFront);
       SmartDashboard.putData("Climb Back", Robot.climber.climbBack);
+      SmartDashboard.putNumber("Grab L Current", Robot.grabber.getMotorLCurrent());
+      SmartDashboard.putNumber("Grab R Current", Robot.grabber.getMotorRCurrent());
       i++;
       break;
 
@@ -223,11 +226,15 @@ public class Robot extends TimedRobot {
     if (!prefs.containsKey("FStepDistLow"))
       prefs.putDouble("FStepDistLow", 4.0);
     if (!prefs.containsKey("CargoGrabSpd"))
-      prefs.getDouble("CargoGrabSpd", 0.5);
+      prefs.putDouble("CargoGrabSpd", 0.5);
     if (!prefs.containsKey("CargoRelSpd"))
-      prefs.getDouble("CargoRelSpd", 0.5);
+      prefs.putDouble("CargoRelSpd", 0.5);
     if (!prefs.containsKey("ChassisDistAllowedErr"))
-      prefs.getDouble("ChassisDistAllowedErr", 10);
+      prefs.putDouble("ChassisDistAllowedErr", 10);
+    if (!prefs.containsKey("GrabberMotorMaxCurrent"))
+      prefs.putDouble("GrabberMotorMaxCurrent", 15);
+    if (!prefs.containsKey("GrabberMotorMinCurrent"))
+      prefs.putDouble("GrabberMotorMinCurrent", 5);
 
     if (prefs.containsKey("BackStepAngleHigh"))
       prefs.remove("BackStepAngleHigh");

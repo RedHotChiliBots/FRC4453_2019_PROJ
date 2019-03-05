@@ -8,8 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
-import frc.robot.RobotMap.LEVEL;
+//import frc.robot.Robot;
+//import frc.robot.RobotMap.LEVEL;
 
 public class AutoRetrieveScore extends CommandGroup {
   /**
@@ -32,14 +32,9 @@ public class AutoRetrieveScore extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    // follow line
     // addParallel(new ChassisDriveJerk());
     // addSequential(new LiftGoToLevel());
-    // if (Robot.lift.level == LEVEL.LOADINGSTATION) {
-    // addSequential(new GrabberGrab());
-    // } else {
-    // addSequential(new GrabberRel());
-    // }
+    // addSequential(new GrabberGrabRel());
     addSequential(new ChassisAutoDriveVision());
     // addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
   }
