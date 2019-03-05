@@ -15,10 +15,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.AutoRetrieveScore;
 import frc.robot.commands.CargoGrab;
 import frc.robot.commands.CargoRelease;
-import frc.robot.commands.ClimberClimb;
 import frc.robot.commands.ClimberClimbNew;
-import frc.robot.commands.ClimberExtend;
-import frc.robot.commands.ClimberRetract;
 import frc.robot.commands.LiftGoToLevel;
 import frc.robot.commands.LiftStartup;
 import frc.robot.commands.PanelGrab;
@@ -141,8 +138,8 @@ public class OI {
   }
 
   public void init() {
-//    switchToCargo.whenPressed(new SwitchToCargo());
-    //    switchToPanel.whenPressed(new SwitchToPanel());
+    // switchToCargo.whenPressed(new SwitchToCargo());
+    // switchToPanel.whenPressed(new SwitchToPanel());
     cargoGrab.whenPressed(new CargoGrab());
     cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
