@@ -205,18 +205,18 @@ public class Chassis extends Subsystem {
 
 		// switch (Robot.grabber.getMode()) {
 		// case CARGO:
-		// 	x = -Robot.oi.getDriveX();
-		// 	y = -Robot.oi.getDriveY();
-		// 	break;
+		// x = -Robot.oi.getDriveX();
+		// y = -Robot.oi.getDriveY();
+		// break;
 
 		// case PANEL:
-		// 	x = Robot.oi.getDriveX();
-		// 	y = Robot.oi.getDriveY();
-		// 	break;
+		// x = Robot.oi.getDriveX();
+		// y = Robot.oi.getDriveY();
+		// break;
 
 		// default:
 		// }
-		 
+
 		x = -Robot.oi.getDriveX();
 		y = -Robot.oi.getDriveY();
 		r = Robot.oi.getDriveR();
@@ -340,13 +340,13 @@ public class Chassis extends Subsystem {
 	 * Drives chassis motors using vision PID loops. NOTE: please call
 	 * driveVisionStart() before using this.
 	 */
-	public void driveVision() {
+	public void driveVision(double fwdVel) {
 		if (Robot.grabber.getMode() == MODE.CARGO) {
-			drive.driveCartesian(-current_strafe, -0.0, -current_turn);
-			//driveChassis(0.0, current_strafe,-current_turn);
+			drive.driveCartesian(-current_strafe, -fwdVel, -current_turn);
+			// driveChassis(0.0, current_strafe,-current_turn);
 		} else {
-			drive.driveCartesian(current_strafe, 0.0, current_turn);
-			//driveChassis(0.0, -current_strafe, current_turn);
+			drive.driveCartesian(current_strafe, fwdVel, current_turn);
+			// driveChassis(0.0, -current_strafe, current_turn);
 		}
 	}
 
