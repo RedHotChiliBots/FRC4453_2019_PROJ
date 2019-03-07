@@ -8,28 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.AutoRetrieveScore;
-import frc.robot.commands.CargoGrab;
-import frc.robot.commands.CargoRelease;
-import frc.robot.commands.ClimberClimbNew;
-import frc.robot.commands.LiftGoToLevel;
-import frc.robot.commands.LiftStartup;
-import frc.robot.commands.PanelGrab;
-import frc.robot.commands.PanelRelease;
-import frc.robot.commands.SwitchToCargo;
-import frc.robot.commands.SwitchToCenter;
-import frc.robot.commands.SwitchToLeft;
-import frc.robot.commands.SwitchToLevel1;
-import frc.robot.commands.SwitchToLevel2;
-import frc.robot.commands.SwitchToLevel3;
-import frc.robot.commands.SwitchToLoadingStation;
-import frc.robot.commands.SwitchToPanel;
-import frc.robot.commands.SwitchToRight;
-import frc.robot.commands.SwitchToShip;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -77,8 +60,10 @@ public class OI {
   // RobotMap.B_BUTTON);
 
   // Driver joystick controls
-//  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
-//  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+  // private JoystickButton switchToCargo = new JoystickButton(driver,
+  // RobotMap.LEFT_BUMPER);
+  // private JoystickButton switchToPanel = new JoystickButton(driver,
+  // RobotMap.RIGHT_BUMPER);
   private JoystickButton cargoRelease = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
   private JoystickButton cargoGrab = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
 
@@ -112,6 +97,7 @@ public class OI {
   private JoystickButton bbSelectCenter = new JoystickButton(btnBoard, RobotMap.BTN_9);
   private JoystickButton bbSelectRight = new JoystickButton(btnBoard, RobotMap.BTN_10);
   private JoystickButton bbGoToSelection = new JoystickButton(btnBoard, RobotMap.BTN_11);
+  private JoystickButton bbAbort = new JoystickButton(btnBoard, RobotMap.BTN_12);
 
   /*
    * Andrew's new config private JoystickButton switchToCargo = new
@@ -168,6 +154,7 @@ public class OI {
     bbSelectCenter.whenPressed(new SwitchToCenter());
     bbSelectRight.whenPressed(new SwitchToRight());
     bbGoToSelection.whenPressed(new LiftGoToLevel());
+    bbAbort.whenPressed(new Abort());
 
     /*
      * Andrew's new config switchToCargo.whenPressed(new SwitchToCargo());
