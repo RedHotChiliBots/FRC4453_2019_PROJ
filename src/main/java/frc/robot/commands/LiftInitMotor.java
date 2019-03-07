@@ -44,7 +44,7 @@ public class LiftInitMotor extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math.abs(Robot.lift.motor.getClosedLoopError()) < err);
+    return (Math.abs(Robot.lift.motor.getSelectedSensorPosition() - Robot.lift.motor.getClosedLoopTarget()) < err);
   }
 
   // Called once after isFinished returns true

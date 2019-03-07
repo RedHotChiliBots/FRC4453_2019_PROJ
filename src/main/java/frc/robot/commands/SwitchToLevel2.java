@@ -38,6 +38,7 @@ public class SwitchToLevel2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("End switch to level 2");
   }
 
   // Called when another command which requires one or more of the same

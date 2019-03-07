@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.ChassisDriveJerk;
 import frc.robot.commands.ChassisDriveTeleop;
-
+import frc.robot.commands.LiftStartup;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Grabber;
@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     chassis.ahrs.zeroYaw();
+    Scheduler.getInstance().add(new LiftStartup());
   }
 
   /**
@@ -125,6 +126,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     chassis.ahrs.zeroYaw();
+    // Scheduler.getInstance().add(new LiftStartup());
   }
 
   /**
@@ -197,7 +199,7 @@ public class Robot extends TimedRobot {
       i++;
       break;
 
-      case 4:
+    case 4:
       i = 0;
     }
   }

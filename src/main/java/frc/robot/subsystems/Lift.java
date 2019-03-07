@@ -38,7 +38,8 @@ public class Lift extends Subsystem {
   private static final int COUNTS_PER_REV_MOTOR = 12;
   private static final int GEAR_RATIO = 20;
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
-  private static final double BARREL_DIA = 1.5;
+  // Diameter is barrel plus half of rope width
+  private static final double BARREL_DIA = 1.5+(0.125/2.0);  
   private static final double INCHES_PER_REV = Math.PI * BARREL_DIA;
   public static final int TICKS_PER_INCH = (int) (COUNTS_PER_REV_GEARBOX / INCHES_PER_REV); // Lead screw 1 in/rev
 
@@ -56,7 +57,7 @@ public class Lift extends Subsystem {
     {
       put("kCruiseVel", 1.0);
       put("kAccel", 1.0);
-      put("kP", 20.0);
+      put("kP", 30.0);
       put("kI", 0.01);
       put("kD", 0.0);
       put("kF", 0.0);
@@ -103,7 +104,7 @@ public class Lift extends Subsystem {
   public LEVEL getLevel() {
     return level;
   }
-  
+
   public double getMotorCurrent() {
     return motor.getOutputCurrent();
   }
