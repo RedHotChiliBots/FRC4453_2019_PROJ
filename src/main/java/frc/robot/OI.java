@@ -71,6 +71,8 @@ public class OI {
 
   private JoystickButton autoRetrieveScore = new JoystickButton(driver, RobotMap.A_BUTTON);
 
+  private JoystickButton abort = new JoystickButton(driver, RobotMap.B_BUTTON);
+
   // private JoystickButton climberClimbNew = new JoystickButton(driver,
   // RobotMap.Y_BUTTON);
   private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
@@ -133,6 +135,7 @@ public class OI {
   public void init() {
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
+    abort.whenPressed(new Abort());
     // cargoGrab.whenPressed(new CargoGrab());
     // cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
