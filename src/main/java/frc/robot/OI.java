@@ -77,6 +77,9 @@ public class OI {
 
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
+  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
+
   // Operator joystick controls
   private JoystickButton switchToLevel1 = new JoystickButton(operator, RobotMap.X_BUTTON);
   private JoystickButton switchToLevel2 = new JoystickButton(operator, RobotMap.Y_BUTTON);
@@ -128,8 +131,8 @@ public class OI {
   }
 
   public void init() {
-    // switchToCargo.whenPressed(new SwitchToCargo());
-    // switchToPanel.whenPressed(new SwitchToPanel());
+    switchToCargo.whenPressed(new SwitchToCargo());
+    switchToPanel.whenPressed(new SwitchToPanel());
     // cargoGrab.whenPressed(new CargoGrab());
     // cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
