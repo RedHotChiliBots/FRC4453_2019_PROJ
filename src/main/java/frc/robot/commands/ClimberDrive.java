@@ -44,7 +44,7 @@ public class ClimberDrive extends Command {
   protected void end() {
     System.out.println("ending ClimberDrive");
     // Robot.chassis.setPercentOut();
-    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    Robot.chassis.driveChassisLocal(0.0, 0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same
@@ -52,6 +52,6 @@ public class ClimberDrive extends Command {
   @Override
   protected void interrupted() {
     // Robot.chassis.setPercentOut();
-    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    Robot.chassis.driveChassisLocal(0.0, 0.0, 0.0);
   }
 }
