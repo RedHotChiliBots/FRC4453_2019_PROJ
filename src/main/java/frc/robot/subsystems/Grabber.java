@@ -66,7 +66,7 @@ public class Grabber extends Subsystem {
     panel = new DoubleSolenoid(RobotMap.PanelGrabberReleaseSolenoid, RobotMap.PanelGrabberGripSolenoid);
 
     // Initialze Mode to PANEL
-    mode = MODE.PANEL;
+    mode = MODE.CARGO;
     action = ACTION.GRAB;
 
     dir = DIR.CENTER;

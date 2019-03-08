@@ -37,8 +37,8 @@ public class RobotMap {
   public static int liftMotor = 5;
 
   // cargo grabber
-  public static int cargoGrabberMotorL = 9;
-  public static int cargoGrabberMotorR = 10;
+  public static int cargoGrabberMotorL = 10;
+  public static int cargoGrabberMotorR = 9;
 
   // ============= SOLENOIDS (dio) =============
 
@@ -128,10 +128,10 @@ public class RobotMap {
   public final static Map<LEVEL, Double> height = new HashMap<LEVEL, Double>() {
     private static final long serialVersionUID = 1L;
     {
-      put(LEVEL.LEVEL3, 56.0); // Score Panel & Cargo in Ship & Rocket
-      put(LEVEL.LEVEL2, 28.0); // Score Panel & Cargo in Ship & Rocket
-      put(LEVEL.LOADINGSTATION, 16.0); // Load Cargo
-      put(LEVEL.SHIP, 10.5); // Score Cargo in Ship
+      put(LEVEL.LEVEL3, 55.0); // Score Panel & Cargo in Ship & Rocket
+      put(LEVEL.LEVEL2, 27.0); // Score Panel & Cargo in Ship & Rocket
+      put(LEVEL.LOADINGSTATION, 15.0); // Load Cargo
+      put(LEVEL.SHIP, 9.5); // Score Cargo in Ship
       put(LEVEL.LEVEL1, 0.0); // Load Panel; Score Panel in Ship & Rocket
     }
   };

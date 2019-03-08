@@ -54,18 +54,18 @@ public class OI {
   // private JoystickButton climberClimb = new JoystickButton(driver,
   // RobotMap.Y_BUTTON);
 
-  // private JoystickButton climberDown = new JoystickButton(operator,
-  // RobotMap.A_BUTTON);
-  // private JoystickButton climberUp = new JoystickButton(operator,
-  // RobotMap.B_BUTTON);
+  private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
+  private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
 
   // Driver joystick controls
   // private JoystickButton switchToCargo = new JoystickButton(driver,
   // RobotMap.LEFT_BUMPER);
   // private JoystickButton switchToPanel = new JoystickButton(driver,
   // RobotMap.RIGHT_BUMPER);
-  private JoystickButton cargoRelease = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
-  private JoystickButton cargoGrab = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+  // private JoystickButton cargoRelease = new JoystickButton(driver,
+  // RobotMap.RIGHT_BUMPER);
+  // private JoystickButton cargoGrab = new JoystickButton(driver,
+  // RobotMap.LEFT_BUMPER);
 
   private JoystickButton autoRetrieveScore = new JoystickButton(driver, RobotMap.A_BUTTON);
 
@@ -76,8 +76,10 @@ public class OI {
   // Operator joystick controls
   private JoystickButton switchToLevel1 = new JoystickButton(operator, RobotMap.X_BUTTON);
   private JoystickButton switchToLevel2 = new JoystickButton(operator, RobotMap.Y_BUTTON);
-  private JoystickButton switchToLevel3 = new JoystickButton(operator, RobotMap.B_BUTTON);
-  private JoystickButton switchToShip = new JoystickButton(operator, RobotMap.A_BUTTON);
+  // private JoystickButton switchToLevel3 = new JoystickButton(operator,
+  // RobotMap.B_BUTTON);
+  // private JoystickButton switchToShip = new JoystickButton(operator,
+  // RobotMap.A_BUTTON);
   private JoystickButton switchToLoadingStation = new JoystickButton(operator, RobotMap.START);
 
   private JoystickButton liftGoToLevel = new JoystickButton(operator, RobotMap.BACK);
@@ -126,8 +128,8 @@ public class OI {
   public void init() {
     // switchToCargo.whenPressed(new SwitchToCargo());
     // switchToPanel.whenPressed(new SwitchToPanel());
-    cargoGrab.whenPressed(new CargoGrab());
-    cargoRelease.whenPressed(new CargoRelease());
+    // cargoGrab.whenPressed(new CargoGrab());
+    // cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
     panelGrab.whenPressed(new PanelGrab());
     panelRelease.whenPressed(new PanelRelease());
@@ -135,11 +137,11 @@ public class OI {
     climberClimbNew.whenPressed(new ClimberClimbNew());
     switchToLevel1.whenPressed(new SwitchToLevel1());
     switchToLevel2.whenPressed(new SwitchToLevel2());
-    switchToLevel3.whenPressed(new SwitchToLevel3());
+    // switchToLevel3.whenPressed(new SwitchToLevel3());
     switchToLoadingStation.whenPressed(new SwitchToLoadingStation());
-    switchToShip.whenPressed(new SwitchToShip());
-    // climberDown.whenPressed(new ClimberExtend());
-    // climberUp.whenPressed(new ClimberRetract());
+    // switchToShip.whenPressed(new SwitchToShip());
+    climberDown.whenPressed(new ClimberExtend());
+    climberUp.whenPressed(new ClimberRetract());
     autoRetrieveScore.whenPressed(new AutoRetrieveScore());
     liftGoToLevel.whenPressed(new LiftGoToLevel());
 
@@ -185,7 +187,7 @@ public class OI {
   }
 
   public double getDriveX() {
-    double v = driver.getX(Hand.kRight);
+    double v = driver.getX(Hand.kLeft);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -194,7 +196,7 @@ public class OI {
    * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveY() {
-    double v = driver.getY(Hand.kRight);
+    double v = driver.getY(Hand.kLeft);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -203,7 +205,7 @@ public class OI {
    * driver.getY(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveR() {
-    double v = driver.getX(Hand.kLeft);
+    double v = driver.getX(Hand.kRight);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 

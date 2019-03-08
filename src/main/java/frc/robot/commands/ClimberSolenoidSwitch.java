@@ -40,11 +40,11 @@ public class ClimberSolenoidSwitch extends Command {
   protected boolean isFinished() {
     boolean result = false;
     if (solenoid == Robot.climber.climbFront) {
-      result = Robot.chassis.ahrs.getRoll() > -Robot.prefs.getDouble("FStepAngleHigh", 18.0)
-          && Robot.chassis.ahrs.getRoll() < -Robot.prefs.getDouble("FStepAngleLow", 14.0);
+      result = Robot.chassis.getPitch() > -Robot.prefs.getDouble("FStepAngleHigh", 18.0)
+          && Robot.chassis.getPitch() < -Robot.prefs.getDouble("FStepAngleLow", 14.0);
     } else {
-      result = Robot.chassis.ahrs.getRoll() > -Robot.prefs.getDouble("BStepAngleHigh", 2.0)
-          && Robot.chassis.ahrs.getRoll() < -Robot.prefs.getDouble("BStepAngleLow", -2.0);
+      result = Robot.chassis.getPitch() > -Robot.prefs.getDouble("BStepAngleHigh", 2.0)
+          && Robot.chassis.getPitch() < -Robot.prefs.getDouble("BStepAngleLow", -2.0);
     }
     if (result)
       System.out.println("Finish ClimberSolenoidSwitch");

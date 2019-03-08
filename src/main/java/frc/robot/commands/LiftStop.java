@@ -7,31 +7,27 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
 /**
  * Add your docs here.
  */
-public class Abort extends InstantCommand {
+public class LiftStop extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public Abort() {
+  public LiftStop() {
     super();
-    requires(Robot.chassis);
-    requires(Robot.climber);
-    requires(Robot.grabber);
     requires(Robot.lift);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    DriverStation.reportWarning("Abort!", false);
-    Robot.climber.retractback();
-    Robot.climber.retractfront();
+    Robot.lift.motor.set(ControlMode.PercentOutput, 0.0);
   }
 
 }

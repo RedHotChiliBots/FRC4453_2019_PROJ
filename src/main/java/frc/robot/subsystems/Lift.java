@@ -39,7 +39,7 @@ public class Lift extends Subsystem {
   private static final int GEAR_RATIO = 20;
   private static final int COUNTS_PER_REV_GEARBOX = COUNTS_PER_REV_MOTOR * GEAR_RATIO;
   // Diameter is barrel plus half of rope width
-  private static final double BARREL_DIA = 1.5+(0.125/2.0);  
+  private static final double BARREL_DIA = 1.5 + (0.125 / 2.0);
   private static final double INCHES_PER_REV = Math.PI * BARREL_DIA;
   public static final int TICKS_PER_INCH = (int) (COUNTS_PER_REV_GEARBOX / INCHES_PER_REV); // Lead screw 1 in/rev
 
@@ -134,7 +134,7 @@ public class Lift extends Subsystem {
         RobotMap.kTimeoutMs); // Configuration Timeout
 
     /* Configure output and sensor direction */
-    motor.setInverted(true);
+    motor.setInverted(false);
     motor.setSensorPhase(true);
 
     /* Configure neutral deadband */
