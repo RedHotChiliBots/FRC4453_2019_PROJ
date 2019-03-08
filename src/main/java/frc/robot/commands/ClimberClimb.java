@@ -44,5 +44,6 @@ public class ClimberClimb extends CommandGroup {
     addSequential(new WaitCommand(0.5));
     addSequential(new ClimberDrive(Robot.climber.climbBackDistanceSensor));
     addSequential(new ClimberSolenoidSwitch(Robot.climber.climbBack, RobotMap.ClimberDown));
+    addSequential(new ChassisDriveTime(1));
   }
 }

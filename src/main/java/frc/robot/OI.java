@@ -54,8 +54,10 @@ public class OI {
   // private JoystickButton climberClimb = new JoystickButton(driver,
   // RobotMap.Y_BUTTON);
 
-  private JoystickButton climberDown = new JoystickButton(operator, RobotMap.A_BUTTON);
-  private JoystickButton climberUp = new JoystickButton(operator, RobotMap.B_BUTTON);
+  // private JoystickButton climberDown = new JoystickButton(operator,
+  // RobotMap.A_BUTTON);
+  // private JoystickButton climberUp = new JoystickButton(operator,
+  // RobotMap.B_BUTTON);
 
   // Driver joystick controls
   // private JoystickButton switchToCargo = new JoystickButton(driver,
@@ -69,17 +71,17 @@ public class OI {
 
   private JoystickButton autoRetrieveScore = new JoystickButton(driver, RobotMap.A_BUTTON);
 
-  private JoystickButton climberClimbNew = new JoystickButton(driver, RobotMap.Y_BUTTON);
+  // private JoystickButton climberClimbNew = new JoystickButton(driver,
+  // RobotMap.Y_BUTTON);
+  private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
 
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
 
   // Operator joystick controls
   private JoystickButton switchToLevel1 = new JoystickButton(operator, RobotMap.X_BUTTON);
   private JoystickButton switchToLevel2 = new JoystickButton(operator, RobotMap.Y_BUTTON);
-  // private JoystickButton switchToLevel3 = new JoystickButton(operator,
-  // RobotMap.B_BUTTON);
-  // private JoystickButton switchToShip = new JoystickButton(operator,
-  // RobotMap.A_BUTTON);
+  private JoystickButton switchToLevel3 = new JoystickButton(operator, RobotMap.B_BUTTON);
+  private JoystickButton switchToShip = new JoystickButton(operator, RobotMap.A_BUTTON);
   private JoystickButton switchToLoadingStation = new JoystickButton(operator, RobotMap.START);
 
   private JoystickButton liftGoToLevel = new JoystickButton(operator, RobotMap.BACK);
@@ -133,15 +135,15 @@ public class OI {
     liftReset.whenPressed(new LiftStartup());
     panelGrab.whenPressed(new PanelGrab());
     panelRelease.whenPressed(new PanelRelease());
-    // climberClimb.whileHeld(new ClimberClimb());
-    climberClimbNew.whenPressed(new ClimberClimbNew());
+    climberClimb.whenPressed(new ClimberClimb());
+    // climberClimbNew.whenPressed(new ClimberClimbNew());
     switchToLevel1.whenPressed(new SwitchToLevel1());
     switchToLevel2.whenPressed(new SwitchToLevel2());
-    // switchToLevel3.whenPressed(new SwitchToLevel3());
+    switchToLevel3.whenPressed(new SwitchToLevel3());
     switchToLoadingStation.whenPressed(new SwitchToLoadingStation());
-    // switchToShip.whenPressed(new SwitchToShip());
-    climberDown.whenPressed(new ClimberExtend());
-    climberUp.whenPressed(new ClimberRetract());
+    switchToShip.whenPressed(new SwitchToShip());
+    // climberDown.whenPressed(new ClimberExtend());
+    // climberUp.whenPressed(new ClimberRetract());
     autoRetrieveScore.whenPressed(new AutoRetrieveScore());
     liftGoToLevel.whenPressed(new LiftGoToLevel());
 
