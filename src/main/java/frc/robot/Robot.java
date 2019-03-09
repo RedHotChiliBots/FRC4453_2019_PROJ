@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.ChassisDriveJerk;
 import frc.robot.commands.ChassisDriveTeleop;
-
+import frc.robot.commands.LiftStartup;
+import frc.robot.commands.LiftStop;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Grabber;
@@ -112,6 +113,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     chassis.ahrs.zeroYaw();
+    Scheduler.getInstance().add(new LiftStartup());
   }
 
   /**
@@ -125,6 +127,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     chassis.ahrs.zeroYaw();
+    Scheduler.getInstance().add(new LiftStop());
   }
 
   /**
@@ -156,9 +159,9 @@ public class Robot extends TimedRobot {
 
     switch (i) {
     case 0:
-      SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
-      SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());
-      SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
+      // SmartDashboard.putNumber("Heading", chassis.ahrs.getYaw());
+      // SmartDashboard.putNumber("Turn Rate", chassis.ahrs.getRate());
+      // SmartDashboard.putNumber("Pitch", chassis.ahrs.getRoll());
       SmartDashboard.putBoolean("Collision Detected", Robot.chassis.isCollisionDetected());
       SmartDashboard.putString("Mode", Robot.grabber.getMode().name());
       SmartDashboard.putString("Dir", Robot.grabber.getDir().name());

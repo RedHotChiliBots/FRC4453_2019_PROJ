@@ -8,28 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.AutoRetrieveScore;
-import frc.robot.commands.CargoGrab;
-import frc.robot.commands.CargoRelease;
-import frc.robot.commands.ClimberClimbNew;
-import frc.robot.commands.LiftGoToLevel;
-import frc.robot.commands.LiftStartup;
-import frc.robot.commands.PanelGrab;
-import frc.robot.commands.PanelRelease;
-import frc.robot.commands.SwitchToCargo;
-import frc.robot.commands.SwitchToCenter;
-import frc.robot.commands.SwitchToLeft;
-import frc.robot.commands.SwitchToLevel1;
-import frc.robot.commands.SwitchToLevel2;
-import frc.robot.commands.SwitchToLevel3;
-import frc.robot.commands.SwitchToLoadingStation;
-import frc.robot.commands.SwitchToPanel;
-import frc.robot.commands.SwitchToRight;
-import frc.robot.commands.SwitchToShip;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -77,16 +60,27 @@ public class OI {
   // RobotMap.B_BUTTON);
 
   // Driver joystick controls
-//  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
-//  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
-  private JoystickButton cargoRelease = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
-  private JoystickButton cargoGrab = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+  // private JoystickButton switchToCargo = new JoystickButton(driver,
+  // RobotMap.LEFT_BUMPER);
+  // private JoystickButton switchToPanel = new JoystickButton(driver,
+  // RobotMap.RIGHT_BUMPER);
+  // private JoystickButton cargoRelease = new JoystickButton(driver,
+  // RobotMap.RIGHT_BUMPER);
+  // private JoystickButton cargoGrab = new JoystickButton(driver,
+  // RobotMap.LEFT_BUMPER);
 
   private JoystickButton autoRetrieveScore = new JoystickButton(driver, RobotMap.A_BUTTON);
 
-  private JoystickButton climberClimbNew = new JoystickButton(driver, RobotMap.Y_BUTTON);
+  private JoystickButton abort = new JoystickButton(driver, RobotMap.B_BUTTON);
+
+  // private JoystickButton climberClimbNew = new JoystickButton(driver,
+  // RobotMap.Y_BUTTON);
+  private JoystickButton climberClimb = new JoystickButton(driver, RobotMap.Y_BUTTON);
 
   private JoystickButton liftReset = new JoystickButton(driver, RobotMap.X_BUTTON);
+
+  private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
+  private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
 
   // Operator joystick controls
   private JoystickButton switchToLevel1 = new JoystickButton(operator, RobotMap.X_BUTTON);
@@ -112,6 +106,7 @@ public class OI {
   private JoystickButton bbSelectCenter = new JoystickButton(btnBoard, RobotMap.BTN_9);
   private JoystickButton bbSelectRight = new JoystickButton(btnBoard, RobotMap.BTN_10);
   private JoystickButton bbGoToSelection = new JoystickButton(btnBoard, RobotMap.BTN_11);
+  private JoystickButton bbAbort = new JoystickButton(btnBoard, RobotMap.BTN_12);
 
   /*
    * Andrew's new config private JoystickButton switchToCargo = new
@@ -138,15 +133,16 @@ public class OI {
   }
 
   public void init() {
-    // switchToCargo.whenPressed(new SwitchToCargo());
-    // switchToPanel.whenPressed(new SwitchToPanel());
-    cargoGrab.whenPressed(new CargoGrab());
-    cargoRelease.whenPressed(new CargoRelease());
+    switchToCargo.whenPressed(new SwitchToCargo());
+    switchToPanel.whenPressed(new SwitchToPanel());
+    abort.whenPressed(new Abort());
+    // cargoGrab.whenPressed(new CargoGrab());
+    // cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
     panelGrab.whenPressed(new PanelGrab());
     panelRelease.whenPressed(new PanelRelease());
-    // climberClimb.whileHeld(new ClimberClimb());
-    climberClimbNew.whenPressed(new ClimberClimbNew());
+    climberClimb.whenPressed(new ClimberClimb());
+    // climberClimbNew.whenPressed(new ClimberClimbNew());
     switchToLevel1.whenPressed(new SwitchToLevel1());
     switchToLevel2.whenPressed(new SwitchToLevel2());
     switchToLevel3.whenPressed(new SwitchToLevel3());
@@ -168,6 +164,7 @@ public class OI {
     bbSelectCenter.whenPressed(new SwitchToCenter());
     bbSelectRight.whenPressed(new SwitchToRight());
     bbGoToSelection.whenPressed(new LiftGoToLevel());
+    bbAbort.whenPressed(new Abort());
 
     /*
      * Andrew's new config switchToCargo.whenPressed(new SwitchToCargo());
@@ -198,7 +195,7 @@ public class OI {
   }
 
   public double getDriveX() {
-    double v = driver.getX(Hand.kRight);
+    double v = driver.getX(Hand.kLeft);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -207,7 +204,7 @@ public class OI {
    * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveY() {
-    double v = driver.getY(Hand.kRight);
+    double v = driver.getY(Hand.kLeft);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -216,7 +213,7 @@ public class OI {
    * driver.getY(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveR() {
-    double v = driver.getX(Hand.kLeft);
+    double v = driver.getX(Hand.kRight);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 

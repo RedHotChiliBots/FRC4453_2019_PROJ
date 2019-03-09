@@ -32,10 +32,11 @@ public class AutoRetrieveScore extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    addSequential(new ChassisAutoDriveVision());
     // addParallel(new ChassisDriveJerk());
     // addSequential(new LiftGoToLevel());
     // addSequential(new GrabberGrabRel());
-    addSequential(new ChassisAutoDriveVision());
+    //addSequential(new ChassisAutoDriveVision());
     // addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
   }
 }

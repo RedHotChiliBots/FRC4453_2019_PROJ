@@ -216,6 +216,10 @@ public class Chassis extends Subsystem {
 		drive.driveCartesian(x, y, r, ahrs.getYaw());
 	}
 
+	public void driveChassisLocal(double x, double y, double r) {
+		drive.driveCartesian(x, y, r);
+	}
+
 	/**
 	 * Teleop Drive assumes resetting "front" of robot based on Panel/Cargo Using
 	 * field oriented control may be preferred over resetting front
@@ -225,24 +229,24 @@ public class Chassis extends Subsystem {
 		double y = 0.0;
 		double r = 0.0;
 
-		// switch (Robot.grabber.getMode()) {
-		// case CARGO:
+		switch (Robot.grabber.getMode()) {
+		case CARGO:
+			x = Robot.oi.getDriveX();
+			y = Robot.oi.getDriveY();
+			break;
+
+		case PANEL:
+			x = -Robot.oi.getDriveX();
+			y = -Robot.oi.getDriveY();
+			break;
+
+		default:
+		}
+
 		// x = -Robot.oi.getDriveX();
 		// y = -Robot.oi.getDriveY();
-		// break;
-
-		// case PANEL:
-		// x = Robot.oi.getDriveX();
-		// y = Robot.oi.getDriveY();
-		// break;
-
-		// default:
-		// }
-
-		x = -Robot.oi.getDriveX();
-		y = -Robot.oi.getDriveY();
 		r = Robot.oi.getDriveR();
-		driveChassis(x, y, r);
+		driveChassisLocal(x, y, r);
 	}
 
 	// Vision stuff
@@ -362,12 +366,12 @@ public class Chassis extends Subsystem {
 	 * Drives chassis motors using vision PID loops. NOTE: please call
 	 * driveVisionStart() before using this.
 	 */
-	public void driveVision() {
+	public void driveVision(double fwdVel) {
 		if (Robot.grabber.getMode() == MODE.CARGO) {
-			drive.driveCartesian(-current_strafe, -0.0, -current_turn);
+			drive.driveCartesian(-current_strafe, -fwdVel, -current_turn);
 			// driveChassis(0.0, current_strafe,-current_turn);
 		} else {
-			drive.driveCartesian(current_strafe, 0.0, current_turn);
+			drive.driveCartesian(current_strafe, fwdVel, current_turn);
 			// driveChassis(0.0, -current_strafe, current_turn);
 		}
 	}

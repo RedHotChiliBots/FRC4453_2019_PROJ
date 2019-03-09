@@ -38,17 +38,20 @@ public class ClimberSolenoidSwitch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean result = false;
-    if (solenoid == Robot.climber.climbFront) {
-      result = Robot.chassis.ahrs.getRoll() > -Robot.prefs.getDouble("FStepAngleHigh", 18.0)
-          && Robot.chassis.ahrs.getRoll() < -Robot.prefs.getDouble("FStepAngleLow", 14.0);
-    } else {
-      result = Robot.chassis.ahrs.getRoll() > -Robot.prefs.getDouble("BStepAngleHigh", 2.0)
-          && Robot.chassis.ahrs.getRoll() < -Robot.prefs.getDouble("BStepAngleLow", -2.0);
-    }
-    if (result)
-      System.out.println("Finish ClimberSolenoidSwitch");
-    return result;
+    // boolean result = false;
+    // if (solenoid == Robot.climber.climbFront) {
+    // result = Robot.chassis.getPitch() > -Robot.prefs.getDouble("FStepAngleHigh",
+    // 18.0)
+    // && Robot.chassis.getPitch() < -Robot.prefs.getDouble("FStepAngleLow", 14.0);
+    // } else {
+    // result = Robot.chassis.getPitch() > -Robot.prefs.getDouble("BStepAngleHigh",
+    // 2.0)
+    // && Robot.chassis.getPitch() < -Robot.prefs.getDouble("BStepAngleLow", -2.0);
+    // }
+    // if (result)
+    // System.out.println("Finish ClimberSolenoidSwitch");
+    // return result;
+    return true;
   }
 
   // Called once after isFinished returns true

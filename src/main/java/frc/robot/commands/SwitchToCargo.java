@@ -36,6 +36,7 @@ public class SwitchToCargo extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("End SwitchToCargo");
   }
 
   // Called when another command which requires one or more of the same
