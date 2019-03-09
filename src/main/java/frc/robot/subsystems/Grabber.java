@@ -19,6 +19,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.ACTION;
 import frc.robot.RobotMap.DIR;
+import frc.robot.RobotMap.LEVEL;
 import frc.robot.RobotMap.MODE;
 import frc.robot.commands.CargoTeleop;
 
@@ -128,6 +129,9 @@ public class Grabber extends Subsystem {
 
   public void cargoRel() {
     double spd = -Robot.prefs.getDouble("CargoRelSpd", 0.5);
+    if (Robot.lift.level == LEVEL.SHIP) {
+      spd /= 2.0;
+    }
     switch (dir) {
     case LEFT:
       motorL.set(ControlMode.PercentOutput, spd);
