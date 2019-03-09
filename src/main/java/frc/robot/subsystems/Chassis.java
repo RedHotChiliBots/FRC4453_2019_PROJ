@@ -76,6 +76,18 @@ public class Chassis extends Subsystem {
 	private AnalogInput loPressureSensor = null;
 	private static final double PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
 
+	// Lift Distance sensor
+	AnalogInput panelDist = null;
+	AnalogInput cargoDist = null;
+	private final double DISTANCE_SENSOR_SCALE = 5.0 / 512;
+
+	// enum PinType {
+	// DigitalIO, PWM, AnalogIn, AnalogOut
+	// };
+
+	// public final int MAX_NAVX_MXP_ANALOGIN_PIN_NUMBER = 3;
+	// public final int NUM_ROBORIO_ONBOARD_ANALOGIN_PINS = 4;
+
 	// Define Encoder constants
 	// private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per
 	// wheel revs.
@@ -139,6 +151,8 @@ public class Chassis extends Subsystem {
 		// Initialize pressure sensors
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
 		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
+		panelDist = new AnalogInput(RobotMap.panelDistSensor);
+		cargoDist = new AnalogInput(RobotMap.cargoDistSensor);
 
 		cameras = NetworkTableInstance.getDefault().getTable("Vision");
 
@@ -183,6 +197,14 @@ public class Chassis extends Subsystem {
 		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
+	public double getPanelDist() {
+		return panelDist.getVoltage() / DISTANCE_SENSOR_SCALE;
+	}
+
+	public double getCargoDist() {
+		return cargoDist.getVoltage() / DISTANCE_SENSOR_SCALE;
+	}
+
 	/*****************************************************************
 	 * Drive routines
 	 *****************************************************************/
@@ -205,18 +227,18 @@ public class Chassis extends Subsystem {
 
 		// switch (Robot.grabber.getMode()) {
 		// case CARGO:
-		// 	x = -Robot.oi.getDriveX();
-		// 	y = -Robot.oi.getDriveY();
-		// 	break;
+		// x = -Robot.oi.getDriveX();
+		// y = -Robot.oi.getDriveY();
+		// break;
 
 		// case PANEL:
-		// 	x = Robot.oi.getDriveX();
-		// 	y = Robot.oi.getDriveY();
-		// 	break;
+		// x = Robot.oi.getDriveX();
+		// y = Robot.oi.getDriveY();
+		// break;
 
 		// default:
 		// }
-		 
+
 		x = -Robot.oi.getDriveX();
 		y = -Robot.oi.getDriveY();
 		r = Robot.oi.getDriveR();
@@ -343,10 +365,10 @@ public class Chassis extends Subsystem {
 	public void driveVision() {
 		if (Robot.grabber.getMode() == MODE.CARGO) {
 			drive.driveCartesian(-current_strafe, -0.0, -current_turn);
-			//driveChassis(0.0, current_strafe,-current_turn);
+			// driveChassis(0.0, current_strafe,-current_turn);
 		} else {
 			drive.driveCartesian(current_strafe, 0.0, current_turn);
-			//driveChassis(0.0, -current_strafe, current_turn);
+			// driveChassis(0.0, -current_strafe, current_turn);
 		}
 	}
 
@@ -409,4 +431,21 @@ public class Chassis extends Subsystem {
 	public double getYaw() {
 		return ahrs.getYaw();
 	}
+
+	// enum PinType {
+	// DigitalIO, PWM, AnalogIn, AnalogOut
+	// };
+
+	// public final int MAX_NAVX_MXP_ANALOGIN_PIN_NUMBER = 3;
+	// public final int NUM_ROBORIO_ONBOARD_ANALOGIN_PINS = 4;
+
+	// public void getChannelFromPin(PinType type, int io_pin_number) {
+	// int roborio_channel = 0;
+	// if (io_pin_number > MAX_NAVX_MXP_ANALOGIN_PIN_NUMBER) {
+	// throw new IllegalArgumentException("Error: Invalid navX-MXP Analog input Pin
+	// #");
+	// }
+	// roborio_channel = io_pin_number + NUM_ROBORIO_ONBOARD_ANALOGIN_PINS;
+	// }
+
 }

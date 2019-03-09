@@ -174,6 +174,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Lift Current", Robot.lift.getMotorCurrent());
       SmartDashboard.putNumber("Lift Position", Robot.lift.motor.getSelectedSensorPosition());
       SmartDashboard.putNumber("Lift Velocity", Robot.lift.motor.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("Panel Dist Sensor", Robot.chassis.getPanelDist());
+      SmartDashboard.putNumber("Cargo Dist Sensor", Robot.chassis.getCargoDist());
       i++;
       break;
 
@@ -197,7 +199,7 @@ public class Robot extends TimedRobot {
       i++;
       break;
 
-      case 4:
+    case 4:
       i = 0;
     }
   }

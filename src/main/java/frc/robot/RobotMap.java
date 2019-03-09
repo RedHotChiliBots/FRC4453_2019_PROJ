@@ -72,6 +72,12 @@ public class RobotMap {
   public static final int ClimbFrontDistanceSensor = 2;
   public static final int ClimbBackDistanceSensor = 3;
 
+  // Lift DIstance Sensors
+  public static final int panelDistSensor = 4;
+  public static final int cargoDistSensor = 6;
+
+  public static final double distFromWall = 10;
+
   // ============= OI CONTROLLERS =============
 
   // X-Box Controller Definitions
