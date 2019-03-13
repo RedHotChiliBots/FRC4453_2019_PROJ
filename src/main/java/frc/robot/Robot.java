@@ -189,6 +189,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putBoolean("Back Climb", Robot.climber.isBackClimb());
       SmartDashboard.putBoolean("Front Step", Robot.climber.isFrontStep());
       SmartDashboard.putBoolean("Back Step", Robot.climber.isBackStep());
+      SmartDashboard.putBoolean("isCPSensor", Robot.chassis.isCPSensor());
       i++;
       break;
 
@@ -240,6 +241,8 @@ public class Robot extends TimedRobot {
       prefs.putDouble("GrabberMotorMaxCurrent", 15);
     if (!prefs.containsKey("GrabberMotorMinCurrent"))
       prefs.putDouble("GrabberMotorMinCurrent", 5);
+    if (!prefs.containsKey("Dist From Wall"))
+      prefs.putDouble("Dist From Wall", 10);
 
     if (prefs.containsKey("BackStepAngleHigh"))
       prefs.remove("BackStepAngleHigh");

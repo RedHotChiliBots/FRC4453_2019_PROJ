@@ -10,37 +10,50 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class isGrabberDist extends Command {
-  public isGrabberDist() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ChassisDriveBackTime extends Command {
+
+  double sec;
+
+  public ChassisDriveBackTime(double sec) {
+    System.out.println("Drive Dist constructed.");
+
+    requires(Robot.chassis);
+
+    this.sec = sec;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    setTimeout(sec); // set 4 second timeout
+    System.out.println("Drive Dist initialize.");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    // System.out.println("Drive execute.");
+    Robot.chassis.driveChassisLocal(0.0, 0.3, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.chassis.isCPSensor();
+    return isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    System.out.println("Drive end.");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    System.out.println("Drive interrupted.");
   }
 }

@@ -8,14 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-//import frc.robot.Robot;
-//import frc.robot.RobotMap.LEVEL;
 
-public class AutoRetrieveScore extends CommandGroup {
+public class DistToLiftGoToLevel extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoRetrieveScore() {
+  public DistToLiftGoToLevel() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -32,10 +30,7 @@ public class AutoRetrieveScore extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addParallel(new ChassisAutoDriveVision());
-    // addSequential(new DistToLiftGoToLevel());
-    // addSequential(new GrabberGrabRel());
-    // addSequential(new ChassisDriveBackTime(1));
-    // addSequential(new LiftGoToLevel(LEVEL.LEVEL1));
+    addSequential(new isGrabberDist());
+    addSequential(new LiftGoToLevel());
   }
 }

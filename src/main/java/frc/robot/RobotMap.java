@@ -76,7 +76,7 @@ public class RobotMap {
   public static final int panelDistSensor = 4;
   public static final int cargoDistSensor = 6;
 
-  public static final double distFromWall = 10;
+  // public static final double distFromWall = 10;
 
   // ============= OI CONTROLLERS =============
 
