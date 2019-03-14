@@ -74,12 +74,10 @@ public class Chassis extends Subsystem {
 	// Hi & Lo Pressure Sensors
 	private AnalogInput hiPressureSensor = null;
 	private AnalogInput loPressureSensor = null;
-	private static final double PRESSURE_SENSOR_INPUTVOLTAGE = 5.0;
 
 	// Lift Distance sensor
 	AnalogInput panelDist = null;
 	AnalogInput cargoDist = null;
-	private final double DISTANCE_SENSOR_SCALE = 5.0 / 512;
 
 	// enum PinType {
 	// DigitalIO, PWM, AnalogIn, AnalogOut
@@ -186,23 +184,30 @@ public class Chassis extends Subsystem {
 		setDefaultCommand(new ChassisDriveTeleop());
 	}
 
+	private static final double SENSOR_INPUTVOLTAGE = 5.0;
+	private final double DISTANCE_SENSOR_SCALE = 5.0 / 1024;
+
 	/**
 	 * Get Hi and Lo pressure sensors in PSI
 	 */
 	public double getLoPressure() {
-		return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
+		return 250.0 * (loPressureSensor.getVoltage() / SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
 	public double getHiPressure() {
-		return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
+		return 250.0 * (hiPressureSensor.getVoltage() / SENSOR_INPUTVOLTAGE) - 25.0;
 	}
 
+	/**
+	 * Get Panel and Cargo distance sensor in inches
+	 */
+	// [5*(Vm/Vi)=Ri]
 	public double getPanelDist() {
-		return panelDist.getVoltage() / DISTANCE_SENSOR_SCALE;
+		return (panelDist.getVoltage() / DISTANCE_SENSOR_SCALE) * 5.0 / 25.4;
 	}
 
 	public double getCargoDist() {
-		return cargoDist.getVoltage() / DISTANCE_SENSOR_SCALE;
+		return (cargoDist.getVoltage() / DISTANCE_SENSOR_SCALE) * 5.0 / 25.4;
 	}
 
 	/*****************************************************************
