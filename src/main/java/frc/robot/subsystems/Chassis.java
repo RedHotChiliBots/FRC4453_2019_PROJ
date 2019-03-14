@@ -76,8 +76,8 @@ public class Chassis extends Subsystem {
 	private AnalogInput loPressureSensor = null;
 
 	// Lift Distance sensor
-	AnalogInput panelDist = null;
-	AnalogInput cargoDist = null;
+	private AnalogInput panelDist = null;
+	private AnalogInput cargoDist = null;
 
 	// enum PinType {
 	// DigitalIO, PWM, AnalogIn, AnalogOut
@@ -184,7 +184,7 @@ public class Chassis extends Subsystem {
 		setDefaultCommand(new ChassisDriveTeleop());
 	}
 
-	private static final double SENSOR_INPUTVOLTAGE = 5.0;
+	private final double SENSOR_INPUTVOLTAGE = 5.0;
 	private final double DISTANCE_SENSOR_SCALE = 5.0 / 1024;
 
 	/**
