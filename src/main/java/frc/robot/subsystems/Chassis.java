@@ -441,6 +441,14 @@ public class Chassis extends Subsystem {
 		return ahrs.getYaw();
 	}
 
+	public boolean isCPSensor() {
+		if (Robot.grabber.mode == MODE.CARGO) {
+			return getCargoDist() < Robot.prefs.getDouble("Dist From Wall", 10);
+		} else {
+			return getPanelDist() < Robot.prefs.getDouble("Dist From Wall", 10);
+		}
+	}
+
 	// enum PinType {
 	// DigitalIO, PWM, AnalogIn, AnalogOut
 	// };
