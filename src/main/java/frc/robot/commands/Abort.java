@@ -12,7 +12,11 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
 /**
- * Add your docs here.
+ * Abort - Interupt all commands
+ * 
+ * Stops all running commands and returns each subsystem to their default
+ * command and resets any subsystems to starting configuration.
+ * 
  */
 public class Abort extends InstantCommand {
   /**

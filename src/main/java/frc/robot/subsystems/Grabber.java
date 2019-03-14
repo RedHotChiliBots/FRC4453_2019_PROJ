@@ -161,7 +161,7 @@ public class Grabber extends Subsystem {
   }
 
   /*****************************************************************
-   * Panel/Cargo & Lift routines
+   * Panel/Cargo and Lift routines
    *****************************************************************/
 
   /*
