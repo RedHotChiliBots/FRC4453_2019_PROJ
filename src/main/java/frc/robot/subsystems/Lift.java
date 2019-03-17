@@ -92,23 +92,15 @@ public class Lift extends Subsystem {
     // Configure lift motor for motion magic
     // motor = new WPI_TalonSRX(RobotMap.liftMotor);
     motor = new CANSparkMaxSendable(RobotMap.liftMotor, CANSparkMax.MotorType.kBrushless);
+    motor.restoreFactoryDefaults();
+    motor.stopMotor();
+    motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    motor.setInverted(false);
+
     pid = motor.getPIDController();
     encoder = motor.getEncoder();
     fLimit = motor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     rLimit = motor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
-
-    motor.restoreFactoryDefaults();
-
-    /* Configure output and sensor direction */
-    motor.setInverted(false);
-    // motor.setSensorPhase(true);
-
-    //motor.set(ControlMode.PercentOutput, 0.0);
-    //motor.setSubsystem("UpperLift");
-    //motor.configFactoryDefault();
-    //motor.setNeutralMode(NeutralMode.Brake);
-    motor.stopMotor();
-    motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
     initMotorConfig();
 
@@ -116,13 +108,12 @@ public class Lift extends Subsystem {
     level = LEVEL.LEVEL1;
 
     // Add Sendable data to dashboard
+    motor.setSubsystem("UpperLift");
     SmartDashboard.putData("Lift Motor", motor);
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 
   /**
