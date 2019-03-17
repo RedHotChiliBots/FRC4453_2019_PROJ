@@ -16,6 +16,7 @@ public class LiftInitMotor extends Command {
   // private WPI_TalonSRX motor = null;
   private double pos = 0.0;
   private double err = 0.0;
+  private double tgt = 0.0;
 
   public LiftInitMotor() {
     requires(Robot.lift);
@@ -32,19 +33,22 @@ public class LiftInitMotor extends Command {
     SmartDashboard.putNumber("Lift Pos Error", pos);
 
     Robot.lift.resetEncoder(pos); // reset both encoder positions, so we can monitor motor2 position
-    Robot.lift.setTgtPosition(0.0);
+//    Robot.lift.setTgtPosition(tgt);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lift.motor.feed();
+//    Robot.lift.motor.feed();
+    Robot.lift.setTgtPosition(tgt);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math.abs(Robot.lift.motor.getSelectedSensorPosition() - Robot.lift.motor.getClosedLoopTarget()) < err);
+    //return (Math.abs(Robot.lift.motor.getSelectedSensorPosition() - Robot.lift.motor.getClosedLoopTarget()) < err);
+    //TODO Check position value - not ticks on SparkMax
+    return (Math.abs(Robot.lift.encoder.getPosition() - tgt) < err);
   }
 
   // Called once after isFinished returns true

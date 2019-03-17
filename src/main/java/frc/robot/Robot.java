@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -171,12 +169,16 @@ public class Robot extends TimedRobot {
       break;
 
     case 1:
-      if (Robot.lift.motor.getControlMode() == ControlMode.Position) {
-        SmartDashboard.putNumber("Lift Target", Robot.lift.motor.getClosedLoopTarget());
-      }
+      //if (Robot.lift.motor.getControlMode() == ControlMode.Position) {
+      //  SmartDashboard.putNumber("Lift Target", Robot.lift.motor.getClosedLoopTarget());
+      //}
+      SmartDashboard.putNumber("Lift Target", Robot.lift.getTgtPosition());
       SmartDashboard.putNumber("Lift Current", Robot.lift.getMotorCurrent());
-      SmartDashboard.putNumber("Lift Position", Robot.lift.motor.getSelectedSensorPosition());
-      SmartDashboard.putNumber("Lift Velocity", Robot.lift.motor.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("Lift Temp", Robot.lift.getMotorTemp());
+      // SmartDashboard.putNumber("Lift Position", Robot.lift.motor.getSelectedSensorPosition());
+      // SmartDashboard.putNumber("Lift Velocity", Robot.lift.motor.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("Lift Position", Robot.lift.encoder.getPosition());
+      SmartDashboard.putNumber("Lift Velocity", Robot.lift.encoder.getVelocity());
       SmartDashboard.putNumber("Panel Dist Sensor", Robot.chassis.getPanelDist());
       SmartDashboard.putNumber("Cargo Dist Sensor", Robot.chassis.getCargoDist());
       i++;
@@ -215,6 +217,8 @@ public class Robot extends TimedRobot {
       prefs.putDouble("CurrentThreshold", 9.0);
     if (!prefs.containsKey("LiftPosError"))
       prefs.putDouble("LiftPosError", 5.0);
+    if (!prefs.containsKey("LiftDownSpd"))
+      prefs.putDouble("LiftDownSpd", 0.25);
     if (!prefs.containsKey("FStepDistHigh"))
       prefs.putDouble("FStepDistHigh", 10.0);
     if (!prefs.containsKey("BStepDistHigh"))

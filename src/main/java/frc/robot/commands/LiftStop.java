@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
@@ -27,7 +25,8 @@ public class LiftStop extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    Robot.lift.motor.set(ControlMode.PercentOutput, 0.0);
+    //Robot.lift.motor.set(ControlMode.PercentOutput, 0.0);
+    Robot.lift.stopMotor();
   }
 
 }

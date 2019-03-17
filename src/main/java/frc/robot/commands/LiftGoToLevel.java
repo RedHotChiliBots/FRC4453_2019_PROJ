@@ -47,9 +47,11 @@ public class LiftGoToLevel extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Math
-        .abs(Robot.lift.motor.getSelectedSensorPosition() - Robot.lift.motor.getClosedLoopTarget()) < Robot.prefs
-            .getDouble("LiftPosError", 5.0));
+    //return (Math
+    //    .abs(Robot.lift.motor.getSelectedSensorPosition() - Robot.lift.motor.getClosedLoopTarget()) < Robot.prefs
+    //        .getDouble("LiftPosError", 5.0));
+    return (Math.abs(Robot.lift.encoder.getPosition() - Robot.lift.getTgtPosition()) < 
+        Robot.prefs.getDouble("LiftPosError", 5.0));
   }
 
   // Called once after isFinished returns true

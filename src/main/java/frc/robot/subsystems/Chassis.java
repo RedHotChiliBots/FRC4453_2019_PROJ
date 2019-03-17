@@ -7,11 +7,14 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+//import com.ctre.phoenix.motorcontrol.NeutralMode;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import frc.robot.CANSparkMaxSendable;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -54,10 +57,16 @@ import frc.robot.commands.ChassisDriveTeleop;
 public class Chassis extends Subsystem {
 
 	// Wheels and Drive type
-	private WPI_TalonSRX frontleft = null;
-	private WPI_TalonSRX frontright = null;
-	private WPI_TalonSRX backleft = null;
-	private WPI_TalonSRX backright = null;
+	// private WPI_TalonSRX frontleft = null;
+	// private WPI_TalonSRX frontright = null;
+	// private WPI_TalonSRX backleft = null;
+	// private WPI_TalonSRX backright = null;
+
+	private CANSparkMaxSendable frontleft = null;
+	private CANSparkMaxSendable frontright = null;
+	private CANSparkMaxSendable backleft = null;
+	private CANSparkMaxSendable backright = null;
+
 	private MecanumDrive drive = null;
 
 	// "jerk" detection
@@ -99,39 +108,63 @@ public class Chassis extends Subsystem {
 	public Chassis() {
 		super("Chassis");
 		// Initialize drive train for Mechanam
-		frontleft = new WPI_TalonSRX(RobotMap.frontLeftMotor);
-		frontright = new WPI_TalonSRX(RobotMap.frontRightMotor);
-		backleft = new WPI_TalonSRX(RobotMap.backLeftMotor);
-		backright = new WPI_TalonSRX(RobotMap.backRightMotor);
+		frontleft = new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
+		frontright =  new CANSparkMaxSendable(RobotMap.frontLeftMotor,CANSparkMax.MotorType.kBrushless);
+		backleft =  new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
+		backright = new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
 
-		frontleft.configFactoryDefault();
-		frontleft.set(ControlMode.PercentOutput, 0.0);
-		frontleft.setNeutralMode(NeutralMode.Brake);
-		frontleft.setSubsystem("Chassis");
-		frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-				RobotMap.kTimeoutMs); // Configuration Timeout
-		frontright.configFactoryDefault();
-		frontright.set(ControlMode.PercentOutput, 0.0);
-		frontright.setNeutralMode(NeutralMode.Brake);
-		frontright.setSubsystem("Csassis");
-		frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-				RobotMap.kTimeoutMs); // Configuration Timeout
-		backleft.configFactoryDefault();
-		backleft.set(ControlMode.PercentOutput, 0.0);
-		backleft.setNeutralMode(NeutralMode.Brake);
-		backleft.setSubsystem("Chassis");
-		backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-				RobotMap.kTimeoutMs); // Configuration Timeout, 0, 100);
-		backright.configFactoryDefault();
-		backright.set(ControlMode.PercentOutput, 0.0);
-		backright.setNeutralMode(NeutralMode.Brake);
-		backright.setSubsystem("Chassis");
-		backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-				RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-				RobotMap.kTimeoutMs); // Configuration Timeout
+		//frontleft.configFactoryDefault();
+		//frontleft.set(ControlMode.PercentOutput, 0.0);
+		//frontleft.setNeutralMode(NeutralMode.Brake);
+		//frontleft.setSubsystem("Chassis");
+		//frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+		//		RobotMap.kTimeoutMs); // Configuration Timeout
+
+		frontleft.restoreFactoryDefaults();
+		frontleft.stopMotor();
+		frontleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		frontleft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+		//frontright.configFactoryDefault();
+		//frontright.set(ControlMode.PercentOutput, 0.0);
+		//frontright.setNeutralMode(NeutralMode.Brake);
+		//frontright.setSubsystem("Csassis");
+		//frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+		//		RobotMap.kTimeoutMs); // Configuration Timeout
+
+		frontright.restoreFactoryDefaults();
+		frontright.stopMotor();
+		frontright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		frontright.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+		//backleft.configFactoryDefault();
+		//backleft.set(ControlMode.PercentOutput, 0.0);
+		//backleft.setNeutralMode(NeutralMode.Brake);
+		//backleft.setSubsystem("Chassis");
+		//backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+		//		RobotMap.kTimeoutMs); // Configuration Timeout, 0, 100);
+
+		backleft.restoreFactoryDefaults();
+		backleft.stopMotor();
+		backleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		backleft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+		//backright.configFactoryDefault();
+		//backright.set(ControlMode.PercentOutput, 0.0);
+		//backright.setNeutralMode(NeutralMode.Brake);
+		//backright.setSubsystem("Chassis");
+		//backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
+		//		RobotMap.kTimeoutMs); // Configuration Timeout
+
+		backright.restoreFactoryDefaults();
+		backright.stopMotor();
+		backright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		backright.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
 		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
 
 		// Initialize AHRS board
