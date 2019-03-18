@@ -7,20 +7,20 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANDigitalInput;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.CANPIDController.AccelStrategy;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CANSparkMaxSendable;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.LEVEL;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
-import com.revrobotics.CANPIDController.AccelStrategy;
-import com.revrobotics.CANDigitalInput;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 
 /**
  * Add your docs here.

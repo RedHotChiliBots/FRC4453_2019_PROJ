@@ -169,14 +169,17 @@ public class Robot extends TimedRobot {
       break;
 
     case 1:
-      //if (Robot.lift.motor.getControlMode() == ControlMode.Position) {
-      //  SmartDashboard.putNumber("Lift Target", Robot.lift.motor.getClosedLoopTarget());
-      //}
+      // if (Robot.lift.motor.getControlMode() == ControlMode.Position) {
+      // SmartDashboard.putNumber("Lift Target",
+      // Robot.lift.motor.getClosedLoopTarget());
+      // }
       SmartDashboard.putNumber("Lift Target", Robot.lift.getTgtPosition());
       SmartDashboard.putNumber("Lift Current", Robot.lift.getMotorCurrent());
       SmartDashboard.putNumber("Lift Temp", Robot.lift.getMotorTemp());
-      // SmartDashboard.putNumber("Lift Position", Robot.lift.motor.getSelectedSensorPosition());
-      // SmartDashboard.putNumber("Lift Velocity", Robot.lift.motor.getSelectedSensorVelocity());
+      // SmartDashboard.putNumber("Lift Position",
+      // Robot.lift.motor.getSelectedSensorPosition());
+      // SmartDashboard.putNumber("Lift Velocity",
+      // Robot.lift.motor.getSelectedSensorVelocity());
       SmartDashboard.putNumber("Lift Position", Robot.lift.encoder.getPosition());
       SmartDashboard.putNumber("Lift Velocity", Robot.lift.encoder.getVelocity());
       SmartDashboard.putNumber("Panel Dist Sensor", Robot.chassis.getPanelDist());
@@ -203,7 +206,6 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Grab L Current", Robot.grabber.getMotorLCurrent());
       SmartDashboard.putNumber("Grab R Current", Robot.grabber.getMotorRCurrent());
       SmartDashboard.putBoolean("Lift Rev Limit", Robot.lift.rLimit.get());
-      SmartDashboard.putBoolean("Lift For Limit", Robot.lift.fLimit.get());
       i++;
       break;
 
