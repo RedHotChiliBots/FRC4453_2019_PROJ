@@ -76,6 +76,10 @@ public class RobotMap {
   public static final int panelDistSensor = 4;
   public static final int cargoDistSensor = 6;
 
+  // Servos - pwm slots
+  public static final int cargoServo = 0;
+  public static final int panelServo = 1;
+  
   // public static final double distFromWall = 10;
 
   // ============= OI CONTROLLERS =============
@@ -112,7 +116,9 @@ public class RobotMap {
   public final static double kNeutralDeadband = 0.001;
   public final static int PID_PRIMARY = 0;
   public final static int SLOT_0 = 0;
-  public final static int kSlot_Distance = SLOT_0;
+  public final static int SLOT_1 = 1;
+  public final static int kSlot_Position = SLOT_0;
+  public final static int kSlot_Velocity = SLOT_1;
 
   public static enum DIR {
     LEFT, RIGHT, CENTER
@@ -134,10 +140,10 @@ public class RobotMap {
   public final static Map<LEVEL, Double> height = new HashMap<LEVEL, Double>() {
     private static final long serialVersionUID = 1L;
     {
-      put(LEVEL.LEVEL3, 58.0); // Score Panel & Cargo in Ship & Rocket
-      put(LEVEL.LEVEL2, 30.0); // Score Panel & Cargo in Ship & Rocket
-      put(LEVEL.LOADINGSTATION, 18.0); // Load Cargo
-      put(LEVEL.SHIP, 12.5); // Score Cargo in Ship
+      put(LEVEL.LEVEL3, 56.0); // Score Panel & Cargo in Ship & Rocket
+      put(LEVEL.LEVEL2, 28.0); // Score Panel & Cargo in Ship & Rocket
+      put(LEVEL.LOADINGSTATION, 16.0); // Load Cargo
+      put(LEVEL.SHIP, 10.5); // Score Cargo in Ship
       put(LEVEL.LEVEL1, 0.0); // Load Panel; Score Panel in Ship & Rocket
     }
   };

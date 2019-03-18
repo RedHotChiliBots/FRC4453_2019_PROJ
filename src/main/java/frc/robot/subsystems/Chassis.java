@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Servo;
+
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.MODE;
@@ -88,23 +90,13 @@ public class Chassis extends Subsystem {
 	private AnalogInput panelDist = null;
 	private AnalogInput cargoDist = null;
 
-	// enum PinType {
-	// DigitalIO, PWM, AnalogIn, AnalogOut
-	// };
+	// Camera servos
+	private Servo cargoServo = null;
+	private Servo panelServo = null;
 
-	// public final int MAX_NAVX_MXP_ANALOGIN_PIN_NUMBER = 3;
-	// public final int NUM_ROBORIO_ONBOARD_ANALOGIN_PINS = 4;
-
-	// Define Encoder constants
-	// private static final double CHASSIS_GEAR_RATIO = 1.0; // Encoder revs per
-	// wheel revs.
-	// private static final double CHASSIS_ENCODER_TICKS_PER_REVOLUTION = 4096; //
-	// Quad encoder, counts per rev
-	// private static final double CHASSIS_WHEEL_DIAMETER = 8.0; // inches
-	// private static final double CHASSIS_TICKS_PER_INCH = (CHASSIS_GEAR_RATIO *
-	// CHASSIS_ENCODER_TICKS_PER_REVOLUTION)
-	// / (CHASSIS_WHEEL_DIAMETER * Math.PI);
-
+	private double cargoServoPos = 0.0;
+	private double panelServoPos = 0.0;
+	
 	public Chassis() {
 		super("Chassis");
 		// Initialize drive train for Mechanam
@@ -113,56 +105,24 @@ public class Chassis extends Subsystem {
 		backleft =  new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
 		backright = new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
 
-		//frontleft.configFactoryDefault();
-		//frontleft.set(ControlMode.PercentOutput, 0.0);
-		//frontleft.setNeutralMode(NeutralMode.Brake);
-		//frontleft.setSubsystem("Chassis");
-		//frontleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-		//		RobotMap.kTimeoutMs); // Configuration Timeout
-
 		frontleft.restoreFactoryDefaults();
 		frontleft.stopMotor();
-		frontleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		frontleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
 		frontleft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
-		//frontright.configFactoryDefault();
-		//frontright.set(ControlMode.PercentOutput, 0.0);
-		//frontright.setNeutralMode(NeutralMode.Brake);
-		//frontright.setSubsystem("Csassis");
-		//frontright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-		//		RobotMap.kTimeoutMs); // Configuration Timeout
 
 		frontright.restoreFactoryDefaults();
 		frontright.stopMotor();
-		frontright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		frontright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
 		frontright.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
-		//backleft.configFactoryDefault();
-		//backleft.set(ControlMode.PercentOutput, 0.0);
-		//backleft.setNeutralMode(NeutralMode.Brake);
-		//backleft.setSubsystem("Chassis");
-		//backleft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-		//		RobotMap.kTimeoutMs); // Configuration Timeout, 0, 100);
 
 		backleft.restoreFactoryDefaults();
 		backleft.stopMotor();
-		backleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		backleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
 		backleft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
-		//backright.configFactoryDefault();
-		//backright.set(ControlMode.PercentOutput, 0.0);
-		//backright.setNeutralMode(NeutralMode.Brake);
-		//backright.setSubsystem("Chassis");
-		//backright.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
-		//		RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-		//		RobotMap.kTimeoutMs); // Configuration Timeout
 
 		backright.restoreFactoryDefaults();
 		backright.stopMotor();
-		backright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Distance);
+		backright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
 		backright.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
 		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
@@ -182,9 +142,19 @@ public class Chassis extends Subsystem {
 		// Initialize pressure sensors
 		hiPressureSensor = new AnalogInput(RobotMap.highPressureSensor);
 		loPressureSensor = new AnalogInput(RobotMap.lowPressureSensor);
+
+		// Initialize distance sensors
 		panelDist = new AnalogInput(RobotMap.panelDistSensor);
 		cargoDist = new AnalogInput(RobotMap.cargoDistSensor);
 
+		// Initialize camera servos
+		cargoServo = new Servo(RobotMap.cargoServo);
+		panelServo = new Servo(RobotMap.panelServo);
+		// Initialize camera position to forward looking (0.0 deg)
+		setCargoServo(0.0);
+		setPanelServo(0.0);
+		
+		// Initialize network table - cameras
 		cameras = NetworkTableInstance.getDefault().getTable("Vision");
 
 		// Setup vision PID loops
@@ -203,6 +173,12 @@ public class Chassis extends Subsystem {
 		pid_turn.enable();
 
 		// Add Sendable data to dashboard
+
+		frontleft.setSubsystem("Chassis");
+		backleft.setSubsystem("Chassis");
+		frontright.setSubsystem("Chassis");
+		backright.setSubsystem("Chassis");
+
 		SmartDashboard.putData("Front Left", frontleft);
 		SmartDashboard.putData("Front Right", frontright);
 		SmartDashboard.putData("Back Left", backleft);
@@ -241,6 +217,32 @@ public class Chassis extends Subsystem {
 
 	public double getCargoDist() {
 		return (cargoDist.getVoltage() / DISTANCE_SENSOR_SCALE) * 5.0 / 25.4;
+	}
+
+	/**
+	 * Set / get servo position
+	 *  servo angle is 0-170deg
+	 *  cmd angle is +-85deg
+	 */
+	private final double calibOffset = 0.0;	// add/sub to calibrate camera at zero degrees 
+	private final double angleOffset = 85.0 + calibOffset;
+	
+	public void setCargoServo(double angle) {
+		this.cargoServoPos = angle;
+		cargoServo.setAngle(angle+angleOffset);
+	}
+
+	public double getCargoServo() {
+		return this.cargoServoPos-angleOffset;
+	}
+
+	public void setPanelServo(double angle) {
+		this.panelServoPos = angle;
+		panelServo.setAngle(angle+angleOffset);
+	}
+
+	public double getPanelServo() {
+		return this.panelServoPos-angleOffset;
 	}
 
 	/*****************************************************************
@@ -426,6 +428,27 @@ public class Chassis extends Subsystem {
 	}
 
 	/**
+	 * Tracks target by reading angle from vision code 
+	 * via network tables and commands serve to angle
+	 */
+	public void trackTargets() {
+		double angle = 0.0;
+		if (cameras.getSubTable("Front").getEntry("Lock").getBoolean(false)) {
+			angle = getCargoServo() + cameras.getSubTable("Front").getEntry("ServoError").getNumber(0.0).doubleValue();
+		} else {
+			angle = 0.0;
+		}
+		setCargoServo(angle);
+
+		if (cameras.getSubTable("Front").getEntry("Lock").getBoolean(false)) {
+			angle = getCargoServo() + cameras.getSubTable("Rear").getEntry("ServoError").getNumber(0.0).doubleValue();
+		} else {
+			angle = 0.0;
+		}
+		setPanelServo(angle);
+	}
+
+	/**
 	 * Detect "jerk" in direction of travel; Ignore being hit from side or behind
 	 * 
 	 */
@@ -448,7 +471,6 @@ public class Chassis extends Subsystem {
 				collisionDetected = true;
 			}
 		}
-
 	}
 
 	public boolean isCollisionDetected() {
@@ -481,21 +503,4 @@ public class Chassis extends Subsystem {
 			return getPanelDist() < Robot.prefs.getDouble("Dist From Wall", 10);
 		}
 	}
-
-	// enum PinType {
-	// DigitalIO, PWM, AnalogIn, AnalogOut
-	// };
-
-	// public final int MAX_NAVX_MXP_ANALOGIN_PIN_NUMBER = 3;
-	// public final int NUM_ROBORIO_ONBOARD_ANALOGIN_PINS = 4;
-
-	// public void getChannelFromPin(PinType type, int io_pin_number) {
-	// int roborio_channel = 0;
-	// if (io_pin_number > MAX_NAVX_MXP_ANALOGIN_PIN_NUMBER) {
-	// throw new IllegalArgumentException("Error: Invalid navX-MXP Analog input Pin
-	// #");
-	// }
-	// roborio_channel = io_pin_number + NUM_ROBORIO_ONBOARD_ANALOGIN_PINS;
-	// }
-
 }

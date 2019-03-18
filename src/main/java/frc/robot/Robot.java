@@ -202,6 +202,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putData("Climb Back", Robot.climber.climbBack);
       SmartDashboard.putNumber("Grab L Current", Robot.grabber.getMotorLCurrent());
       SmartDashboard.putNumber("Grab R Current", Robot.grabber.getMotorRCurrent());
+      SmartDashboard.putBoolean("Lift Rev Limit", Robot.lift.rLimit.get());
+      SmartDashboard.putBoolean("Lift For Limit", Robot.lift.fLimit.get());
       i++;
       break;
 

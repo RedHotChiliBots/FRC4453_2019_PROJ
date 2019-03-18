@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class LiftStartup extends CommandGroup {
   /**
@@ -33,6 +34,7 @@ public class LiftStartup extends CommandGroup {
     System.out.println("Starting LiftStartup");
 
     addSequential(new LiftResetMotor());
+    addSequential(new WaitCommand(0.5));
     addSequential(new LiftInitMotor());
 
     System.out.println("Ending LiftStartup");
