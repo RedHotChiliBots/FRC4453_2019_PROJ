@@ -22,22 +22,15 @@ import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 
-//import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.motorcontrol.Faults;
-//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-//import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 /**
  * Add your docs here.
  */
 public class Lift extends Subsystem {
 
   // Define lift motor
-  // public WPI_TalonSRX motor = null;
   public CANSparkMaxSendable motor = null;
   public CANPIDController pid = null;
   public CANEncoder encoder = null;
-  public CANDigitalInput fLimit = null;
   public CANDigitalInput rLimit = null;
 
   // SmartMax does not return target position
@@ -59,33 +52,13 @@ public class Lift extends Subsystem {
   private static final double REV_PER_INCH_GEARBOX = 1.0 / INCHES_PER_REV_GEARBOX;
   private static final double REV_PER_INCH_MOTOR = 1.0 / INCHES_PER_REV_MOTOR;
 
-  /*
-   * private static final int COUNTS_PER_REV_MOTOR = 1; private static final int
-   * GEAR_RATIO = 4; private static final int COUNTS_PER_REV_GEARBOX =
-   * COUNTS_PER_REV_MOTOR * GEAR_RATIO; // Diameter is barrel plus half of rope
-   * width private static final double BARREL_DIA = 1.5 + (0.125 / 2.0); private
-   * static final double INCHES_PER_REV = Math.PI * BARREL_DIA; public static
-   * final int TICKS_PER_INCH = (int) (COUNTS_PER_REV_GEARBOX / INCHES_PER_REV);
-   * // Lead screw 1 in/rev
-   * 
-   * // Calculate max velocity in tics / 100ms for 600rpm private static final
-   * double RISE = 78 - 19; // inches private static final double TIME = 1.0; //
-   * seconds private static final double SPEED = RISE / TIME; // inches per second
-   * private static final double RPM = (SPEED / INCHES_PER_REV) * 60.0; // 28
-   * revs @ 10revs/sec or 600revs/min private static final double TICKS_PER_MIN =
-   * RPM * COUNTS_PER_REV_GEARBOX; private static final int TICKS_PER_100MS =
-   * (int) (TICKS_PER_MIN / 60 / 10); // 60sec/min; 10 100ms/sec private static
-   * final int TICKS_PER_100MS_PER_SEC = (int) (TICKS_PER_100MS * 4.0); // max
-   * speed in .25 sec
-   */
   /**
    * Add your docs here.
    */
   public Lift() {
     super("Lift");
 
-    // Configure lift motor for motion magic
-    // motor = new WPI_TalonSRX(RobotMap.liftMotor);
+    // Configure lift motor for smart motion
     motor = new CANSparkMaxSendable(RobotMap.liftMotor, CANSparkMax.MotorType.kBrushless);
     motor.restoreFactoryDefaults();
     motor.stopMotor();
@@ -94,10 +67,8 @@ public class Lift extends Subsystem {
 
     pid = motor.getPIDController();
     encoder = motor.getEncoder();
-    fLimit = motor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     rLimit = motor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     rLimit.enableLimitSwitch(true);
-    fLimit.enableLimitSwitch(false);
 
     initMotorConfig();
 
@@ -144,33 +115,19 @@ public class Lift extends Subsystem {
     motor.stopMotor();
   }
 
-  // public void feedMotor() {
-  // motor.feed();
-  // }
-
   /**
-   * Lift motor methods in MotionMagic mode
+   * Lift motor methods in Smart Motion mode
    */
   public void initMotorConfig() {
-    /* Configure the left Talon's selected sensor as local QuadEncoder */
-    // motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, // Local
-    // Feedback Source
-    // RobotMap.PID_PRIMARY, // PID Slot for Source [0, 1]
-    // RobotMap.kTimeoutMs); // Configuration Timeout
-
     /**
      * Max out the peak output (for all modes). However you can limit the output of
      * a given PID object with configClosedLoopPeakOutput().
      */
-    // motor.configPeakOutputForward(+1.0, RobotMap.kTimeoutMs);
-    // motor.configPeakOutputReverse(-1.0, RobotMap.kTimeoutMs);
     pid.setOutputRange(-1.0, 1.0);
 
     encoder.setPositionConversionFactor(INCHES_PER_REV_MOTOR); // One motor rev equals this
     encoder.setVelocityConversionFactor(1.0 / GEAR_RATIO);
 
-    // TODO pid.setReference(value, ControlType.kSmartMotion,
-    // RobotMap.kSlot_Distance);
     pid.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, RobotMap.kSlot_Position);
     pid.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, RobotMap.kSlot_Velocity);
 
@@ -179,9 +136,7 @@ public class Lift extends Subsystem {
 
     motor.setClosedLoopRampRate(0.25); // Number of seconds to reach full speed
 
-    /* Motion Magic Configurations */
-    // motor.configMotionAcceleration(TICKS_PER_100MS_PER_SEC, RobotMap.kTimeoutMs);
-    // motor.configMotionCruiseVelocity(TICKS_PER_100MS, RobotMap.kTimeoutMs);
+    /* Smart Motion Magic */
     pid.setSmartMotionMaxAccel(560.0 * 4, RobotMap.kSlot_Position);
     pid.setSmartMotionMaxVelocity(560.0, RobotMap.kSlot_Position);
 
@@ -189,17 +144,6 @@ public class Lift extends Subsystem {
     pid.setSmartMotionMaxVelocity(560.0, RobotMap.kSlot_Velocity);
 
     /* FPID Gains for distance servo */
-    // motor.config_kP(RobotMap.kSlot_Distance, gainsDistance.get("kP"),
-    // RobotMap.kTimeoutMs);
-    // motor.config_kI(RobotMap.kSlot_Distance, gainsDistance.get("kI"),
-    // RobotMap.kTimeoutMs);
-    // motor.config_kD(RobotMap.kSlot_Distance, gainsDistance.get("kD"),
-    // RobotMap.kTimeoutMs);
-    // motor.config_kF(RobotMap.kSlot_Distance, gainsDistance.get("kF"),
-    // RobotMap.kTimeoutMs);
-    // motor.config_IntegralZone(RobotMap.kSlot_Distance,
-    // gainsDistance.get("kIzone").intValue(), RobotMap.kTimeoutMs);
-
     pid.setP(0.00075, RobotMap.kSlot_Position);
     pid.setI(0.000075, RobotMap.kSlot_Position);
     pid.setD(0.0, RobotMap.kSlot_Position);
@@ -212,30 +156,12 @@ public class Lift extends Subsystem {
     pid.setFF(0.0, RobotMap.kSlot_Velocity);
     pid.setIZone(20.0, RobotMap.kSlot_Velocity);
 
-    // motor.configClosedLoopPeakOutput(RobotMap.kSlot_Distance,
-    // gainsDistance.get("kPeakOutput"), RobotMap.kTimeoutMs);
-    // motor.configAllowableClosedloopError(RobotMap.kSlot_Distance, 2,
-    // RobotMap.kTimeoutMs);
-
-    // pid.setSmartMotionAllowedClosedLoopError(0.0625 * REV_PER_INCH_MOTOR,
-    // RobotMap.kSlot_Position);
     pid.setSmartMotionAllowedClosedLoopError(0.0625, RobotMap.kSlot_Position);
     pid.setSmartMotionAllowedClosedLoopError(2, RobotMap.kSlot_Velocity);
-
-    /**
-     * 1ms per loop. PID loop can be slowed down if need be. For example, - if
-     * sensor updates are too slow - sensor deltas are very small per update, so
-     * derivative error never gets large enough to be useful. - sensor movement is
-     * very slow causing the derivative error to be near zero.
-     */
-    // int closedLoopTimeMs = 1;
-    // TODO motor.configClosedLoopPeriod(0, closedLoopTimeMs, RobotMap.kTimeoutMs);
   }
 
   // Set target position in inches
   public void setTgtPosition(double pos) {
-    // motor.set(ControlMode.MotionMagic, pos * TICKS_PER_INCH); // ,
-    // DemandType.AuxPID, target_turn);
     tgtPosition = pos;
     // pid.setReference(pos * REV_PER_INCH_MOTOR, ControlType.kSmartMotion,
     // RobotMap.kSlot_Position);
@@ -247,17 +173,12 @@ public class Lift extends Subsystem {
   }
 
   public void resetEncoder(double pos) {
-    // pid.setReference(pos * REV_PER_INCH_MOTOR, ControlType.kSmartMotion,
-    // RobotMap.kSlot_Position);
     pid.setReference(pos, ControlType.kSmartMotion, RobotMap.kSlot_Position);
     // motor.getSensorCollection().setQuadraturePosition((int) pos * TICKS_PER_INCH,
     // RobotMap.kTimeoutMs);
   }
 
   public boolean isLimit() {
-    // Faults f = new Faults();
-    // motor.getFaults();
-    // return f.ReverseLimitSwitch;
     return Robot.lift.rLimit.get();
   }
 }
