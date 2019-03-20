@@ -24,7 +24,7 @@ public class ClimberDrive2 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.driveChassisLocal(0.0, -0.3, 0.0);
+//    Robot.chassis.driveChassisLocal(0.0, -0.3, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,6 +42,6 @@ public class ClimberDrive2 extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+//    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
   }
 }

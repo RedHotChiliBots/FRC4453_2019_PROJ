@@ -12,6 +12,7 @@ package frc.robot.subsystems;
 //import com.ctre.phoenix.motorcontrol.NeutralMode;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import frc.robot.CANSparkMaxSendable;
 import com.revrobotics.ControlType;
@@ -69,7 +70,13 @@ public class Chassis extends Subsystem {
 	private CANSparkMaxSendable backleft = null;
 	private CANSparkMaxSendable backright = null;
 
+	public CANPIDController pidFL = null;
+	public CANPIDController pidFR = null;
+	public CANPIDController pidBL = null;
+	public CANPIDController pidBR = null;
+
 	private MecanumDrive drive = null;
+	// private DifferentialDrive drive = null;
 
 	// "jerk" detection
 	private boolean collisionDetected = false;
@@ -96,36 +103,49 @@ public class Chassis extends Subsystem {
 
 	private double cargoServoPos = 0.0;
 	private double panelServoPos = 0.0;
-	
+
 	public Chassis() {
 		super("Chassis");
 		// Initialize drive train for Mechanam
 		frontleft = new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
-		frontright =  new CANSparkMaxSendable(RobotMap.frontLeftMotor,CANSparkMax.MotorType.kBrushless);
-		backleft =  new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
-		backright = new CANSparkMaxSendable(RobotMap.frontLeftMotor, CANSparkMax.MotorType.kBrushless);
+		frontright = new CANSparkMaxSendable(RobotMap.frontRightMotor, CANSparkMax.MotorType.kBrushless);
+		backleft = new CANSparkMaxSendable(RobotMap.backLeftMotor, CANSparkMax.MotorType.kBrushless);
+		backright = new CANSparkMaxSendable(RobotMap.backRightMotor, CANSparkMax.MotorType.kBrushless);
 
 		frontleft.restoreFactoryDefaults();
 		frontleft.stopMotor();
-		frontleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
+		// frontleft.getPIDController().setReference(0.0, ControlType.kVoltage,
+		// RobotMap.kSlot_Position);
 		frontleft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		pidFL = frontleft.getPIDController();
+		pidFL.setReference(0.0, ControlType.kDutyCycle, RobotMap.kSlot_Position);
 
 		frontright.restoreFactoryDefaults();
 		frontright.stopMotor();
-		frontright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
+		// frontright.getPIDController().setReference(0.0, ControlType.kVoltage,
+		// RobotMap.kSlot_Position);
 		frontright.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		pidFR = frontleft.getPIDController();
+		pidFR.setReference(0.0, ControlType.kDutyCycle, RobotMap.kSlot_Position);
 
 		backleft.restoreFactoryDefaults();
 		backleft.stopMotor();
-		backleft.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
+		// backleft.getPIDController().setReference(0.0, ControlType.kVoltage,
+		// RobotMap.kSlot_Position);
 		backleft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		pidBL = frontleft.getPIDController();
+		pidBL.setReference(0.0, ControlType.kDutyCycle, RobotMap.kSlot_Position);
 
 		backright.restoreFactoryDefaults();
 		backright.stopMotor();
-		backright.getPIDController().setReference(0.0, ControlType.kVoltage, RobotMap.kSlot_Position);
+		// backright.getPIDController().setReference(0.0, ControlType.kVoltage,
+		// RobotMap.kSlot_Position);
 		backright.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		pidBR = frontleft.getPIDController();
+		pidBR.setReference(0.0, ControlType.kDutyCycle, RobotMap.kSlot_Position);
 
 		drive = new MecanumDrive(frontleft, backleft, frontright, backright);
+		// drive = new DifferentialDrive(frontleft, frontright);
 
 		// Initialize AHRS board
 		try {
@@ -153,7 +173,7 @@ public class Chassis extends Subsystem {
 		// Initialize camera position to forward looking (0.0 deg)
 		setCargoServo(0.0);
 		setPanelServo(0.0);
-		
+
 		// Initialize network table - cameras
 		cameras = NetworkTableInstance.getDefault().getTable("Vision");
 
@@ -220,29 +240,27 @@ public class Chassis extends Subsystem {
 	}
 
 	/**
-	 * Set / get servo position
-	 *  servo angle is 0-170deg
-	 *  cmd angle is +-85deg
+	 * Set / get servo position servo angle is 0-170deg cmd angle is +-85deg
 	 */
-	private final double calibOffset = 0.0;	// add/sub to calibrate camera at zero degrees 
+	private final double calibOffset = 0.0; // add/sub to calibrate camera at zero degrees
 	private final double angleOffset = 85.0 + calibOffset;
-	
+
 	public void setCargoServo(double angle) {
 		this.cargoServoPos = angle;
-		cargoServo.setAngle(angle+angleOffset);
+		cargoServo.setAngle(angle + angleOffset);
 	}
 
 	public double getCargoServo() {
-		return this.cargoServoPos-angleOffset;
+		return this.cargoServoPos - angleOffset;
 	}
 
 	public void setPanelServo(double angle) {
 		this.panelServoPos = angle;
-		panelServo.setAngle(angle+angleOffset);
+		panelServo.setAngle(angle + angleOffset);
 	}
 
 	public double getPanelServo() {
-		return this.panelServoPos-angleOffset;
+		return this.panelServoPos - angleOffset;
 	}
 
 	/*****************************************************************
@@ -254,6 +272,7 @@ public class Chassis extends Subsystem {
 	 */
 	public void driveChassis(double x, double y, double r) {
 		drive.driveCartesian(x, y, r, ahrs.getYaw());
+		// drive.tankDrive(-Robot.oi.getDriveLY(), -Robot.oi.getDriverRY());
 	}
 
 	public void driveChassisLocal(double x, double y, double r) {
@@ -287,6 +306,7 @@ public class Chassis extends Subsystem {
 		// y = -Robot.oi.getDriveY();
 		r = Robot.oi.getDriveR();
 		driveChassisLocal(x, y, r);
+		// driveChassis(x, y);
 	}
 
 	// Vision stuff
@@ -408,10 +428,10 @@ public class Chassis extends Subsystem {
 	 */
 	public void driveVision(double fwdVel) {
 		if (Robot.grabber.getMode() == MODE.CARGO) {
-			drive.driveCartesian(-current_strafe, -fwdVel, -current_turn);
+			// drive.driveCartesian(-current_strafe, -fwdVel, -current_turn);
 			// driveChassis(0.0, current_strafe,-current_turn);
 		} else {
-			drive.driveCartesian(current_strafe, fwdVel, current_turn);
+			// drive.driveCartesian(current_strafe, fwdVel, current_turn);
 			// driveChassis(0.0, -current_strafe, current_turn);
 		}
 	}
@@ -428,8 +448,8 @@ public class Chassis extends Subsystem {
 	}
 
 	/**
-	 * Tracks target by reading angle from vision code 
-	 * via network tables and commands serve to angle
+	 * Tracks target by reading angle from vision code via network tables and
+	 * commands serve to angle
 	 */
 	public void trackTargets() {
 		double angle = 0.0;

@@ -195,7 +195,7 @@ public class OI {
   }
 
   public double getDriveX() {
-    double v = driver.getX(Hand.kLeft);
+    double v = driver.getX(Hand.kLeft)*.6;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -204,7 +204,7 @@ public class OI {
    * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveY() {
-    double v = driver.getY(Hand.kLeft);
+    double v = -driver.getY(Hand.kLeft)*.6;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -213,7 +213,31 @@ public class OI {
    * driver.getY(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveR() {
+    double v = driver.getX(Hand.kRight)*.5;
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
+
+  /**
+   * 
+   * @return
+   */
+  public double getDriveLX() {
+    double v = driver.getX(Hand.kLeft);
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
+
+  public double getDriveLY() {
+    double v = driver.getY(Hand.kLeft);
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
+
+  public double getDriveRX() {
     double v = driver.getX(Hand.kRight);
+    return Math.abs(v) < DEADZONE ? 0.0 : v;
+  }
+
+  public double getDriverRY() {
+    double v = driver.getY(Hand.kRight);
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 

@@ -11,22 +11,26 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.LEVEL;
+import frc.robot.RobotMap.MODE;
 
 public class LiftGoToLevel extends Command {
 
   private LEVEL base_level = null;
+  private MODE mode = null;
   private LEVEL level = null;
 
   public LiftGoToLevel() {
     requires(Robot.lift);
     this.base_level = null;
+    this.mode = null;
     this.level = null;
   }
 
-  public LiftGoToLevel(LEVEL level) {
+  public LiftGoToLevel(MODE mode, LEVEL level) {
     requires(Robot.lift);
     this.base_level = level;
     this.level = level;
+    this.mode = mode;
   }
 
   // Called just before this Command runs the first time
@@ -35,23 +39,27 @@ public class LiftGoToLevel extends Command {
     if (level == null) {
       level = Robot.lift.level;
     }
+    if (mode == null) {
+      mode = Robot.grabber.mode;
+    }
     Robot.lift.motor.stopMotor();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lift.setTgtPosition(RobotMap.height.get(this.level));
+    Robot.lift.setTgtPosition(RobotMap.height.get(this.mode).get(this.level));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return (Math
-    //    .abs(Robot.lift.motor.getSelectedSensorPosition() - Robot.lift.motor.getClosedLoopTarget()) < Robot.prefs
-    //        .getDouble("LiftPosError", 5.0));
-    return (Math.abs(Robot.lift.encoder.getPosition() - Robot.lift.getTgtPosition()) < 
-        Robot.prefs.getDouble("LiftPosError", 5.0));
+    // return (Math
+    // .abs(Robot.lift.motor.getSelectedSensorPosition() -
+    // Robot.lift.motor.getClosedLoopTarget()) < Robot.prefs
+    // .getDouble("LiftPosError", 5.0));
+    return (Math.abs(Robot.lift.encoder.getPosition() - Robot.lift.getTgtPosition()) < Robot.prefs
+        .getDouble("LiftPosError", 0.5));
   }
 
   // Called once after isFinished returns true

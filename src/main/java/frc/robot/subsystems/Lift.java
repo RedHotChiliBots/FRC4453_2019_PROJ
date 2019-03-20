@@ -156,7 +156,7 @@ public class Lift extends Subsystem {
     pid.setFF(0.0, RobotMap.kSlot_Velocity);
     pid.setIZone(20.0, RobotMap.kSlot_Velocity);
 
-    pid.setSmartMotionAllowedClosedLoopError(0.0625, RobotMap.kSlot_Position);
+    pid.setSmartMotionAllowedClosedLoopError(0.25, RobotMap.kSlot_Position);
     pid.setSmartMotionAllowedClosedLoopError(2, RobotMap.kSlot_Velocity);
   }
 
@@ -173,7 +173,8 @@ public class Lift extends Subsystem {
   }
 
   public void resetEncoder(double pos) {
-    pid.setReference(pos, ControlType.kSmartMotion, RobotMap.kSlot_Position);
+    encoder.setPosition(pos);
+    // pid.setReference(pos, ControlType.kSmartMotion, RobotMap.kSlot_Position);
     // motor.getSensorCollection().setQuadraturePosition((int) pos * TICKS_PER_INCH,
     // RobotMap.kTimeoutMs);
   }

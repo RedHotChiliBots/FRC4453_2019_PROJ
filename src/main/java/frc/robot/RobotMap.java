@@ -30,8 +30,8 @@ public class RobotMap {
   // chassis
   public static int frontLeftMotor = 1;
   public static int frontRightMotor = 2;
-  public static int backRightMotor = 3;
-  public static int backLeftMotor = 4;
+  public static int backLeftMotor = 3;
+  public static int backRightMotor = 4;
 
   // lifts
   public static int liftMotor = 5;
@@ -79,7 +79,7 @@ public class RobotMap {
   // Servos - pwm slots
   public static final int cargoServo = 0;
   public static final int panelServo = 1;
-  
+
   // public static final double distFromWall = 10;
 
   // ============= OI CONTROLLERS =============
@@ -129,7 +129,7 @@ public class RobotMap {
   }
 
   public static enum LEVEL {
-    LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP, SELECTED, CURRENT
+    LEVEL1, LEVEL2, LEVEL3, LOADINGSTATION, SHIP // , SELECTED, CURRENT, PANELLOAD
   }
 
   public static enum ACTION {
@@ -137,38 +137,30 @@ public class RobotMap {
   }
 
   // Heights are inches above base of 19" (Level 1)
-  public final static Map<LEVEL, Double> height = new HashMap<LEVEL, Double>() {
+  public final static Map<MODE, Map<LEVEL, Double>> height = new HashMap<MODE, Map<LEVEL, Double>>() {
     private static final long serialVersionUID = 1L;
     {
-      put(LEVEL.LEVEL3, 56.0); // Score Panel & Cargo in Ship & Rocket
-      put(LEVEL.LEVEL2, 28.0); // Score Panel & Cargo in Ship & Rocket
-      put(LEVEL.LOADINGSTATION, 16.0); // Load Cargo
-      put(LEVEL.SHIP, 10.5); // Score Cargo in Ship
-      put(LEVEL.LEVEL1, 0.0); // Load Panel; Score Panel in Ship & Rocket
+      put(MODE.PANEL, new HashMap<LEVEL, Double>() {
+        private static final long serialVersionUID = 1L;
+        {
+          put(LEVEL.LEVEL3, 56.0); // Score Panel in Rocket Level 3
+          put(LEVEL.LEVEL2, 28.0); // Score Panel in Rocket Level 2
+          put(LEVEL.LOADINGSTATION, 16.0); // Load Panel
+          put(LEVEL.SHIP, 10.5); // Score Panel in Ship
+          put(LEVEL.LEVEL1, 0.0); // Score Panel in Rocket Level 1
+        }
+      });
+      put(MODE.CARGO, new HashMap<LEVEL, Double>() {
+        private static final long serialVersionUID = 1L;
+        {
+          put(LEVEL.LEVEL3, 56.0); // Score Cargo in Rocket Level 3
+          put(LEVEL.LEVEL2, 28.0); // Score Cargo in Rocket Level 2
+          put(LEVEL.LOADINGSTATION, 16.0); // Load Cargo
+          put(LEVEL.SHIP, 10.5); // Score Cargo in Ship
+          put(LEVEL.LEVEL1, 0.0); // Score Cargo in Rocket Level 1
+        }
+      });
     }
   };
 
-  /*
-   * public static enum LIFT { UPPER, LOWER }
-   * 
-   * // Heights are inches above base of 19" (Level 1) public final static
-   * Map<LIFT, Map<LEVEL, Double>> height = new HashMap<LIFT, Map<LEVEL,
-   * Double>>() { private static final long serialVersionUID = 1L;
-   * 
-   * { put(LIFT.UPPER, new HashMap<LEVEL, Double>() { private static final long
-   * serialVersionUID = 1L;
-   * 
-   * { put(LEVEL.LEVEL3, 28.0); // Score Panel & Cargo in Ship & Rocket
-   * put(LEVEL.LEVEL2, 28.0); // Score Panel & Cargo in Ship & Rocket
-   * put(LEVEL.LOADINGSTATION, 16.0); // Load Cargo put(LEVEL.SHIP, 10.5); //
-   * Score Cargo in Ship put(LEVEL.LEVEL1, 0.0); // Load Panel; Score Panel in
-   * Ship & Rocket } }); put(LIFT.LOWER, new HashMap<LEVEL, Double>() { private
-   * static final long serialVersionUID = 1L;
-   * 
-   * { put(LEVEL.LEVEL3, 28.0); // Score Panel & Cargo in Ship & Rocket
-   * put(LEVEL.LEVEL2, 0.0); // Score Panel & Cargo in Ship & Rocket
-   * put(LEVEL.LOADINGSTATION, 0.0); // Load Cargo put(LEVEL.SHIP, 0.0); // Score
-   * Cargo in Ship put(LEVEL.LEVEL1, 0.0); // Load Panel; Score Panel in Ship &
-   * Rocket } }); } };
-   */
 }

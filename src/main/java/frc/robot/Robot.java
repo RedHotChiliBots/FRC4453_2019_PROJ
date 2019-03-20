@@ -252,25 +252,9 @@ public class Robot extends TimedRobot {
     if (!prefs.containsKey("Dist From Wall"))
       prefs.putDouble("Dist From Wall", 10);
 
-    if (prefs.containsKey("BackStepAngleHigh"))
-      prefs.remove("BackStepAngleHigh");
-    if (prefs.containsKey("BackStepAngleLow"))
-      prefs.remove("BackStepAngleLow");
-    if (prefs.containsKey("FrontStepAngleHigh"))
-      prefs.remove("FrontStepAngleHigh");
-    if (prefs.containsKey("FrontStepAngleLow"))
-      prefs.remove("FrontStepAngleLow");
-    if (prefs.containsKey("BackStepDist"))
-      prefs.remove("BackStepDist");
-    if (prefs.containsKey("FrontStepDist"))
-      prefs.remove("FrontStepDist");
-    if (prefs.containsKey("BackStepDistHigh"))
-      prefs.remove("BackStepDistHigh");
-    if (prefs.containsKey("FrontStepAngle"))
-      prefs.remove("FrontStepAngle");
-    if (prefs.containsKey("BackStepAngle"))
-      prefs.remove("BackStepAngle");
-    if (prefs.containsKey("LMotorReset"))
-      prefs.remove("LMotorReset");
+    if (prefs.containsKey("LLMotorReset"))
+      prefs.remove("LLMotorReset");
+    if (prefs.containsKey("ULMotorReset"))
+      prefs.remove("ULMotorReset");
   }
 }
