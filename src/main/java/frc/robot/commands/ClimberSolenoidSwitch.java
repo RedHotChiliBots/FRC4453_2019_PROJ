@@ -39,11 +39,11 @@ public class ClimberSolenoidSwitch extends Command {
   @Override
   protected boolean isFinished() {
     // boolean result = false;
-    if (solenoid == Robot.climber.climbFront) {
-      return Robot.climber.isFrontClimb();
-    } else {
-      return Robot.climber.isBackClimb();
-    }
+    // if (solenoid == Robot.climber.climbFront) {
+    // return Robot.climber.isFrontClimb();
+    // } else {
+    // return Robot.climber.isBackClimb();
+    // }
     // if (solenoid == Robot.climber.climbFront) {
     // result = Robot.chassis.getPitch() > -Robot.prefs.getDouble("FStepAngleHigh",
     // 18.0)
@@ -56,7 +56,7 @@ public class ClimberSolenoidSwitch extends Command {
     // if (result)
     // System.out.println("Finish ClimberSolenoidSwitch");
     // return result;
-    // return true;
+    return true;
   }
 
   // Called once after isFinished returns true

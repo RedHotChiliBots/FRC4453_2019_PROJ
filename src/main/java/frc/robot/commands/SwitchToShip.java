@@ -22,13 +22,14 @@ public class SwitchToShip extends Command {
   protected void initialize() {
     System.out.println("Init SwitchToShip");
 
-    if (Robot.grabber.mode == MODE.PANEL) {
-      Robot.lift.setLevel(LEVEL.LEVEL1);
-    } else {
-      Robot.lift.setLevel(LEVEL.SHIP);
-    }
+    // if (Robot.grabber.mode == MODE.PANEL) {
+    // Robot.lift.setLevel(LEVEL.LEVEL1);
+    // } else {
+    // Robot.lift.setLevel(LEVEL.SHIP);
+    // }
 
     Robot.grabber.setAction(ACTION.RELEASE);
+    Robot.lift.setLevel(LEVEL.SHIP);
   }
 
   // Called repeatedly when this Command is scheduled to run

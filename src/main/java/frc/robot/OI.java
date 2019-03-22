@@ -195,7 +195,7 @@ public class OI {
   }
 
   public double getDriveX() {
-    double v = driver.getX(Hand.kLeft)*.6;
+    double v = driver.getX(Hand.kLeft) * .6;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -204,7 +204,7 @@ public class OI {
    * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveY() {
-    double v = -driver.getY(Hand.kLeft)*.6;
+    double v = -driver.getY(Hand.kLeft) * .6;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -213,7 +213,7 @@ public class OI {
    * driver.getY(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveR() {
-    double v = driver.getX(Hand.kRight)*.5;
+    double v = driver.getX(Hand.kRight) * .5;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -257,7 +257,8 @@ public class OI {
   public double getCargoR() {
     int v = operator.getPOV();
     if (v >= 0) {
-      return calcCargo(Math.abs(360 - v));
+      // return calcCargo(Math.abs(360 - v));
+      return calcCargo(v);
     } else {
       return 0.0;
     }
@@ -265,15 +266,20 @@ public class OI {
 
   private double calcCargo(int v) {
     double spd = 0.0;
-    if ((v > 135) && (v < 225)) {
-      spd = -1.0;
-    } else if (v >= 225) {
-      spd = 1.0;
-    } else if (v > 90) {
-      spd = 0.0;
+    if ((v > 90) && (v < 270)) {
+      spd = -1;
     } else {
-      spd = 1.0 - (v / 90.0);
+      spd = 1;
     }
+    // if ((v > 135) && (v < 225)) {
+    // spd = -1.0;
+    // } else if (v >= 225) {
+    // spd = 1.0;
+    // } else if (v > 90) {
+    // spd = 0.0;
+    // } else {
+    // spd = 1.0 - (v / 90.0);
+    // }
     return spd;
   }
 }

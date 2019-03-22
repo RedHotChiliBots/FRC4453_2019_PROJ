@@ -32,7 +32,7 @@ public class ChassisDriveTime extends Command {
   @Override
   protected void execute() {
     // System.out.println("Drive execute.");
-//    Robot.chassis.driveChassisLocal(0.0, -0.3, 0.0);
+    Robot.chassis.driveChassisLocal(0.0, 0.2, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -44,7 +44,7 @@ public class ChassisDriveTime extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-//    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    Robot.chassis.driveChassisLocal(0.0, 0.0, 0.0);
     System.out.println("Drive end.");
   }
 
@@ -52,7 +52,7 @@ public class ChassisDriveTime extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-//    Robot.chassis.driveChassis(0.0, 0.0, 0.0);
+    Robot.chassis.driveChassisLocal(0.0, 0.0, 0.0);
     System.out.println("Drive interrupted.");
   }
 }
