@@ -195,7 +195,7 @@ public class OI {
   }
 
   public double getDriveX() {
-    double v = driver.getX(Hand.kLeft) * .6;
+    double v = driver.getX(Hand.kLeft) * .7;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 
@@ -204,7 +204,7 @@ public class OI {
    * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
    */
   public double getDriveY() {
-    double v = -driver.getY(Hand.kLeft) * .6;
+    double v = -driver.getY(Hand.kLeft) * .7;
     return Math.abs(v) < DEADZONE ? 0.0 : v;
   }
 

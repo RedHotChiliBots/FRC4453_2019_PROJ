@@ -42,7 +42,7 @@ public class Lift extends Subsystem {
   public LEVEL level = null;
 
   // Lift Motor, Encoder, Gearbox Calcs
-  private static final int GEAR_RATIO = 4;
+  private static final int GEAR_RATIO = 48;
   // Diameter is barrel plus half of rope width
   private static final double BARREL_DIA = 1.5 + (0.125 / 2.0);
 

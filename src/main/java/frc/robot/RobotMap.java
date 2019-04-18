@@ -153,10 +153,10 @@ public class RobotMap {
       put(MODE.CARGO, new HashMap<LEVEL, Double>() {
         private static final long serialVersionUID = 1L;
         {
-          put(LEVEL.LEVEL3, 56.0); // Score Cargo in Rocket Level 3[[[[=j//jj/jj/]]]]
+          put(LEVEL.LEVEL3, 56.0); // Score Cargo in Rocket Level 3
           put(LEVEL.LEVEL2, 28.0); // Score Cargo in Rocket Level 2
           put(LEVEL.LOADINGSTATION, 16.0); // Load Cargo
-          put(LEVEL.SHIP, 15.5); // Score Cargo in Ship
+          put(LEVEL.SHIP, 15.5); // Score Cargo in Shipw
           put(LEVEL.LEVEL1, 0.0); // Score Cargo in Rocket Level 1
         }
       });
