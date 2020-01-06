@@ -141,7 +141,7 @@ public class Lift extends Subsystem {
     pid.setSmartMotionMaxVelocity(560.0, RobotMap.kSlot_Position);
 
     pid.setSmartMotionMaxAccel(560.0 * 4, RobotMap.kSlot_Velocity);
-    pid.setSmartMotionMaxVelocity(560.0, RobotMap.kSlot_Velocity);
+    pid.setSmartMotionMaxVelocity(900.0, RobotMap.kSlot_Velocity);
 
     /* FPID Gains for distance servo */
     pid.setP(0.00095, RobotMap.kSlot_Position);

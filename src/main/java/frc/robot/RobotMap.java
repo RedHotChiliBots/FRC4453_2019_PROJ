@@ -33,6 +33,8 @@ public class RobotMap {
   public static int backLeftMotor = 3;
   public static int backRightMotor = 4;
 
+  public static int leds = 11;
+
   // lifts
   public static int liftMotor = 5;
 
@@ -134,6 +136,10 @@ public class RobotMap {
 
   public static enum ACTION {
     GRAB, RELEASE
+  }
+
+  public static enum KID {
+    ON, OFF
   }
 
   // Heights are inches above base of 19" (Level 1)

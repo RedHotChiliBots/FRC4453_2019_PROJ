@@ -7,7 +7,8 @@
 
 package frc.robot.subsystems;
 
-//import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 //import com.ctre.phoenix.motorcontrol.NeutralMode;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -34,6 +35,7 @@ import edu.wpi.first.wpilibj.Servo;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.KID;
 import frc.robot.RobotMap.MODE;
 import frc.robot.commands.ChassisDriveTeleop;
 
@@ -70,6 +72,8 @@ public class Chassis extends Subsystem {
 	private CANSparkMaxSendable backleft = null;
 	private CANSparkMaxSendable backright = null;
 
+	public WPI_TalonSRX leds = null;
+
 	public CANPIDController pidFL = null;
 	public CANPIDController pidFR = null;
 	public CANPIDController pidBL = null;
@@ -88,6 +92,8 @@ public class Chassis extends Subsystem {
 
 	// Define navX board
 	public AHRS ahrs = null;
+
+	public KID kid = null;
 
 	// Hi & Lo Pressure Sensors
 	private AnalogInput hiPressureSensor = null;
@@ -174,6 +180,8 @@ public class Chassis extends Subsystem {
 		setCargoServo(0.0);
 		setPanelServo(0.0);
 
+		kid = KID.OFF;
+
 		// Initialize network table - cameras
 		cameras = NetworkTableInstance.getDefault().getTable("Vision");
 
@@ -193,6 +201,11 @@ public class Chassis extends Subsystem {
 		pid_turn.enable();
 
 		// Add Sendable data to dashboard
+
+		leds = new WPI_TalonSRX(RobotMap.leds);
+
+		leds.enableVoltageCompensation(true);
+		leds.set(ControlMode.PercentOutput, 0.5);
 
 		frontleft.setSubsystem("Chassis");
 		backleft.setSubsystem("Chassis");
@@ -305,7 +318,7 @@ public class Chassis extends Subsystem {
 		// x = -Robot.oi.getDriveX();
 		// y = -Robot.oi.getDriveY();
 		r = Robot.oi.getDriveR();
-		driveChassisLocal(x, y, r);
+		driveChassisLocal(x, -y, r);
 		// driveChassis(x, y);
 	}
 
@@ -522,5 +535,13 @@ public class Chassis extends Subsystem {
 		} else {
 			return getPanelDist() < Robot.prefs.getDouble("Dist From Wall", 10);
 		}
+	}
+
+	public void setKidMode(KID k) {
+		kid = k;
+	}
+
+	public KID getKidMode() {
+		return kid;
 	}
 }

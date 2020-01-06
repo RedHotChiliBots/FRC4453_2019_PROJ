@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.robot.commands.ChassisDriveJerk;
 import frc.robot.commands.ChassisDriveTeleop;
@@ -78,6 +79,7 @@ public class Robot extends TimedRobot {
     telemetry();
     chassis.findJerk();
     chassis.doRumble();
+    chassis.leds.set(ControlMode.PercentOutput, 0.5);
   }
 
   /**

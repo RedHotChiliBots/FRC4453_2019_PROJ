@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.RobotMap.KID;
 import frc.robot.commands.*;
 
 /**
@@ -82,6 +83,9 @@ public class OI {
   private JoystickButton switchToPanel = new JoystickButton(driver, RobotMap.LEFT_BUMPER);
   private JoystickButton switchToCargo = new JoystickButton(driver, RobotMap.RIGHT_BUMPER);
 
+  private JoystickButton switchToKid = new JoystickButton(driver, RobotMap.START);
+  private JoystickButton switchOffKidMode = new JoystickButton(driver, RobotMap.BACK);
+
   // Operator joystick controls
   private JoystickButton switchToLevel1 = new JoystickButton(operator, RobotMap.X_BUTTON);
   private JoystickButton switchToLevel2 = new JoystickButton(operator, RobotMap.Y_BUTTON);
@@ -136,6 +140,8 @@ public class OI {
     switchToCargo.whenPressed(new SwitchToCargo());
     switchToPanel.whenPressed(new SwitchToPanel());
     abort.whenPressed(new Abort());
+    switchToKid.whenPressed(new SwitchToKid());
+    switchOffKidMode.whenPressed(new SwitchOffKidMode());
     // cargoGrab.whenPressed(new CargoGrab());
     // cargoRelease.whenPressed(new CargoRelease());
     liftReset.whenPressed(new LiftStartup());
@@ -195,26 +201,33 @@ public class OI {
   }
 
   public double getDriveX() {
-    double v = driver.getX(Hand.kLeft) * .7;
-    return Math.abs(v) < DEADZONE ? 0.0 : v;
+    if (Robot.chassis.kid == KID.ON) {
+      double v = driver.getX(Hand.kLeft) * .35;
+      return Math.abs(v) < DEADZONE ? 0.0 : v;
+    } else {
+      double v = driver.getX(Hand.kLeft) * .7;
+      return Math.abs(v) < DEADZONE ? 0.0 : v;
+    }
   }
 
-  /*
-   * Andrew's new config public double getDriveX() { double v =
-   * driver.getX(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
-   */
   public double getDriveY() {
-    double v = -driver.getY(Hand.kLeft) * .7;
-    return Math.abs(v) < DEADZONE ? 0.0 : v;
+    if (Robot.chassis.kid == KID.ON) {
+      double v = driver.getY(Hand.kLeft) * .35;
+      return Math.abs(v) < DEADZONE ? 0.0 : v;
+    } else {
+      double v = driver.getY(Hand.kLeft) * .7;
+      return Math.abs(v) < DEADZONE ? 0.0 : v;
+    }
   }
 
-  /*
-   * Andrew's new config public double getDriveY() { double v =
-   * driver.getY(Hand.kLeft); return Math.abs(v) < DEADZONE ? 0.0 : v; }
-   */
   public double getDriveR() {
-    double v = driver.getX(Hand.kRight) * .5;
-    return Math.abs(v) < DEADZONE ? 0.0 : v;
+    if (Robot.chassis.kid == KID.ON) {
+      double v = driver.getX(Hand.kRight) * .35;
+      return Math.abs(v) < DEADZONE ? 0.0 : v;
+    } else {
+      double v = driver.getX(Hand.kRight) * .5;
+      return Math.abs(v) < DEADZONE ? 0.0 : v;
+    }
   }
 
   /**
